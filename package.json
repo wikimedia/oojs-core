@@ -32,7 +32,8 @@
       "web": "http://www.trevorparscal.com/"
     },
     {
-      "name": "Roan Kattouw"
+      "name": "Roan Kattouw",
+      "web": "https://github.com/catrope"
     }
   ],
   "main": "./src/oo.js",
