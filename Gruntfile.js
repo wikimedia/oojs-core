@@ -2,13 +2,20 @@
 module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
+	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
 	grunt.initConfig({
 		jshint: {
-			all: ['*.js', 'test/*.js']
+			all: ['*.js', 'src/*.js', 'test/*.js']
 		},
 		qunit: {
 			all: ['test/index.html']
+		},
+		watch: {
+			all: {
+				files: ['<%= jshint.all %>'],
+				tasks: ['test']
+			}
 		}
 	});
 
