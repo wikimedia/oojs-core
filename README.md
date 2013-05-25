@@ -1,6 +1,24 @@
 oojs [![Build Status](https://travis-ci.org/trevorparscal/oojs.png)](https://travis-ci.org/trevorparscal/oojs) [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
 =================
 
+oo.js is a JavaScript library for working with objects.
+
+Key features include inheritance, mixins and utilities for working with objects.
+
+ ```javascript
+/* Example */
+( function ( oo ) {
+    function Animal() {}
+    function Magic() {}
+    function Unicorn() {
+        Animal.call( this );
+        Magic.call( this );
+    }
+    oo.inheritClass( Unicorn, Animal );
+    oo.mixinClass( Unicorn, Magic );
+}( OO ) );
+ ```
+
 Quick start
 ----------
 
