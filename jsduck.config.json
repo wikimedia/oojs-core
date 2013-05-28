@@ -1,0 +1,8 @@
+{
+	"--title": "OOJS Documentation",
+	"--output": "docs",
+	"--": [
+		"src/core.js",
+		"src/EventEmitter.js"
+	]
+}
