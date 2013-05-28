@@ -125,17 +125,10 @@ oo.mixinClass = function ( targetFn, originFn ) {
  * Create an object that inherits from another object.
  *
  * @method
- * @until ES5: Object.create
  * @param {Object} origin Object to inherit from
  * @return {Object} Empty object that inherits from origin
  */
-oo.createObject = Object.create || function ( origin ) {
-	function O() {}
-	O.prototype = origin;
-	var r = new O();
-
-	return r;
-};
+oo.createObject = Object.create;
 
 /**
  * Create a new object that is an instance of the same
