@@ -6,9 +6,7 @@
 
 ( function ( oo ) {
 
-QUnit.module( 'oo' );
-
-/* Tests */
+QUnit.module( 'OO' );
 
 QUnit.test( 'createObject', 4, function ( assert ) {
 	var foo, bar, fooKeys, barKeys;
