@@ -3,17 +3,8 @@ var qunit = require( 'qunit' );
 
 qunit.setup({
 	log: {
-		// Results
-		assertions: false,
-		tests: false,
-		summary: false,
-		globalSummary: true,
-
-		// Failures
-		errors: true,
-
-		// Progress
-		testing: true
+		summary: true,
+		errors: true
 	}
 });
 
