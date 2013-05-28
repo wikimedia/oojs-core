@@ -19,6 +19,7 @@ module.exports = function ( grunt ) {
 					'src/intro.js',
 					'src/core.js',
 					'src/EventEmitter.js',
+					'src/export.js',
 					'src/outro.js'
 				]
 			}

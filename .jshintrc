@@ -26,9 +26,9 @@
 	"nomen": true,
 	"onevar": true,
 
-	"predef": [
-		"OO",
-		"oo",
-		"QUnit"
-	]
+	"globals": {
+		"oo": true,
+		"OO": false,
+		"QUnit": false
+	}
 }

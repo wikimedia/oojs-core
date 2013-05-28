@@ -1,11 +1,7 @@
-/*!
- * Base object.
- */
-
 var
 	/**
 	 * Namespace for all classes, static methods and static properties.
-	 * @class
+	 * @class oo
 	 * @singleton
 	 */
 	oo = {},
@@ -276,10 +272,3 @@ oo.copy = function ( source, callback ) {
 
 	return destination;
 };
-
-/*jshint node:true */
-if ( typeof module !== 'undefined' && module.exports ) {
-	module.exports = oo;
-} else {
-	global.OO = oo;
-}
