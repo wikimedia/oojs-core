@@ -1,3 +1,9 @@
+/*!
+ * Grunt file
+ *
+ * @package OOJS
+ */
+
 /*jshint node:true */
 module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
