@@ -1,11 +1,3 @@
-/*!
- * EventEmitter construtor.
- *
- * @package OOJS
- */
-
-( function ( oo ) {
-
 /**
  * Event emitter.
  *
@@ -228,5 +220,3 @@ oo.EventEmitter.prototype.once = function ( event, listener ) {
 		listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
 	} );
 };
-
-}( OO ) );

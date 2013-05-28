@@ -1,16 +1,16 @@
 /*jshint node:true */
 var qunit = require( 'qunit' );
 
-qunit.setup({
+qunit.setup( {
 	log: {
 		summary: true,
 		errors: true
 	}
-});
+} );
 
 qunit.run({
 	code: {
-		path: './src/oo.core.js',
+		path: './dist/oo.js',
 		namespace: 'OO'
 	},
 	tests: [

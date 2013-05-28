@@ -1,12 +1,6 @@
 /*!
  * Base object.
- *
- * @package OOJS
  */
-
-( function ( global ) {
-
-'use strict';
 
 var
 	/**
@@ -289,5 +283,3 @@ if ( typeof module !== 'undefined' && module.exports ) {
 } else {
 	global.OO = oo;
 }
-
-}( this ) );

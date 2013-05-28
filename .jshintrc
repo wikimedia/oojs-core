@@ -28,6 +28,7 @@
 
 	"predef": [
 		"OO",
+		"oo",
 		"QUnit"
 	]
 }

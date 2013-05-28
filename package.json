@@ -19,7 +19,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://mit-license.org/"
+      "url": "http://oojs.mit-license.org"
     }
   ],
   "author": {
@@ -38,7 +38,8 @@
   ],
   "main": "./src/oo.js",
   "scripts": {
-    "test": "grunt test && node test/node-index.js"
+    "test": "grunt test && node test/node-index.js",
+    "prepublish": "grunt build"
   },
   "dependencies": {},
   "devDependencies": {
