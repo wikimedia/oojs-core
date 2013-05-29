@@ -59,7 +59,7 @@ module.exports = function ( grunt ) {
 			src = this.data.src,
 			version = grunt.config( 'pkg.version' );
 
-		src.forEach(function ( filepath ) {
+		src.forEach( function ( filepath ) {
 			var text = grunt.file.read( __dirname + '/' + filepath );
 
 			// Ensure files use only \n for line endings, not \r\n

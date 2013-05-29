@@ -102,6 +102,8 @@ oo.EventEmitter.prototype.off = function ( event, callback ) {
 
 /**
  * Emit an event.
+ * TODO: Should this be chainable? What is the usefulness of the boolean
+ * return value here?
  *
  * @method
  * @param {string} event Type of event
@@ -144,7 +146,7 @@ oo.EventEmitter.prototype.connect = function ( context, methods ) {
 	for ( event in methods ) {
 		method = methods[event];
 		// Allow providing additional args
-		if ( oo.isArray( method ) ) {
+		if ( Array.isArray( method ) ) {
 			args = method.slice( 1 );
 			method = method[0];
 		} else {

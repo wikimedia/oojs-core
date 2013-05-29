@@ -14,6 +14,7 @@ qunit.run({
 		namespace: 'OO'
 	},
 	tests: [
-		'./test/oo.core.test.js'
+		'./test/oo.core.test.js',
+		'./test/oo.EventEmitter.test.js'
 	]
 });
