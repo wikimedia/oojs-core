@@ -49,8 +49,6 @@ oo.inheritClass = function ( targetFn, originFn ) {
 		throw new Error( 'Target already inherits from origin' );
 	}
 
-	// Doesn't really require ES5 (jshint/jshint#74@github)
-	/*jshint es5: true */
 	var targetConstructor = targetFn.prototype.constructor;
 
 	targetFn.prototype = oo.createObject( originFn.prototype );

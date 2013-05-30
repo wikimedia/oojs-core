@@ -19,7 +19,6 @@
 	"undef": true,
 	"unused": true,
 	// Relaxing
-	"es5": true,
 	"multistr": true,
 	"smarttabs": true,
 	// Legacy
