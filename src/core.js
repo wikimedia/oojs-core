@@ -1,7 +1,7 @@
 var
 	/**
 	 * Namespace for all classes, static methods and static properties.
-	 * @class oo
+	 * @class OO
 	 * @singleton
 	 */
 	oo = {},

@@ -1,6 +1,8 @@
 {
 	"--title": "OOJS Documentation",
 	"--output": "docs",
+	"--categories": "./jsduck.categories.json",
+	"--builtin-classes": true,
 	"--": [
 		"src/core.js",
 		"src/EventEmitter.js"
