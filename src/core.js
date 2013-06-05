@@ -193,7 +193,7 @@ oo.getObjectValues = function ( obj ) {
  * @param {boolean} [asymmetrical] Whether to check only that b contains values from a
  * @returns {boolean} If the objects contain the same values as each other
  */
-oo.compareObjects = function ( a, b, asymmetrical ) {
+oo.compare = function ( a, b, asymmetrical ) {
 	var aValue, bValue, aType, bType, k;
 	for ( k in a ) {
 		aValue = a[k];
@@ -202,12 +202,12 @@ oo.compareObjects = function ( a, b, asymmetrical ) {
 		bType = typeof bValue;
 		if ( aType !== bType ||
 			( ( aType === 'string' || aType === 'number' ) && aValue !== bValue ) ||
-			( aValue === Object( aValue ) && !oo.compareObjects( aValue, bValue ) ) ) {
+			( aValue === Object( aValue ) && !oo.compare( aValue, bValue ) ) ) {
 			return false;
 		}
 	}
 	// If the check is not asymmetrical, recursing with the arguments swapped will verify our result
-	return asymmetrical ? true : oo.compareObjects( b, a, true );
+	return asymmetrical ? true : oo.compare( b, a, true );
 };
 
 /**
