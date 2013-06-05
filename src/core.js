@@ -10,7 +10,7 @@ var
 /* Class Methods */
 
 /**
- * Utility for common usage of #createObject for inheriting from one
+ * Utility for common usage of Object#create for inheriting from one
  * prototype to another.
  *
  * Beware: This redefines the prototype, call before setting your prototypes.
@@ -51,14 +51,14 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	var targetConstructor = targetFn.prototype.constructor;
 
-	targetFn.prototype = oo.createObject( originFn.prototype );
+	targetFn.prototype = Object.create( originFn.prototype );
 
 	// Restore constructor property of targetFn
 	targetFn.prototype.constructor = targetConstructor;
 
 	// Extend static properties - always initialize both sides
 	originFn.static = originFn.static || {};
-	targetFn.static = oo.createObject( originFn.static );
+	targetFn.static = Object.create( originFn.static );
 
 	// Copy mixin tracking
 	targetFn.mixins = originFn.mixins ? originFn.mixins.slice( 0 ) : [];
@@ -120,15 +120,6 @@ oo.mixinClass = function ( targetFn, originFn ) {
 /* Object Methods */
 
 /**
- * Create an object that inherits from another object.
- *
- * @method
- * @param {Object} origin Object to inherit from
- * @return {Object} Empty object that inherits from origin
- */
-oo.createObject = Object.create;
-
-/**
  * Create a new object that is an instance of the same
  * constructor as the input, inherits from the same object
  * and contains the same own properties.
@@ -154,7 +145,7 @@ oo.createObject = Object.create;
 oo.cloneObject = function ( origin ) {
 	var key, r;
 
-	r = oo.createObject( origin.constructor.prototype );
+	r = Object.create( origin.constructor.prototype );
 
 	for ( key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
