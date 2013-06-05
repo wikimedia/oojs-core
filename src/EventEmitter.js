@@ -13,33 +13,6 @@ oo.EventEmitter = function OoEventEmitter() {
 /* Methods */
 
 /**
- * Emit an event.
- *
- * @method
- * @param {string} event Type of event
- * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
- * @returns {boolean} If event was handled by at least one listener
- */
-oo.EventEmitter.prototype.emit = function ( event ) {
-	var i, len, binding, bindings, args;
-
-	if ( event in this.bindings ) {
-		// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
-		bindings = this.bindings[event].slice();
-		args = Array.prototype.slice.call( arguments, 1 );
-		for ( i = 0, len = bindings.length; i < len; i++ ) {
-			binding = bindings[i];
-			binding.callback.apply(
-				binding.context,
-				binding.args ? binding.args.concat( args ) : args
-			);
-		}
-		return true;
-	}
-	return false;
-};
-
-/**
  * Add a listener to events of a specific event.
  *
  * @method
@@ -68,6 +41,22 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
 		'context': context || null
 	} );
 	return this;
+};
+
+/**
+ * Adds a one-time listener to a specific event.
+ *
+ * @method
+ * @param {string} event Type of event to listen to
+ * @param {Function} listener Listener to call when event occurs
+ * @chainable
+ */
+oo.EventEmitter.prototype.once = function ( event, listener ) {
+	var eventEmitter = this;
+	return this.on( event, function listenerWrapper() {
+		eventEmitter.off( event, listenerWrapper );
+		listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
+	} );
 };
 
 /**
@@ -109,6 +98,33 @@ oo.EventEmitter.prototype.off = function ( event, callback ) {
 		}
 	}
 	return this;
+};
+
+/**
+ * Emit an event.
+ *
+ * @method
+ * @param {string} event Type of event
+ * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
+ * @returns {boolean} If event was handled by at least one listener
+ */
+oo.EventEmitter.prototype.emit = function ( event ) {
+	var i, len, binding, bindings, args;
+
+	if ( event in this.bindings ) {
+		// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
+		bindings = this.bindings[event].slice();
+		args = Array.prototype.slice.call( arguments, 1 );
+		for ( i = 0, len = bindings.length; i < len; i++ ) {
+			binding = bindings[i];
+			binding.callback.apply(
+				binding.context,
+				binding.args ? binding.args.concat( args ) : args
+			);
+		}
+		return true;
+	}
+	return false;
 };
 
 /**
@@ -203,20 +219,4 @@ oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
 	}
 
 	return this;
-};
-
-/**
- * Adds a one-time listener to a specific event.
- *
- * @method
- * @param {string} event Type of event to listen to
- * @param {Function} listener Listener to call when event occurs
- * @chainable
- */
-oo.EventEmitter.prototype.once = function ( event, listener ) {
-	var eventEmitter = this;
-	return this.on( event, function listenerWrapper() {
-		eventEmitter.off( event, listenerWrapper );
-		listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
-	} );
 };
