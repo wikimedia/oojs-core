@@ -394,6 +394,46 @@ QUnit.test( 'compare( Object, Object )', 12, function ( assert ) {
 	);
 } );
 
+QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 3, function ( assert ) {
+	var x, y, z;
+
+	x = {
+		foo: [ true, 42 ]
+	};
+	y = {
+		foo: [ true, 42, 10 ],
+		bar: [ {
+			x: {},
+			y: [ 'test' ]
+		} ]
+	};
+	z = {
+		foo: [ 1, 42 ],
+		bar: [ {
+			x: {},
+			y: [ 'test' ]
+		} ]
+	};
+
+	assert.strictEqual(
+		oo.compare( x, y, false ),
+		false,
+		'A subset of B (asymmetrical: false)'
+	);
+
+	assert.strictEqual(
+		oo.compare( x, y, true ),
+		true,
+		'A subset of B (asymmetrical: true)'
+	);
+
+	assert.strictEqual(
+		oo.compare( x, z, true ),
+		false,
+		'A subset of B with differences (asymmetrical: true)'
+	);
+} );
+
 QUnit.test( 'copy( Array )', 7, function ( assert ) {
 	var simpleArray = [ 'foo', 3, true, false ],
 		withObj = [ { 'bar': 'baz', 'quux': 3 }, 5, null ],
