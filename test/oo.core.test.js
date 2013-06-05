@@ -271,6 +271,129 @@ QUnit.test( 'getObjectValues', 6, function ( assert ) {
 	);
 } );
 
+QUnit.test( 'compare( Object, Object )', 12, function ( assert ) {
+	var x, y, z;
+
+	assert.strictEqual(
+		oo.compare( [], [] ),
+		true,
+		'Empty array'
+	);
+
+	assert.strictEqual(
+		oo.compare( {}, {} ),
+		true,
+		'Empty plain object'
+	);
+
+	assert.strictEqual(
+		oo.compare( [ undefined ], [ undefined ] ),
+		true,
+		'Undefined'
+	);
+
+	assert.strictEqual(
+		oo.compare( [ null ], [ null ] ),
+		true,
+		'Null'
+	);
+
+	assert.strictEqual(
+		oo.compare( [ true ], [ true ] ),
+		true,
+		'boolean'
+	);
+
+	assert.strictEqual(
+		oo.compare( [ 42 ], [ 42 ] ),
+		true,
+		'number'
+	);
+
+	assert.strictEqual(
+		oo.compare( [ 'foo' ], [ 'foo' ] ),
+		true,
+		'string'
+	);
+
+	assert.strictEqual(
+		oo.compare( [], {} ),
+		true,
+		'Empty array equals empty plain object'
+	);
+
+	assert.strictEqual(
+		oo.compare(
+			{
+				foo: [ true, 42 ],
+				bar: [ {
+					x: {},
+					y: [ 'test' ]
+				} ]
+			},
+			{
+				foo: [ true, 42 ],
+				bar: [ {
+					x: {},
+					y: [ 'test' ]
+				} ]
+			}
+		),
+		true,
+		'Nested structure with no difference'
+	);
+
+	assert.strictEqual(
+		oo.compare(
+			{
+				foo: [ true, 42 ],
+				bar: [ {
+					x: {},
+					y: [ 'test' ]
+				} ]
+			},
+			{
+				foo: [ 1, 42 ],
+				bar: [ {
+					x: {},
+					y: [ 'test' ]
+				} ]
+			}
+		),
+		false,
+		'Nested structure with difference'
+	);
+
+	x = function X() {
+		this.name = 'X';
+	};
+	x.foo = [ true ];
+
+	y = function Y() {
+		this.name = 'Y';
+	};
+	y.foo = [ true ];
+
+	z = function Z() {
+		this.name = 'Z';
+	};
+	z.foo = [ 1 ];
+
+	// oo.compare ignores the function body. It treats them
+	// like regular object containers.
+	assert.strictEqual(
+		oo.compare( x, y ),
+		true,
+		'Function object with no difference'
+	);
+
+	assert.strictEqual(
+		oo.compare( x, z ),
+		false,
+		'Function object with difference'
+	);
+} );
+
 QUnit.test( 'copy( Array )', 7, function ( assert ) {
 	var simpleArray = [ 'foo', 3, true, false ],
 		withObj = [ { 'bar': 'baz', 'quux': 3 }, 5, null ],

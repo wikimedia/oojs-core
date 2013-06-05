@@ -181,7 +181,7 @@ oo.getObjectValues = function ( obj ) {
 };
 
 /**
- * Recursively compares string and number property between two objects.
+ * Recursively compares properties between two objects.
  *
  * A false result may be caused by property inequality or by properties in one object missing from
  * the other. An asymmetrical test may also be performed, which checks only that properties in the
