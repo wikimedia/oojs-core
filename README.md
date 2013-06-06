@@ -56,6 +56,9 @@ $ git remote update
   # If you have a fork, be sure to checkout upstream/master or whatever
   # the name of the original remote is.
 $ git checkout origin/master
+  # Get commits since last version bump
+  # Copy the resulting list into a new section on History.md
+$ git log --format='* %s (%aN)' --no-merges v$(node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version);')...HEAD
   # The following will:
   # - Increase the version number in package.json
   # - Create a commit with message -m (substituting %s for the version)
