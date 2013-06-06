@@ -40,7 +40,13 @@ QUnit.test( 'on', 7, function ( assert ) {
 	ee.emit( 'args' );
 
 	ee.on( 'context-default', function () {
-		assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
+		if ( global.window ) {
+			// Browser
+			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
+		} else {
+			// Node (the global object is different per file scope, can't compare directly)
+			assert.strictEqual( !!this.global.$ref, !!global.$ref, 'Default context for handlers in non-strict mode is global' );
+		}
 	} );
 	/*
 		Doesn't work because PhantomJS uses an outdated jsc engine that doesn't

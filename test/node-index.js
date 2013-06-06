@@ -8,7 +8,7 @@ qunit.setup( {
 	}
 } );
 
-qunit.run({
+qunit.run( {
 	code: {
 		path: './dist/oo.js',
 		namespace: 'OO'
@@ -17,4 +17,8 @@ qunit.run({
 		'./test/oo.core.test.js',
 		'./test/oo.EventEmitter.test.js'
 	]
-});
+}, function ( err, report ) {
+	if ( err || report.failed ) {
+		process.exit( 1 );
+	}
+} );
