@@ -5,11 +5,15 @@
 	<title>oojs Test Suite</title>
 	<link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
 	<script src="../node_modules/qunitjs/qunit/qunit.js"></script>
+	<script>
+		QUnit.config.requireExpects = true;
+	</script>
 	<script src="../dist/oo.js"></script>
 	<script src="./oo.core.test.js"></script>
 	<script src="./oo.EventEmitter.test.js"></script>
 </head>
 <body>
 	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
 </body>
 </html>
