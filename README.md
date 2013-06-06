@@ -44,3 +44,28 @@ Bug tracker
 -----------
 
 Found a bug? Please report it in the [issue tracker](https://github.com/trevorparscal/oojs/issues)!
+
+Release
+----------
+
+Release process:
+
+```bash
+$ cd path/to/oojs/
+$ git remote update
+  # If you have a fork, be sure to checkout upstream/master or whatever
+  # the name of the original remote is.
+$ git checkout origin/master
+  # The following will:
+  # - Increase the version number in package.json
+  # - Create a commit with message -m (substituting %s for the version)
+  # - Create a git tag named "v%s"
+$ npm version patch -m 'Tag v%s'
+  # Push to the origin
+$ git push --tags && git push origin HEAD:master
+  # Publish to NPM
+  # This will run the prepublish build script to run the tests first
+  # and re-build dist/oo.js
+$ git checkout v1.2.3
+$ npm publish
+```
