@@ -5,7 +5,7 @@ var
 	 * @singleton
 	 */
 	oo = {},
-	hasOwn = Object.prototype.hasOwnProperty;
+	hasOwn = oo.hasOwnProperty;
 
 /* Class Methods */
 
