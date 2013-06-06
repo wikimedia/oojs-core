@@ -517,16 +517,27 @@ QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 3, function ( ass
 	);
 } );
 
-QUnit.test( 'copy( Array )', 7, function ( assert ) {
+QUnit.test( 'copy( Array )', 8, function ( assert ) {
 	var simpleArray = [ 'foo', 3, true, false ],
 		withObj = [ { 'bar': 'baz', 'quux': 3 }, 5, null ],
 		nestedArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
 		sparseArray = [ 'a', undefined, undefined, 'b' ],
 		withSparseArray = [ [ 'a', undefined, undefined, 'b' ] ],
-		withFunction = [ function () { return true; } ],
-		Cloneable = function ( p ) {
-			this.p = p;
+		withFunction = [ function () { return true; } ];
+
+	function Cloneable( p ) {
+		this.p = p;
+	}
+
+	function Thing( p ) {
+		this.p = p;
+
+		// Create a trap here to make sure we explode if
+		// oo.copy tries to copy non-plain objects.
+		this.child = {
+			parrent: this
 		};
+	}
 
 	Cloneable.prototype.clone = function () {
 		return new Cloneable( this.p + '-clone' );
@@ -566,6 +577,11 @@ QUnit.test( 'copy( Array )', 7, function ( assert ) {
 		oo.copy( withFunction ),
 		withFunction,
 		'Array containing function'
+	);
+
+	assert.deepEqual(
+		oo.copy( [ new Thing( 42 ) ] ),
+		[ new Thing( 42 ) ]
 	);
 } );
 

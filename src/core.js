@@ -273,11 +273,11 @@ oo.copy = function ( source, callback ) {
 			// DOM Node
 			destination[key] = callback ?
 				callback( sourceValue.cloneNode( true ) ) : sourceValue.cloneNode( true );
-		} else if ( sourceValue === Object( sourceValue ) && typeof sourceValue !== 'function' ) {
-			// Other objects, except for functions that we cannot clone
+		} else if ( oo.isPlainObject( sourceValue ) ) {
+			// Plain objects
 			destination[key] = oo.copy( sourceValue, callback );
 		} else {
-			// Primitive values and functions
+			// Non-plain objects (incl. functions) and primitive values
 			destination[key] = callback ? callback( sourceValue ) : sourceValue;
 		}
 	}
