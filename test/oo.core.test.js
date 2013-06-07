@@ -91,8 +91,8 @@ if ( global.document ) {
 	} );
 }
 
-QUnit.test( 'inheritClass', 18, function ( assert ) {
-	var foo, bar;
+QUnit.test( 'inheritClass', 19, function ( assert ) {
+	var foo, bar, key, enumKeys;
 
 	function Foo() {
 		this.constructedFoo = true;
@@ -181,6 +181,18 @@ QUnit.test( 'inheritClass', 18, function ( assert ) {
 	assert.equal( bar.bFn(), 'proto of Bar', 'own properties go first' );
 	assert.equal( bar.c, 'proto of Foo', 'prototype properties are inherited' );
 	assert.equal( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
+
+	enumKeys = [];
+	for ( key in bar ) {
+		enumKeys.push( key );
+	}
+
+	// issue #8
+	assert.strictEqual(
+		enumKeys.indexOf( 'constructor' ),
+		-1,
+		'The restored "constructor" property should not be enumerable'
+	);
 
 	Bar.prototype.dFn = function () {
 		return 'proto of Bar';

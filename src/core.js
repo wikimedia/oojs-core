@@ -81,10 +81,15 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	var targetConstructor = targetFn.prototype.constructor;
 
-	targetFn.prototype = Object.create( originFn.prototype );
-
-	// Restore constructor property of targetFn
-	targetFn.prototype.constructor = targetConstructor;
+	targetFn.prototype = Object.create( originFn.prototype, {
+		// Restore constructor property of targetFn
+		constructor: {
+			value: targetConstructor,
+			enumerable: false,
+			writable: true,
+			configurable: true
+		}
+	} );
 
 	// Extend static properties - always initialize both sides
 	originFn.static = originFn.static || {};
