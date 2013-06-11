@@ -6,6 +6,12 @@
 
 ( function ( oo, global ) {
 
+// In NodeJS the `this` as passed from the global scope to this closure is
+// (for NodeJS legacy reasons) not the global object but in fact a reference
+// to module.exports. The `this` inside this closure, however, is the
+// global object.
+global = global.window ? global : this;
+
 QUnit.module( 'OO.EventEmitter' );
 
 QUnit.test( 'on', 7, function ( assert ) {
@@ -40,13 +46,7 @@ QUnit.test( 'on', 7, function ( assert ) {
 	ee.emit( 'args' );
 
 	ee.on( 'context-default', function () {
-		if ( global.window ) {
-			// Browser
-			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
-		} else {
-			// Node (the global object is different per file scope, can't compare directly)
-			assert.strictEqual( !!this.global.$ref, !!global.$ref, 'Default context for handlers in non-strict mode is global' );
-		}
+		assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
 	} );
 	/*
 		Doesn't work because PhantomJS uses an outdated jsc engine that doesn't
