@@ -1,4 +1,4 @@
-OOJS [![Build Status](https://travis-ci.org/trevorparscal/oojs.png)](https://travis-ci.org/trevorparscal/oojs) [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
+OOJS [![Build Status](https://travis-ci.org/trevorparscal/oojs.png?branch=master)](https://travis-ci.org/trevorparscal/oojs) [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
 =================
 
 OOJS is a JavaScript library for working with objects.
