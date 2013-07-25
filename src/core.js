@@ -230,6 +230,11 @@ oo.getObjectValues = function ( obj ) {
  */
 oo.compare = function ( a, b, asymmetrical ) {
 	var aValue, bValue, aType, bType, k;
+
+	if ( a === b ) {
+		return true;
+	}
+
 	for ( k in a ) {
 		aValue = a[k];
 		bValue = b[k];
