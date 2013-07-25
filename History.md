@@ -1,5 +1,10 @@
 # oojs Release History
 
+## v1.0.1 / 2013-06-06
+
+* license: Refer to OOJS Team and other contributors (Timo Tijhof)
+* test: Fix oo.EventEmitter context test failure on nodejs (Timo Tijhof)
+
 ## v1.0.0 / 2013-06-06
 
 * core: Don't copy non-plain objects in oo.copy (Timo Tijhof)
