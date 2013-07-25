@@ -71,5 +71,5 @@ $ git push --tags && git push origin HEAD:master
   # This will run the prepublish build script to run the tests first
   # and re-build dist/oo.js
 $ git checkout v1.2.3
-$ npm publish
+$ npm install && npm test && npm publish
 ```
