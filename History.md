@@ -1,5 +1,12 @@
 # oojs Release History
 
+
+## v1.0.2 / 2013-07-25
+
+* core: Optimise oo.compare when a and b are equal by reference (Timo Tijhof)
+* test: Fix false positive in nodejs EventEmitter test (Timo Tijhof)
+* core: Make "constructor" non-enumerable in oo.inheritClass (Timo Tijhof)
+
 ## v1.0.1 / 2013-06-06
 
 * license: Refer to OOJS Team and other contributors (Timo Tijhof)

@@ -58,6 +58,7 @@ $ git remote update
 $ git checkout origin/master
   # Get commits since last version bump
   # Copy the resulting list into a new section on History.md
+  # git add -p && git commit -m "history: Add notes for vNEXT" (where NEXT is the next version)
 $ git log --format='* %s (%aN)' --no-merges v$(node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version);')...HEAD
   # The following will:
   # - Increase the version number in package.json
