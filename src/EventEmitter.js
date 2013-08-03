@@ -2,6 +2,7 @@
  * Event emitter.
  *
  * @class OO.EventEmitter
+ *
  * @constructor
  * @property {Object} bindings
  */

@@ -15,7 +15,9 @@ qunit.run( {
 	},
 	tests: [
 		'./test/oo.core.test.js',
-		'./test/oo.EventEmitter.test.js'
+		'./test/oo.EventEmitter.test.js',
+		'./test/oo.Registry.test.js',
+		'./test/oo.Factory.test.js'
 	]
 }, function ( err, report ) {
 	if ( err || report.failed ) {

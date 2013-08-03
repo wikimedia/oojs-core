@@ -5,6 +5,8 @@
 	"--builtin-classes": true,
 	"--": [
 		"src/core.js",
-		"src/EventEmitter.js"
+		"src/EventEmitter.js",
+		"src/Registry.js",
+		"src/Factory.js"
 	]
 }

@@ -8,7 +8,6 @@
 
 QUnit.module( 'OO' );
 
-
 QUnit.test( 'isPlainObject', 17, function ( assert ) {
 	function Thing() {}
 
