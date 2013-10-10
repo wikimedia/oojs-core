@@ -1,5 +1,9 @@
 # oojs Release History
 
+## v1.0.4 / 2013-10-10
+
+* core: Add getHash to core (Trevor Parscal)
+
 ## v1.0.3 / 2013-10-10
 
 * core: Add oo.Registry and oo.Factory (Trevor Parscal)
