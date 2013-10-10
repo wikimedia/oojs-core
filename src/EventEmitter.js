@@ -15,6 +15,8 @@ oo.EventEmitter = function OoEventEmitter() {
 /**
  * Add a listener to events of a specific event.
  *
+ * If the callback/context are already bound to the event, they will not be bound again.
+ *
  * @method
  * @param {string} event Type of event to listen to
  * @param {Function} callback Function to call when event occurs
@@ -24,21 +26,35 @@ oo.EventEmitter = function OoEventEmitter() {
  * @chainable
  */
 oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
+	var i, bindings, binding;
+
 	// Validate callback
 	if ( typeof callback !== 'function' ) {
 		throw new Error( 'Invalid callback. Function or method name expected.' );
 	}
-
-	// Auto-initialize binding
-	if ( !( event in this.bindings ) ) {
-		this.bindings[event] = [];
+	// Fallback to null context
+	if ( arguments.length < 4 ) {
+		context = null;
 	}
-
+	if ( this.bindings.hasOwnProperty( event ) ) {
+		// Check for duplicate callback and context for this event
+		bindings = this.bindings[event];
+		i = bindings.length;
+		while ( i-- ) {
+			binding = bindings[i];
+			if ( bindings.callback === callback && bindings.context === context ) {
+				return this;
+			}
+		}
+	} else {
+		// Auto-initialize bindings list
+		bindings = this.bindings[event] = [];
+	}
 	// Add binding
-	this.bindings[event].push( {
+	bindings.push( {
 		'callback': callback,
 		'args': args,
-		'context': context || null
+		'context': context
 	} );
 	return this;
 };
@@ -65,10 +81,11 @@ oo.EventEmitter.prototype.once = function ( event, listener ) {
  * @method
  * @param {string} event Type of event to remove listener from
  * @param {Function} [callback] Listener to remove, omit to remove all
+ * @param {Object} [context=null] Object used context for callback function or method
  * @chainable
  * @throws {Error} Listener argument is not a function
  */
-oo.EventEmitter.prototype.off = function ( event, callback ) {
+oo.EventEmitter.prototype.off = function ( event, callback, context ) {
 	var i, bindings;
 
 	if ( arguments.length === 1 ) {
@@ -84,11 +101,15 @@ oo.EventEmitter.prototype.off = function ( event, callback ) {
 			// No matching bindings
 			return this;
 		}
+		// Fallback to null context
+		if ( arguments.length < 3 ) {
+			context = null;
+		}
 		// Remove matching handlers
 		bindings = this.bindings[event];
 		i = bindings.length;
 		while ( i-- ) {
-			if ( bindings[i].callback === callback ) {
+			if ( bindings[i].callback === callback && bindings[i].context === context ) {
 				bindings.splice( i, 1 );
 			}
 		}
@@ -182,6 +203,7 @@ oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
 	var i, method, callback, event, bindings;
 
 	if ( methods ) {
+		// Remove specific connections to the context
 		for ( event in methods ) {
 			method = methods[event];
 			if ( typeof method === 'string' ) {
@@ -194,28 +216,17 @@ oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
 			} else {
 				callback = method;
 			}
-			bindings = this.bindings[event];
-			i = bindings.length;
-			while ( i-- ) {
-				if ( bindings[i].context === context && bindings[i].callback === callback ) {
-					bindings.splice( i, 1 );
-				}
-			}
-			if ( bindings.length === 0 ) {
-				delete this.bindings[event];
-			}
+			this.off( event, callback, context );
 		}
 	} else {
+		// Remove all connections to the context
 		for ( event in this.bindings ) {
 			bindings = this.bindings[event];
 			i = bindings.length;
 			while ( i-- ) {
 				if ( bindings[i].context === context ) {
-					bindings.splice( i, 1 );
+					this.off( event, bindings[i].callback, context );
 				}
-			}
-			if ( bindings.length === 0 ) {
-				delete this.bindings[event];
 			}
 		}
 	}
