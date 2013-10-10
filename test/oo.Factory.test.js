@@ -17,17 +17,24 @@ oo.FactoryObjectStub = function OoFactoryObjectStub( a, b, c, d ) {
 	this.d = d;
 };
 
+oo.FactoryObjectStub.static = {};
+
+oo.FactoryObjectStub.static.name = 'factory-object-stub';
+
 /* Tests */
 
-QUnit.test( 'register', 1, function ( assert ) {
+QUnit.test( 'register', 2, function ( assert ) {
 	var factory = new oo.Factory();
 	assert.throws(
 		function () {
-			factory.register( 'factory-object-stub', 'not-a-function' );
+			factory.register( 'not-a-function' );
 		},
 		Error,
 		'Throws an exception when trying to register a non-function value as a constructor'
 	);
+
+	factory.register( oo.FactoryObjectStub );
+	assert.strictEqual( factory.lookup( 'factory-object-stub' ), oo.FactoryObjectStub );
 } );
 
 QUnit.test( 'create', 3, function ( assert ) {
@@ -36,13 +43,13 @@ QUnit.test( 'create', 3, function ( assert ) {
 
 	assert.throws(
 		function () {
-			factory.create( 'factory-object-stub' );
+			factory.create( 'factory-object-stub', 23, 'foo', { 'bar': 'baz' } );
 		},
 		Error,
 		'Throws an exception when trying to create a object of an unregistered type'
 	);
 
-	factory.register( 'factory-object-stub', oo.FactoryObjectStub );
+	factory.register( oo.FactoryObjectStub );
 
 	obj = factory.create( 'factory-object-stub', 16, 'foo', { 'baz': 'quux' }, 5 );
 
@@ -57,6 +64,12 @@ QUnit.test( 'create', 3, function ( assert ) {
 		true,
 		'Creates an object that is an instanceof the registered constructor'
 	);
+} );
+
+QUnit.test( 'lookup', 1, function ( assert ) {
+	var factory = new oo.Factory();
+	factory.register( oo.FactoryObjectStub );
+	assert.strictEqual( factory.lookup( 'factory-object-stub' ), oo.FactoryObjectStub );
 } );
 
 }( OO ) );

@@ -69,6 +69,7 @@ oo.Factory.prototype.create = function ( name ) {
 	if ( !this.registry.hasOwnProperty( name ) ) {
 		throw new Error( 'No class registered by that name: ' + name );
 	}
+	constructor = this.registry[name];
 
 	// Convert arguments to array and shift the first argument (name) off
 	args = Array.prototype.slice.call( arguments, 1 );
