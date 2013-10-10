@@ -1,5 +1,10 @@
 # oojs Release History
 
+## v1.0.3 / 2013-10-10
+
+* core: Add oo.Registry and oo.Factory (Trevor Parscal)
+* EventEmitter: Re-use #off in #connect and add context argument to #off (Trevor Parscal)
+* readme: Add npm install and npm test to release process (Timo Tijhof)
 
 ## v1.0.2 / 2013-07-25
 
