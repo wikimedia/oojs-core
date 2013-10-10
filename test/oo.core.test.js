@@ -644,4 +644,164 @@ QUnit.test( 'copy( Object )', 7, function ( assert ) {
 	);
 } );
 
+QUnit.test( 'getHash: Basic usage', 7, function ( assert ) {
+	var tmp, key,
+		cases = {},
+		hash = '{"a":1,"b":1,"c":1}',
+		customHash = '{"first":1,"last":1}';
+
+	cases['a-z literal'] = {
+		object: {
+			a: 1,
+			b: 1,
+			c: 1
+		},
+		hash: hash
+	};
+
+	cases['z-a literal'] = {
+		object: {
+			c: 1,
+			b: 1,
+			a: 1
+		},
+		hash: hash
+	};
+
+	tmp = {};
+	cases['a-z augmented'] = {
+		object: tmp,
+		hash: hash
+	};
+	tmp.a = 1;
+	tmp.b = 1;
+	tmp.c = 1;
+
+	tmp = {};
+	cases['z-a augmented'] = {
+		object: tmp,
+		hash: hash
+	};
+	tmp.c = 1;
+	tmp.b = 1;
+	tmp.a = 1;
+
+	cases['custom hash'] = {
+		object: {
+			getHashObject: function () {
+				return {
+					'first': 1,
+					'last': 1
+				};
+			}
+		},
+		hash: customHash
+	};
+
+	cases['custom hash reversed'] = {
+		object: {
+			getHashObject: function () {
+				return {
+					'last': 1,
+					'first': 1
+				};
+			}
+		},
+		hash: customHash
+	};
+
+	for ( key in cases ) {
+		assert.equal(
+			oo.getHash( cases[key].object ),
+			cases[key].hash,
+			key + ': object has expected hash, regardless of "property order"'
+		);
+	}
+
+	// .. and that something completely different is in face different
+	// (just incase getHash is broken and always returns the same)
+	assert.notEqual(
+		oo.getHash( { a: 2, b: 2 } ),
+		hash,
+		'A different object has a different hash'
+	);
+} );
+
+QUnit.test( 'getHash: Complex usage', function ( assert ) {
+	var obj, hash, frame,
+		doc = this && 'window' in this && this.window.document;
+
+	QUnit.expect( doc ? 3 : 2 );
+
+	obj = {
+		a: 1,
+		b: 1,
+		c: 1,
+		// Nested array
+		d: ['x', 'y', 'z'],
+		e: {
+			a: 2,
+			b: 2,
+			c: 2
+		}
+	};
+
+	assert.equal(
+		oo.getHash( obj ),
+		'{"a":1,"b":1,"c":1,"d":["x","y","z"],"e":{"a":2,"b":2,"c":2}}',
+		'Object with nested array and nested object'
+	);
+
+	// Include a circular reference
+	/*
+	 * PhantomJS hangs when calling JSON.stringify with an object containing a
+	 * circular reference (https://github.com/ariya/phantomjs/issues/11206).
+	 * We know latest Chrome/Firefox and IE8+ support this. So, for the sake of
+	 * having qunit/phantomjs work, lets disable this for now.
+	obj.f = obj;
+
+	assert.throws( function () {
+		oo.getHash( obj );
+	}, 'Throw exceptions for objects with cirular references ' );
+	*/
+
+	function Foo() {
+		this.a = 1;
+		this.c = 3;
+		this.b = 2;
+	}
+
+	hash = '{"a":1,"b":2,"c":3}';
+
+	assert.equal(
+		oo.getHash( new Foo() ),
+		hash,
+		// This was previously broken when we used .constructor === Object
+		// oo.getHash.keySortReplacer, because although instances of Foo
+		// do inherit from Object (( new Foo() ) instanceof Object === true),
+		// direct comparison would return false.
+		'Treat objects constructed by a function as well'
+	);
+
+	// This test can only be done in a browser envrionment
+	if ( doc ) {
+		frame = doc.createElement( 'frame' );
+		frame.src = 'about:blank';
+		doc.getElementById( 'qunit-fixture' ).appendChild( frame );
+		obj = new frame.contentWindow.Object();
+		obj.c = 3;
+		obj.b = 2;
+		obj.a = 1;
+
+		assert.equal(
+			oo.getHash( obj ),
+			hash,
+			// This was previously broken when we used comparison with "Object" in
+			// oo.getHash.keySortReplacer, because they are an instance of the other
+			// window's "Object".
+			'Treat objects constructed by a another window as well'
+		);
+	}
+} );
+
 }( OO, this ) );
