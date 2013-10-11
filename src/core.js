@@ -94,9 +94,6 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	// Extend static properties - always initialize both sides
 	originFn.static = originFn.static || {};
 	targetFn.static = Object.create( originFn.static );
-
-	// Copy mixin tracking
-	targetFn.mixins = originFn.mixins ? originFn.mixins.slice( 0 ) : [];
 };
 
 /**
