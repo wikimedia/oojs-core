@@ -14,7 +14,7 @@ module.exports = function ( grunt ) {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		build: {
 			all: {
-				dest: 'dist/oo.js',
+				dest: 'dist/oojs.js',
 				src: [
 					'src/intro.js',
 					'src/core.js',

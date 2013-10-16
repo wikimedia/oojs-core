@@ -68,8 +68,7 @@ $ npm version patch -m 'Tag v%s'
   # Push to the origin
 $ git push --tags && git push origin HEAD:master
   # Publish to NPM
-  # This will run the prepublish build script to run the tests first
-  # and re-build dist/oo.js
+  # This will run the prepublish script to re-build dist/oojs.js
 $ git checkout v1.2.3
 $ npm install && npm test && npm publish
 ```

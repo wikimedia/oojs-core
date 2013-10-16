@@ -10,7 +10,7 @@ qunit.setup( {
 
 qunit.run( {
 	code: {
-		path: './dist/oo.js',
+		path: './dist/oojs.js',
 		namespace: 'OO'
 	},
 	tests: [
