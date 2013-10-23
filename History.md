@@ -1,5 +1,11 @@
 # oojs Release History
 
+## v1.0.5 / 2013-10-23
+
+* core: Add simpleArrayUnion, simpleArrayIntersection and simpleArrayDifference (Timo Tijhof)
+* build: Consistenetly use oojs as filename instead of oo (Timo Tijhof)
+* core: Remove unused code for tracking mixins (Timo Tijhof)
+
 ## v1.0.4 / 2013-10-10
 
 * core: Add getHash to core (Trevor Parscal)
