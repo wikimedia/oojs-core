@@ -804,4 +804,81 @@ QUnit.test( 'getHash: Complex usage', function ( assert ) {
 	}
 } );
 
+QUnit.test( 'simpleArrayUnion', 5, function ( assert ) {
+
+	assert.deepEqual(
+		oo.simpleArrayUnion( [] ),
+		[],
+		'Empty'
+	);
+
+	assert.deepEqual(
+		oo.simpleArrayUnion( [ 'a', 'b', 'a' ] ),
+		[ 'a', 'b' ],
+		'Single array with dupes'
+	);
+
+	assert.deepEqual(
+		oo.simpleArrayUnion( [ 'a', 'b', 'a' ], [ 'c', 'd', 'c' ] ),
+		[ 'a', 'b', 'c', 'd' ],
+		'Multiple arrays with their own dupes'
+	);
+
+	assert.deepEqual(
+		oo.simpleArrayUnion( [ 'a', 'b', 'a', 'c' ], [ 'c', 'd', 'c', 'a' ] ),
+		[ 'a', 'b', 'c', 'd' ],
+		'Multiple arrays with mixed dupes'
+	);
+
+	// Implementation detail, tested to ensure it is not
+	// changed unintentinally.
+	assert.deepEqual(
+		oo.simpleArrayUnion(
+			[ 1, 2, 1, 2, true, { 'a': 1 } ],
+			[ 3, 3, 2, 1, false, { 'b': 2 } ]
+		),
+		[ 1, 2, true, { 'a': 1 }, 3, false ],
+		'Values should be strings. Original value is preserved but compared as string'
+	);
+
+} );
+
+QUnit.test( 'simpleArrayIntersection', 2, function ( assert ) {
+
+	assert.deepEqual(
+		oo.simpleArrayIntersection( [], [] ),
+		[],
+		'Empty'
+	);
+
+	assert.deepEqual(
+		oo.simpleArrayIntersection(
+			[ 'a', 'b', 'c', 'a' ],
+			[, 'b', 'c', 'd', 'c' ]
+		),
+		[ 'b', 'c' ],
+		'Simple'
+	);
+
+} );
+
+QUnit.test( 'simpleArrayDifference', 2, function ( assert ) {
+
+	assert.deepEqual(
+		oo.simpleArrayDifference( [], [] ),
+		[],
+		'Empty'
+	);
+
+	assert.deepEqual(
+		oo.simpleArrayDifference(
+			[ 'a', 'b', 'c', 'a' ],
+			[, 'b', 'c', 'd', 'c' ]
+		),
+		[ 'a', 'a' ],
+		'Simple'
+	);
+
+} );
+
 }( OO, this ) );
