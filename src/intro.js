@@ -1,6 +1,6 @@
 /*!
  * Object Oriented JavaScript Library v@VERSION
- * https://github.com/trevorparscal/oojs
+ * https://www.mediawiki.org/wiki/OOJS
  *
  * Copyright 2011-2013 OOJS Team and other contributors.
  * Released under the MIT license

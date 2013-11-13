@@ -9,12 +9,10 @@
     "inheritance",
     "library"
   ],
+  "homepage": "https://www.mediawiki.org/wiki/OOJS",
   "repository": {
     "type": "git",
-    "url": "git://github.com/trevorparscal/oojs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/trevorparscal/oojs/issues"
+    "url": "https://git.wikimedia.org/git/oojs/core.git"
   },
   "licenses": [
     {

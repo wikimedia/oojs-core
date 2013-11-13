@@ -1,4 +1,4 @@
-OOJS [![Build Status](https://travis-ci.org/trevorparscal/oojs.png?branch=master)](https://travis-ci.org/trevorparscal/oojs) [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
+OOJS [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
 =================
 
 OOJS is a JavaScript library for working with objects.
@@ -27,7 +27,7 @@ This module is available as an [npm](https://npmjs.org/) package! Install it rig
 npm install oojs
 ```
 
-Or clone the repo, `git clone --recursive https://github.com/trevorparscal/oojs.git`.
+Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 
 Versioning
 ----------
@@ -43,7 +43,7 @@ For more information on SemVer, please visit http://semver.org/.
 Bug tracker
 -----------
 
-Found a bug? Please report it in the [issue tracker](https://github.com/trevorparscal/oojs/issues)!
+Found a bug? Please report it in the [issue tracker](https://bugzilla.wikimedia.org/enter_bug.cgi?product=OOJS)!
 
 Release
 ----------
