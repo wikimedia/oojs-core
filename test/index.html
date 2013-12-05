@@ -3,12 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>oojs Test Suite</title>
-	<link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
-	<script src="../node_modules/qunitjs/qunit/qunit.js"></script>
+	<link rel="stylesheet" href="../lib/qunitjs/qunit.css">
+	<script src="../lib/qunitjs/qunit.js"></script>
 	<script>
 		QUnit.config.requireExpects = true;
 	</script>
+	<!-- Source code -->
 	<script src="../dist/oojs.js"></script>
+	<!-- Test suites -->
 	<script src="./oo.core.test.js"></script>
 	<script src="./oo.EventEmitter.test.js"></script>
 	<script src="./oo.Registry.test.js"></script>

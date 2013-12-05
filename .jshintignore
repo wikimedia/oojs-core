@@ -1,4 +1,5 @@
-docs/
+doc/
+lib/
 node_modules
 src/intro.js
 src/outro.js
