@@ -53,22 +53,31 @@ Release process:
 ```bash
 $ cd path/to/oojs/
 $ git remote update
-  # If you have a fork, be sure to checkout upstream/master or whatever
-  # the name of the original remote is.
-$ git checkout origin/master
-  # Get commits since last version bump
-  # Copy the resulting list into a new section on History.md
-  # git add -p && git commit -m "history: Add notes for vNEXT" (where NEXT is the next version)
+$ git checkout -b release -t origin/master
+
+# Ensure tests pass
+$ npm install && npm test
+
+# Avoid using "npm version patch" because that creates
+# both a commit and a tag, and we shouldn't tag until after
+# the commit is merged.
+
+# Update release notes
+# Copy the resulting list into a new section on History.md
 $ git log --format='* %s (%aN)' --no-merges v$(node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version);')...HEAD
-  # The following will:
-  # - Increase the version number in package.json
-  # - Create a commit with message -m (substituting %s for the version)
-  # - Create a git tag named "v%s"
-$ npm version patch -m 'Tag v%s'
-  # Push to the origin
-$ git push --tags && git push origin HEAD:master
-  # Publish to NPM
-  # This will run the prepublish script to re-build dist/oojs.js
-$ git checkout v1.2.3
-$ npm install && npm test && npm publish
+$ edit History.md
+
+# Update the version number
+$ edit package.json
+
+$ git add -p
+$ git commit -m "Tag vX.X.X"
+$ git review
+
+# After merging:
+$ git remote update
+$ git checkout origin/master
+$ git tag "vX.X.X"
+$ git push --tags
+$ npm publish
 ```
