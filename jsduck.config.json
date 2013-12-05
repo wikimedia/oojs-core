@@ -1,5 +1,5 @@
 {
-	"--title": "OOJS Documentation",
+	"--title": "OOjs Documentation",
 	"--output": "docs",
 	"--categories": "./jsduck.categories.json",
 	"--builtin-classes": true,

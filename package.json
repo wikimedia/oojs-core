@@ -9,7 +9,7 @@
     "inheritance",
     "library"
   ],
-  "homepage": "https://www.mediawiki.org/wiki/OOJS",
+  "homepage": "https://www.mediawiki.org/wiki/OOjs",
   "repository": {
     "type": "git",
     "url": "https://git.wikimedia.org/git/oojs/core.git"

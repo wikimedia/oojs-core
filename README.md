@@ -1,7 +1,7 @@
-OOJS [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
+OOjs [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
 =================
 
-OOJS is a JavaScript library for working with objects.
+OOjs is a JavaScript library for working with objects.
 
 Key features include inheritance, mixins and utilities for working with objects.
 
@@ -43,7 +43,7 @@ For more information on SemVer, please visit http://semver.org/.
 Bug tracker
 -----------
 
-Found a bug? Please report it in the [issue tracker](https://bugzilla.wikimedia.org/enter_bug.cgi?product=OOJS)!
+Found a bug? Please report it in the [issue tracker](https://bugzilla.wikimedia.org/enter_bug.cgi?product=OOjs)!
 
 Release
 ----------

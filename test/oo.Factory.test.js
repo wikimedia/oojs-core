@@ -1,7 +1,5 @@
 /*!
  * Factory test suite.
- *
- * @package OOJS
  */
 
 ( function ( oo ) {

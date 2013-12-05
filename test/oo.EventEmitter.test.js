@@ -1,7 +1,5 @@
 /*!
  * EventEmitter test suite.
- *
- * @package OOJS
  */
 
 ( function ( oo, global ) {

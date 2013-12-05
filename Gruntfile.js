@@ -1,7 +1,5 @@
 /*!
  * Grunt file
- *
- * @package OOJS
  */
 
 /*jshint node:true */

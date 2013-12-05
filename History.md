@@ -1,4 +1,4 @@
-# oojs Release History
+# OOjs Release History
 
 ## v1.0.5 / 2013-10-23
 

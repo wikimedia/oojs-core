@@ -1,7 +1,5 @@
 /*!
  * Base object test suite.
- *
- * @package OOJS
  */
 
 ( function ( oo, global ) {

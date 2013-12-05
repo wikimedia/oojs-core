@@ -1,7 +1,5 @@
 /*!
  * Registry test suite.
- *
- * @package OOJS
  */
 
 ( function ( oo ) {
