@@ -41,7 +41,7 @@ QUnit.test( 'create', 3, function ( assert ) {
 
 	assert.throws(
 		function () {
-			factory.create( 'factory-object-stub', 23, 'foo', { 'bar': 'baz' } );
+			factory.create( 'factory-object-stub', 23, 'foo', { bar: 'baz' } );
 		},
 		Error,
 		'Throws an exception when trying to create a object of an unregistered type'
@@ -49,11 +49,11 @@ QUnit.test( 'create', 3, function ( assert ) {
 
 	factory.register( oo.FactoryObjectStub );
 
-	obj = factory.create( 'factory-object-stub', 16, 'foo', { 'baz': 'quux' }, 5 );
+	obj = factory.create( 'factory-object-stub', 16, 'foo', { baz: 'quux' }, 5 );
 
 	assert.deepEqual(
 		obj,
-		new oo.FactoryObjectStub( 16, 'foo', { 'baz': 'quux' }, 5 ),
+		new oo.FactoryObjectStub( 16, 'foo', { baz: 'quux' }, 5 ),
 		'Creates an object of the registered type and passes through arguments'
 	);
 

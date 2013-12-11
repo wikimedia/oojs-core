@@ -141,8 +141,8 @@ QUnit.test( 'connect', 2, function ( assert ) {
 	};
 
 	ee.connect( host, {
-		'foo': 'onFoo',
-		'bar': [ 'barbara', data1 ]
+		foo: 'onFoo',
+		bar: [ 'barbara', data1 ]
 	} );
 
 	ee.emit( 'foo' );
@@ -166,8 +166,8 @@ QUnit.test( 'disconnect( host )', 2, function ( assert ) {
 
 	i = 0;
 	ee.connect( host, {
-		'foo': 'onFoo',
-		'bar': 'onBar'
+		foo: 'onFoo',
+		bar: 'onBar'
 	} );
 	ee.emit( 'foo' );
 	ee.emit( 'bar' );
@@ -194,13 +194,13 @@ QUnit.test( 'disconnect( host, methods )', 3, function ( assert ) {
 
 	i = 0;
 	ee.connect( host, {
-		'foo': 'onFoo',
-		'bar': 'onBar'
+		foo: 'onFoo',
+		bar: 'onBar'
 	} );
 	ee.emit( 'foo' );
 	ee.emit( 'bar' );
 
-	ee.disconnect( host, { 'foo': 'onFoo' } );
+	ee.disconnect( host, { foo: 'onFoo' } );
 	ee.emit( 'foo' );
 	ee.emit( 'bar' );
 } );

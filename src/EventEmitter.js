@@ -53,9 +53,9 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
 	}
 	// Add binding
 	bindings.push( {
-		'callback': callback,
-		'args': args,
-		'context': context
+		callback: callback,
+		args: args,
+		context: context
 	} );
 	return this;
 };

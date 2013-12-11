@@ -10,7 +10,6 @@ var
 
 /* Class Methods */
 
-
 /**
  * Assert whether a value is a plain object or not.
  *

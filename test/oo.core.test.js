@@ -63,7 +63,6 @@ if ( global.document ) {
 		global.document.getElementById( 'qunit-fixture' ).appendChild( iframe );
 		IframeObject = iframe.contentWindow.Object;
 
-
 		assert.notStrictEqual(
 			IframeObject,
 			Object,
@@ -75,7 +74,6 @@ if ( global.document ) {
 			true,
 			'instance of iframeObject'
 		);
-
 
 		// https://bugzilla.mozilla.org/814622
 		threw = false;
@@ -528,7 +526,7 @@ QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 3, function ( ass
 
 QUnit.test( 'copy( Array )', 8, function ( assert ) {
 	var simpleArray = [ 'foo', 3, true, false ],
-		withObj = [ { 'bar': 'baz', 'quux': 3 }, 5, null ],
+		withObj = [ { bar: 'baz', quux: 3 }, 5, null ],
 		nestedArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
 		sparseArray = [ 'a', undefined, undefined, 'b' ],
 		withSparseArray = [ [ 'a', undefined, undefined, 'b' ] ],
@@ -595,11 +593,11 @@ QUnit.test( 'copy( Array )', 8, function ( assert ) {
 } );
 
 QUnit.test( 'copy( Object )', 7, function ( assert ) {
-	var simpleObj = { 'foo': 'bar', 'baz': 3, 'quux': null, 'truth': true, 'falsehood': false },
-		nestedObj = { 'foo': { 'bar': 'baz', 'quux': 3 }, 'whee': 5 },
-		withArray = { 'foo': [ 'a', 'b' ], 'bar': [ 1, 3, 4 ] },
-		withSparseArray = { 'foo': [ 'a', undefined, undefined, 'b' ] },
-		withFunction = { 'func': function () { return true; } },
+	var simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
+		nestedObj = { foo: { bar: 'baz', quux: 3 }, whee: 5 },
+		withArray = { foo: [ 'a', 'b' ], bar: [ 1, 3, 4 ] },
+		withSparseArray = { foo: [ 'a', undefined, undefined, 'b' ] },
+		withFunction = { func: function () { return true; } },
 		Cloneable = function ( p ) {
 			this.p = p;
 		};
@@ -621,8 +619,8 @@ QUnit.test( 'copy( Object )', 7, function ( assert ) {
 		'Cloneable object'
 	);
 	assert.deepEqual(
-		oo.copy( { 'foo': new Cloneable( 'bar' ) } ),
-		{ 'foo': new Cloneable( 'bar-clone' ) },
+		oo.copy( { foo: new Cloneable( 'bar' ) } ),
+		{ foo: new Cloneable( 'bar-clone' ) },
 		'Object containing object'
 	);
 	assert.deepEqual(
@@ -688,8 +686,8 @@ QUnit.test( 'getHash: Basic usage', 7, function ( assert ) {
 		object: {
 			getHashObject: function () {
 				return {
-					'first': 1,
-					'last': 1
+					first: 1,
+					last: 1
 				};
 			}
 		},
@@ -700,8 +698,8 @@ QUnit.test( 'getHash: Basic usage', 7, function ( assert ) {
 		object: {
 			getHashObject: function () {
 				return {
-					'last': 1,
-					'first': 1
+					last: 1,
+					first: 1
 				};
 			}
 		},
@@ -832,10 +830,10 @@ QUnit.test( 'simpleArrayUnion', 5, function ( assert ) {
 	// changed unintentinally.
 	assert.deepEqual(
 		oo.simpleArrayUnion(
-			[ 1, 2, 1, 2, true, { 'a': 1 } ],
-			[ 3, 3, 2, 1, false, { 'b': 2 } ]
+			[ 1, 2, 1, 2, true, { a: 1 } ],
+			[ 3, 3, 2, 1, false, { b: 2 } ]
 		),
-		[ 1, 2, true, { 'a': 1 }, 3, false ],
+		[ 1, 2, true, { a: 1 }, 3, false ],
 		'Values should be strings. Original value is preserved but compared as string'
 	);
 

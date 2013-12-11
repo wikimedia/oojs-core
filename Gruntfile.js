@@ -7,6 +7,7 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-jscs-checker' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
@@ -28,6 +29,13 @@ module.exports = function ( grunt ) {
 			options: JSON.parse( grunt.file.read( '.jshintrc' )
 				.replace( /\/\*(?:(?!\*\/)[\s\S])*\*\//g, '' ).replace( /\/\/[^\n\r]*/g, '' ) ),
 			all: ['*.js', '{src,dist,test}/*.js']
+		},
+		jscs: {
+			src: [
+				'<%= jshint.all %>',
+				'!src/intro.js',
+				'!src/outro.js'
+			]
 		},
 		qunit: {
 			all: ['test/index.html']
@@ -88,6 +96,6 @@ module.exports = function ( grunt ) {
 		grunt.log.ok( 'File "' + name + '" created.' );
 	} );
 
-	grunt.registerTask( 'test', ['git-build', 'build', 'jshint', 'qunit'] );
+	grunt.registerTask( 'test', ['git-build', 'build', 'jshint', 'jscs', 'qunit'] );
 	grunt.registerTask( 'default', 'test' );
 };
