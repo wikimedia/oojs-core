@@ -27,10 +27,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "qunit": "~0.5.16",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.5.4",
-    "grunt-contrib-qunit": "~0.2.1",
-    "grunt-contrib-watch": "~0.4.3"
+    "qunit": "0.5.17",
+    "grunt": "0.4.2",
+    "grunt-contrib-jshint": "0.5.4",
+    "grunt-contrib-qunit": "0.2.2",
+    "grunt-contrib-watch": "0.4.4"
   }
 }
