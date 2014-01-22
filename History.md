@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v1.0.7 / 2014-01-21
+* Update dist build header and license file for 2014 (James D. Forrester)
+* build: Set up node-jscs, pass it, and configure in Grunt (Timo Tijhof)
+* package.json: Set npm dependencies at fixed versions (Timo Tijhof)
+
 ## v1.0.6 / 2013-12-10
 * Change display name from OOJS to OOjs (Timo Tijhof)
 * Add qunitjs lib to repo (Timo Tijhof)
