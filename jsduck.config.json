@@ -1,7 +1,9 @@
 {
-	"--title": "OOjs Documentation",
+	"--title": "OOjs - Documentation",
+	"--footer": "Documentation for OOjs.",
 	"--output": "docs",
 	"--categories": "./jsduck.categories.json",
+	"--warnings-exit-nonzero": true,
 	"--builtin-classes": true,
 	"--": [
 		"src/core.js",
