@@ -86,7 +86,7 @@ if ( global.document ) {
 	} );
 }
 
-QUnit.test( 'inheritClass', 19, function ( assert ) {
+QUnit.test( 'inheritClass', 26, function ( assert ) {
 	var foo, bar, key, enumKeys;
 
 	function Foo() {
@@ -107,6 +107,7 @@ QUnit.test( 'inheritClass', 19, function ( assert ) {
 	foo = new Foo();
 
 	function Bar() {
+		this.constructor.super.call( this );
 		this.constructedBar = true;
 	}
 	oo.inheritClass( Bar, Foo );
@@ -171,11 +172,20 @@ QUnit.test( 'inheritClass', 19, function ( assert ) {
 		'bar instance of Bar'
 	);
 
+	assert.equal( foo.constructor, Foo, 'original constructor is unchanged' );
+	assert.equal( foo.constructedFoo, true, 'original constructor ran' );
+	assert.equal( foo.constructedBar, undefined, 'subclass did not modify parent class' );
+
 	assert.equal( bar.constructor, Bar, 'constructor property is restored' );
+	assert.equal( bar.constructor.super, Foo, 'super property points to parent class' );
+	assert.equal( bar.constructedFoo, true, 'parent class ran through this.constructor.super' );
+	assert.equal( bar.constructedBar, true, 'original constructor ran' );
 	assert.equal( bar.b, 'proto of Bar', 'own methods go first' );
 	assert.equal( bar.bFn(), 'proto of Bar', 'own properties go first' );
 	assert.equal( bar.c, 'proto of Foo', 'prototype properties are inherited' );
 	assert.equal( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
+
+	assert.equal( bar.constructor.super, Foo, 'super property points to parent class' );
 
 	enumKeys = [];
 	for ( key in bar ) {
