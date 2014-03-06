@@ -1,6 +1,4 @@
 /**
- * Data registry.
- *
  * @class OO.Registry
  * @mixins OO.EventEmitter
  *
@@ -33,7 +31,6 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
  *
  * Only the base name will be registered, overriding any existing entry with the same base name.
  *
- * @method
  * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Mixed} data Data to associate with symbolic name
  * @fires register
@@ -57,13 +54,12 @@ oo.Registry.prototype.register = function ( name, data ) {
 };
 
 /**
- * Gets data for a given symbolic name.
+ * Get data for a given symbolic name.
  *
  * Lookups are done using the base name.
  *
- * @method
  * @param {string} name Symbolic name
- * @returns {Mixed|undefined} Data associated with symbolic name
+ * @return {Mixed|undefined} Data associated with symbolic name
  */
 oo.Registry.prototype.lookup = function ( name ) {
 	return this.registry[name];

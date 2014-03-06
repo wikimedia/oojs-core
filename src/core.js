@@ -13,7 +13,6 @@ var
 /**
  * Assert whether a value is a plain object or not.
  *
- * @method
  * @param {Mixed} obj
  * @return {boolean}
  */
@@ -48,7 +47,7 @@ oo.isPlainObject = function ( obj ) {
  *  This is how prototypal inheritance works, it can only be one straight chain
  *  (just like classical inheritance in PHP for example). If you need to work with
  *  multiple constructors consider storing an instance of the other constructor in a
- *  property instead, or perhaps use a mixin (see oo.mixinClass).
+ *  property instead, or perhaps use a mixin (see OO.mixinClass).
  *
  *     function Thing() {}
  *     Thing.prototype.exists = function () {};
@@ -72,7 +71,6 @@ oo.isPlainObject = function ( obj ) {
  *     x.walk();
  *     x instanceof Thing && x instanceof Person && x instanceof Jumper;
  *
- * @method
  * @param {Function} targetFn
  * @param {Function} originFn
  * @throws {Error} If target already inherits from origin
@@ -126,7 +124,6 @@ oo.inheritClass = function ( targetFn, originFn ) {
  *     OO.inheritClass( FooBar, Foo );
  *     OO.mixinClass( FooBar, ContextLazyLoad );
  *
- * @method
  * @param {Function} targetFn
  * @param {Function} originFn
  */
@@ -174,7 +171,6 @@ oo.mixinClass = function ( targetFn, originFn ) {
  *     foo2.getAge(); // 21
  *     foo.getAge(); // 22
  *
- * @method
  * @param {Object} origin
  * @return {Object} Clone of origin
  */
@@ -193,11 +189,10 @@ oo.cloneObject = function ( origin ) {
 };
 
 /**
- * Gets an array of all property values in an object.
+ * Get an array of all property values in an object.
  *
- * @method
  * @param {Object} Object to get values from
- * @returns {Array} List of object values
+ * @return {Array} List of object values
  */
 oo.getObjectValues = function ( obj ) {
 	var key, values;
@@ -223,11 +218,10 @@ oo.getObjectValues = function ( obj ) {
  * the other. An asymmetrical test may also be performed, which checks only that properties in the
  * first object are present in the second object, but not the inverse.
  *
- * @method
  * @param {Object} a First object to compare
  * @param {Object} b Second object to compare
  * @param {boolean} [asymmetrical] Whether to check only that b contains values from a
- * @returns {boolean} If the objects contain the same values as each other
+ * @return {boolean} If the objects contain the same values as each other
  */
 oo.compare = function ( a, b, asymmetrical ) {
 	var aValue, bValue, aType, bType, k;
@@ -256,10 +250,9 @@ oo.compare = function ( a, b, asymmetrical ) {
  *
  * Copies are deep, and will either be an object or an array depending on `source`.
  *
- * @method
  * @param {Object} source Object to copy
  * @param {Function} [callback] Applied to leaf values before they added to the clone
- * @returns {Object} Copy of source object
+ * @return {Object} Copy of source object
  */
 oo.copy = function ( source, callback ) {
 	var key, sourceValue, sourceType, destination;
@@ -297,8 +290,9 @@ oo.copy = function ( source, callback ) {
 };
 
 /**
- * Generates a hash of an object based on its name and data.
- * Performance optimization: http://jsperf.com/ve-gethash-201208#/toJson_fnReplacerIfAoForElse
+ * Generate a hash of an object based on its name and data.
+ *
+ * Performance optimization: <http://jsperf.com/ve-gethash-201208#/toJson_fnReplacerIfAoForElse>
  *
  * To avoid two objects with the same values generating different hashes, we utilize the replacer
  * argument of JSON.stringify and sort the object by key as it's being serialized. This may or may
@@ -309,20 +303,21 @@ oo.copy = function ( source, callback ) {
  * ourselves. This allows classes to define custom hashing.
  *
  * @param {Object} val Object to generate hash for
- * @returns {string} Hash of object
+ * @return {string} Hash of object
  */
 oo.getHash = function ( val ) {
 	return JSON.stringify( val, oo.getHash.keySortReplacer );
 };
 
 /**
- * Helper function for oo.getHash which sorts objects by key.
+ * Helper function for OO.getHash which sorts objects by key.
  *
  * This is a callback passed into JSON.stringify.
  *
+ * @method getHash_keySortReplacer
  * @param {string} key Property name of value being replaced
  * @param {Mixed} val Property value to replace
- * @returns {Mixed} Replacement value
+ * @return {Mixed} Replacement value
  */
 oo.getHash.keySortReplacer = function ( key, val ) {
 	var normalized, keys, i, len;
@@ -352,13 +347,13 @@ oo.getHash.keySortReplacer = function ( key, val ) {
 /**
  * Compute the union (duplicate-free merge) of a set of arrays.
  *
- * Arrays values must be convertable to object keys (strings)
+ * Arrays values must be convertable to object keys (strings).
  *
  * By building an object (with the values for keys) in parallel with
- * the array, a new item's existence in the union can be computed faster
+ * the array, a new item's existence in the union can be computed faster.
  *
  * @param {Array...} arrays Arrays to union
- * @returns {Array} Union of the arrays
+ * @return {Array} Union of the arrays
  */
 oo.simpleArrayUnion = function () {
 	var i, ilen, arr, j, jlen,
@@ -383,16 +378,16 @@ oo.simpleArrayUnion = function () {
  *
  * An intersection checks the item exists in 'b' while difference checks it doesn't.
  *
- * Arrays values must be convertable to object keys (strings)
+ * Arrays values must be convertable to object keys (strings).
  *
  * By building an object (with the values for keys) of 'b' we can
- * compute the result faster
+ * compute the result faster.
  *
  * @private
  * @param {Array} a First array
  * @param {Array} b Second array
  * @param {boolean} includeB Whether to items in 'b'
- * @returns {Array} Combination (intersection or difference) of arrays
+ * @return {Array} Combination (intersection or difference) of arrays
  */
 function simpleArrayCombine( a, b, includeB ) {
 	var i, ilen, isInB,
@@ -416,11 +411,11 @@ function simpleArrayCombine( a, b, includeB ) {
 /**
  * Compute the intersection of two arrays (items in both arrays).
  *
- * Arrays values must be convertable to object keys (strings)
+ * Arrays values must be convertable to object keys (strings).
  *
  * @param {Array} a First array
  * @param {Array} b Second array
- * @returns {Array} Intersection of arrays
+ * @return {Array} Intersection of arrays
  */
 oo.simpleArrayIntersection = function ( a, b ) {
 	return simpleArrayCombine( a, b, true );
@@ -429,11 +424,11 @@ oo.simpleArrayIntersection = function ( a, b ) {
 /**
  * Compute the difference of two arrays (items in 'a' but not 'b').
  *
- * Arrays values must be convertable to object keys (strings)
+ * Arrays values must be convertable to object keys (strings).
  *
  * @param {Array} a First array
  * @param {Array} b Second array
- * @returns {Array} Intersection of arrays
+ * @return {Array} Intersection of arrays
  */
 oo.simpleArrayDifference = function ( a, b ) {
 	return simpleArrayCombine( a, b, false );

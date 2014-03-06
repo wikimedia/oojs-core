@@ -1,13 +1,16 @@
 /**
- * Event emitter.
- *
  * @class OO.EventEmitter
  *
  * @constructor
- * @property {Object} bindings
  */
 oo.EventEmitter = function OoEventEmitter() {
 	// Properties
+
+	/**
+	 * Storage of bound event handlers by event name.
+	 *
+	 * @property
+	 */
 	this.bindings = {};
 };
 
@@ -18,7 +21,6 @@ oo.EventEmitter = function OoEventEmitter() {
  *
  * If the callback/context are already bound to the event, they will not be bound again.
  *
- * @method
  * @param {string} event Type of event to listen to
  * @param {Function} callback Function to call when event occurs
  * @param {Array} [args] Arguments to pass to listener, will be prepended to emitted arguments
@@ -63,7 +65,6 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
 /**
  * Adds a one-time listener to a specific event.
  *
- * @method
  * @param {string} event Type of event to listen to
  * @param {Function} listener Listener to call when event occurs
  * @chainable
@@ -79,7 +80,6 @@ oo.EventEmitter.prototype.once = function ( event, listener ) {
 /**
  * Remove a specific listener from a specific event.
  *
- * @method
  * @param {string} event Type of event to remove listener from
  * @param {Function} [callback] Listener to remove, omit to remove all
  * @param {Object} [context=null] Object used context for callback function or method
@@ -124,13 +124,13 @@ oo.EventEmitter.prototype.off = function ( event, callback, context ) {
 
 /**
  * Emit an event.
+ *
  * TODO: Should this be chainable? What is the usefulness of the boolean
  * return value here?
  *
- * @method
  * @param {string} event Type of event
  * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
- * @returns {boolean} If event was handled by at least one listener
+ * @return {boolean} If event was handled by at least one listener
  */
 oo.EventEmitter.prototype.emit = function ( event ) {
 	var i, len, binding, bindings, args;
@@ -154,12 +154,11 @@ oo.EventEmitter.prototype.emit = function ( event ) {
 /**
  * Connect event handlers to an object.
  *
- * @method
  * @param {Object} context Object to call methods on when events occur
  * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} methods List of
- * event bindings keyed by event name containing either method names, functions or arrays containing
- * method name or function followed by a list of arguments to be passed to callback before emitted
- * arguments
+ *  event bindings keyed by event name containing either method names, functions or arrays containing
+ *  method name or function followed by a list of arguments to be passed to callback before emitted
+ *  arguments
  * @chainable
  */
 oo.EventEmitter.prototype.connect = function ( context, methods ) {
@@ -194,7 +193,6 @@ oo.EventEmitter.prototype.connect = function ( context, methods ) {
 /**
  * Disconnect event handlers from an object.
  *
- * @method
  * @param {Object} context Object to disconnect methods from
  * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} [methods] List of
  * event bindings keyed by event name containing either method names or functions

@@ -1,6 +1,4 @@
 /**
- * Object factory.
- *
  * @class OO.Factory
  * @extends OO.Registry
  *
@@ -25,14 +23,12 @@ oo.inheritClass( oo.Factory, oo.Registry );
  *
  * Classes must have a static `name` property to be registered.
  *
- *     @example
  *     function MyClass() {};
  *     // Adds a static property to the class defining a symbolic name
  *     MyClass.static = { 'name': 'mine' };
  *     // Registers class with factory, available via symbolic name 'mine'
  *     factory.register( MyClass );
  *
- * @method
  * @param {Function} constructor Constructor to use when creating object
  * @throws {Error} Name must be a string and must not be empty
  * @throws {Error} Constructor must be a function
@@ -57,10 +53,9 @@ oo.Factory.prototype.register = function ( constructor ) {
  * Name is used to look up the constructor to use, while all additional arguments are passed to the
  * constructor directly, so leaving one out will pass an undefined to the constructor.
  *
- * @method
  * @param {string} name Object name
  * @param {Mixed...} [args] Arguments to pass to the constructor
- * @returns {Object} The new object
+ * @return {Object} The new object
  * @throws {Error} Unknown object name
  */
 oo.Factory.prototype.create = function ( name ) {

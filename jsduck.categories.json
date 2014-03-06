@@ -17,7 +17,14 @@
 			{
 				"name": "JavaScript",
 				"classes": [
-					"Array", "Boolean", "Date", "Function", "Number", "Object", "RegExp", "String"
+					"Array",
+					"Boolean",
+					"Date",
+					"Function",
+					"Number",
+					"Object",
+					"RegExp",
+					"String"
 				]
 			}
 		]
