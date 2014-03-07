@@ -107,7 +107,7 @@ QUnit.test( 'inheritClass', 26, function ( assert ) {
 	foo = new Foo();
 
 	function Bar() {
-		this.constructor.super.call( this );
+		Bar.super.call( this );
 		this.constructedBar = true;
 	}
 	oo.inheritClass( Bar, Foo );

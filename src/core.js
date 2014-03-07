@@ -53,14 +53,14 @@ oo.isPlainObject = function ( obj ) {
  *     Thing.prototype.exists = function () {};
  *
  *     function Person() {
- *         this.constructor.super.apply( this, arguments );
+ *         Person.super.apply( this, arguments );
  *     }
- *     oo.inheritClass( Person, Thing );
+ *     OO.inheritClass( Person, Thing );
  *     Person.static.defaultEyeCount = 2;
  *     Person.prototype.walk = function () {};
  *
  *     function Jumper() {
- *         this.constructor.super.apply( this, arguments );
+ *         Jumper.super.apply( this, arguments );
  *     }
  *     OO.inheritClass( Jumper, Person );
  *     Jumper.prototype.jump = function () {};
