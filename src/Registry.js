@@ -37,19 +37,16 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
  * @throws {Error} Name argument must be a string or array
  */
 oo.Registry.prototype.register = function ( name, data ) {
-	if ( typeof name !== 'string' && !Array.isArray( name ) ) {
-		throw new Error( 'Name argument must be a string or array, cannot be a ' + typeof name );
-	}
 	var i, len;
-	if ( Array.isArray( name ) ) {
+	if ( typeof name === 'string' ) {
+		this.registry[name] = data;
+		this.emit( 'register', name, data );
+	} else if ( Array.isArray( name ) ) {
 		for ( i = 0, len = name.length; i < len; i++ ) {
 			this.register( name[i], data );
 		}
-	} else if ( typeof name === 'string' ) {
-		this.registry[name] = data;
-		this.emit( 'register', name, data );
 	} else {
-		throw new Error( 'Name must be a string or array of strings, cannot be a ' + typeof name );
+		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );
 	}
 };
 
