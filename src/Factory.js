@@ -5,8 +5,7 @@
  * @constructor
  */
 oo.Factory = function OoFactory() {
-	// Parent constructor
-	oo.Registry.call( this );
+	oo.Factory.super.call( this );
 
 	// Properties
 	this.entries = [];
@@ -44,7 +43,8 @@ oo.Factory.prototype.register = function ( constructor ) {
 		throw new Error( 'Name must be a string and must not be empty' );
 	}
 	this.entries.push( name );
-	oo.Registry.prototype.register.call( this, name, constructor );
+
+	oo.Factory.super.prototype.register.call( this, name, constructor );
 };
 
 /**
