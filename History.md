@@ -1,5 +1,14 @@
 # OOjs Release History
 
+## v1.0.8 / 2014-03-11
+* Factory: Use Class.super instead of hard coding parent class (Timo Tijhof)
+* Registry: Remove redundant type validation logic in #register (Timo Tijhof)
+* core: Use Class.super instead of this.constructor.super (Timo Tijhof)
+* doc: Improve overall documentation and fix minor issues (Timo Tijhof)
+* core: Add a 'super' property to inheriting classes (Timo Tijhof)
+* build: Implement generateDocs.sh script (Timo Tijhof)
+* package.json: Update devDependencies (Timo Tijhof)
+
 ## v1.0.7 / 2014-01-21
 * Update dist build header and license file for 2014 (James D. Forrester)
 * build: Set up node-jscs, pass it, and configure in Grunt (Timo Tijhof)
