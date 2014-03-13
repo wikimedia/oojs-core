@@ -149,22 +149,20 @@ QUnit.test( 'connect', 2, function ( assert ) {
 	ee.emit( 'bar' );
 } );
 
-QUnit.test( 'disconnect( host )', 2, function ( assert ) {
-	var host, i,
+QUnit.test( 'disconnect( host )', 1, function ( assert ) {
+	var host,
+		hits = { foo: 0, bar: 0 },
 		ee = new oo.EventEmitter();
 
 	host = {
 		onFoo: function () {
-			i++;
-			assert.strictEqual( i, 1, 'onFoo is unbound by disconnect' );
+			hits.foo++;
 		},
 		onBar: function () {
-			i++;
-			assert.strictEqual( i, 2, 'onBar is unbound by disconnect' );
+			hits.bar++;
 		}
 	};
 
-	i = 0;
 	ee.connect( host, {
 		foo: 'onFoo',
 		bar: 'onBar'
@@ -175,24 +173,24 @@ QUnit.test( 'disconnect( host )', 2, function ( assert ) {
 	ee.disconnect( host );
 	ee.emit( 'foo' );
 	ee.emit( 'bar' );
+
+	assert.deepEqual( hits, { foo: 1, bar: 1 } );
 } );
 
-QUnit.test( 'disconnect( host, methods )', 3, function ( assert ) {
-	var host, i,
+QUnit.test( 'disconnect( host, methods )', 1, function ( assert ) {
+	var host,
+		hits = { foo: 0, bar: 0 },
 		ee = new oo.EventEmitter();
 
 	host = {
 		onFoo: function () {
-			i++;
-			assert.strictEqual( i, 1, 'onFoo is unbound by disconnect' );
+			hits.foo++;
 		},
 		onBar: function () {
-			i++;
-			assert.ok( i === 2 || i === 3, 'onBar is unbound by disconnect' );
+			hits.bar++;
 		}
 	};
 
-	i = 0;
 	ee.connect( host, {
 		foo: 'onFoo',
 		bar: 'onBar'
@@ -203,6 +201,30 @@ QUnit.test( 'disconnect( host, methods )', 3, function ( assert ) {
 	ee.disconnect( host, { foo: 'onFoo' } );
 	ee.emit( 'foo' );
 	ee.emit( 'bar' );
+
+	assert.deepEqual( hits, { foo: 1, bar: 2 } );
+} );
+
+QUnit.test( 'disconnect( host, unbound methods )', 1, function ( assert ) {
+	var host,
+		ee = new oo.EventEmitter();
+
+	host = {
+		onFoo: function () {
+		},
+		onBar: function () {
+		}
+	};
+
+	// Verify that disconnect does not fail if there were no events bound yet
+	ee = new oo.EventEmitter();
+	ee.disconnect( {} );
+	ee.disconnect( host, { foo: 'onFoo' } );
+	ee.disconnect( host );
+
+	assert.throws( function () {
+		ee.disconnect( host, { notfound: 'onExample' } );
+	}, 'method must exist on host object even if event has no listeners' );
 } );
 
 QUnit.test( 'chainable', 6, function ( assert ) {
