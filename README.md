@@ -1,4 +1,4 @@
-OOjs [![NPM version](https://badge.fury.io/js/oojs.png)](https://badge.fury.io/js/oojs)
+OOjs <a href="https://badge.fury.io/js/oojs"><img src="https://badge.fury.io/js/oojs@2x.png" alt="NPM version" height="18"/></a>
 =================
 
 OOjs is a JavaScript library for working with objects.
