@@ -38,6 +38,17 @@ oo.isPlainObject = function ( obj ) {
 };
 
 /**
+ * Utility to initialize a class for OO inheritance.
+ *
+ * Currently this just initializes an empty static object.
+ *
+ * @param {Function} fn
+ */
+oo.initClass = function ( fn ) {
+	fn.static = fn.static || {};
+};
+
+/**
  * Utility for common usage of Object#create for inheriting from one
  * prototype to another.
  *
@@ -94,7 +105,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	} );
 
 	// Extend static properties - always initialize both sides
-	originFn.static = originFn.static || {};
+	oo.initClass( originFn );
 	targetFn.static = Object.create( originFn.static );
 };
 
@@ -138,7 +149,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 	}
 
 	// Copy static properties - always initialize both sides
-	targetFn.static = targetFn.static || {};
+	oo.initClass( targetFn );
 	if ( originFn.static ) {
 		for ( key in originFn.static ) {
 			if ( hasOwn.call( originFn.static, key ) ) {
@@ -146,7 +157,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 			}
 		}
 	} else {
-		originFn.static = {};
+		oo.initClass( originFn );
 	}
 };
 

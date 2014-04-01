@@ -15,7 +15,7 @@ oo.FactoryObjectStub = function OoFactoryObjectStub( a, b, c, d ) {
 	this.d = d;
 };
 
-oo.FactoryObjectStub.static = {};
+oo.initClass( oo.FactoryObjectStub );
 
 oo.FactoryObjectStub.static.name = 'factory-object-stub';
 
