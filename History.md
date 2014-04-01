@@ -1,5 +1,11 @@
 # OOjs Release History
 
+## v1.0.9 / 2014-04-01
+* core: Add initClass method for initializing static in base classes (Ed Sanders)
+* package.json: Bump jscs to 0.4.1 (James D. Forrester)
+* readme: Use HiDPI version of npm badge (Timo Tijhof)
+* EventEmitter: Improve test coverage for disconnect() (Timo Tijhof)
+
 ## v1.0.8 / 2014-03-11
 * Factory: Use Class.super instead of hard coding parent class (Timo Tijhof)
 * Registry: Remove redundant type validation logic in #register (Timo Tijhof)
