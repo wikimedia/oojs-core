@@ -67,7 +67,12 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	var targetConstructor = targetFn.prototype.constructor;
 
-	targetFn.super = originFn;
+	// Using ['super'] instead of .super because 'super' is not supported
+	// by IE 8 and below (bug 63303).
+	// Provide .parent as alias for code supporting older browsers which
+	// allows people to comply with their style guide.
+	targetFn['super'] = targetFn.parent = originFn;
+
 	targetFn.prototype = Object.create( originFn.prototype, {
 		// Restore constructor property of targetFn
 		constructor: {

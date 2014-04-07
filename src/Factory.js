@@ -5,7 +5,7 @@
  * @constructor
  */
 oo.Factory = function OoFactory() {
-	oo.Factory.super.call( this );
+	oo.Factory.parent.call( this );
 
 	// Properties
 	this.entries = [];
@@ -45,7 +45,7 @@ oo.Factory.prototype.register = function ( constructor ) {
 	}
 	this.entries.push( name );
 
-	oo.Factory.super.prototype.register.call( this, name, constructor );
+	oo.Factory.parent.prototype.register.call( this, name, constructor );
 };
 
 /**

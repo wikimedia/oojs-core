@@ -23,7 +23,7 @@
 		foo = new Foo();
 
 		function Bar() {
-			Bar.super.call( this );
+			Bar.parent.call( this );
 			this.constructedBar = true;
 		}
 		oo.inheritClass( Bar, Foo );
@@ -93,7 +93,7 @@
 		assert.equal( foo.constructedBar, undefined, 'subclass did not modify parent class' );
 
 		assert.equal( bar.constructor, Bar, 'constructor property is restored' );
-		assert.equal( bar.constructor.super, Foo, 'super property points to parent class' );
+		assert.equal( bar.constructor.parent, Foo, 'super property points to parent class' );
 		assert.equal( bar.constructedFoo, true, 'parent class ran through this.constructor.super' );
 		assert.equal( bar.constructedBar, true, 'original constructor ran' );
 		assert.equal( bar.b, 'proto of Bar', 'own methods go first' );
@@ -101,7 +101,7 @@
 		assert.equal( bar.c, 'proto of Foo', 'prototype properties are inherited' );
 		assert.equal( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
 
-		assert.equal( bar.constructor.super, Foo, 'super property points to parent class' );
+		assert.equal( bar.constructor.parent, Foo, 'super property points to parent class' );
 
 		enumKeys = [];
 		for ( key in bar ) {
