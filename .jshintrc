@@ -1,29 +1,16 @@
 {
 	// Enforcing
 	"bitwise": true,
-	"camelcase": true,
 	"curly": true,
 	"eqeqeq": true,
-	"forin": false,
-	"immed": true,
 	"latedef": true,
-	"newcap": true,
 	"noarg": true,
 	"noempty": true,
 	"nonew": true,
-	"plusplus": false,
-	"quotmark": "single",
 	"regexp": true,
 	"strict": false,
-	"trailing": true,
 	"undef": true,
 	"unused": true,
-	// Relaxing
-	"multistr": true,
-	"smarttabs": true,
-	// Legacy
-	"nomen": true,
-	"onevar": true,
 
 	"globals": {
 		"oo": true,

@@ -49,7 +49,7 @@ QUnit.test( 'on', 7, function ( assert ) {
 	/*
 		Doesn't work because PhantomJS uses an outdated jsc engine that doesn't
 		support everything from ES5 yet, Strict Mode is among the lacking features.
-	 ( function () {
+	( function () {
 		'use strict';
 		assert.strictEqual( this, undefined, 'closure this in strict mode is undefined' );
 	} () );

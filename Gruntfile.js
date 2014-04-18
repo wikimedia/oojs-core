@@ -26,16 +26,19 @@ module.exports = function ( grunt ) {
 			}
 		},
 		jshint: {
-			options: JSON.parse( grunt.file.read( '.jshintrc' )
-				.replace( /\/\*(?:(?!\*\/)[\s\S])*\*\//g, '' ).replace( /\/\/[^\n\r]*/g, '' ) ),
-			all: ['*.js', '{src,dist,test}/*.js']
+			options: {
+				jshintrc: '.jshintrc'
+			},
+			dev: ['*.js', '{src,test}/**/*.js'],
+			dist: 'dist/**/*.js'
 		},
 		jscs: {
-			src: [
-				'<%= jshint.all %>',
+			dev: [
+				'<%= jshint.dev %>',
 				'!src/intro.js',
 				'!src/outro.js'
-			]
+			],
+			dist: '<%= jshint.dist %>'
 		},
 		qunit: {
 			all: ['test/index.html']
