@@ -57,7 +57,7 @@ module.exports = function ( grunt ) {
 				done( false );
 				return;
 			}
-			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stout.substr( 0, 10 ) + ')' );
+			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stout.slice( 0, 10 ) + ')' );
 			grunt.verbose.writeln( 'Added git HEAD to pgk.version' );
 			done();
 		} );
@@ -71,7 +71,7 @@ module.exports = function ( grunt ) {
 			version = grunt.config( 'pkg.version' );
 
 		src.forEach( function ( filepath ) {
-			var text = grunt.file.read( __dirname + '/' + filepath );
+			var text = grunt.file.read( filepath );
 
 			// Ensure files use only \n for line endings, not \r\n
 			if ( /\x0d\x0a/.test( text ) ) {
@@ -87,7 +87,9 @@ module.exports = function ( grunt ) {
 		}
 
 		// Replace version and date placeholders
-		compiled = compiled.replace( /@VERSION/g, version ).replace( /@DATE/g, new Date() );
+		compiled = compiled
+			.replace( /@VERSION/g, version )
+			.replace( /@DATE/g, new Date() );
 
 		grunt.file.write( name, compiled );
 
