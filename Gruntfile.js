@@ -33,8 +33,7 @@ module.exports = function ( grunt ) {
 			dist: 'dist/**/*.js'
 		},
 		jscs: {
-			dev: '<%= jshint.dev %>',
-			dist: '<%= jshint.dist %>'
+			dev: '<%= jshint.dev %>'
 		},
 		qunit: {
 			all: ['test/index.html']
