@@ -15,13 +15,13 @@ module.exports = function ( grunt ) {
 			all: {
 				dest: 'dist/oojs.js',
 				src: [
-					'src/intro.js',
+					'src/intro.js.txt',
 					'src/core.js',
 					'src/EventEmitter.js',
 					'src/Registry.js',
 					'src/Factory.js',
 					'src/export.js',
-					'src/outro.js'
+					'src/outro.js.txt'
 				]
 			}
 		},
@@ -33,11 +33,7 @@ module.exports = function ( grunt ) {
 			dist: 'dist/**/*.js'
 		},
 		jscs: {
-			dev: [
-				'<%= jshint.dev %>',
-				'!src/intro.js',
-				'!src/outro.js'
-			],
+			dev: '<%= jshint.dev %>',
 			dist: '<%= jshint.dist %>'
 		},
 		qunit: {
