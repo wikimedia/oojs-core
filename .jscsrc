@@ -44,22 +44,6 @@
 		"<="
 	],
 	"requireRightStickedOperators": ["!"],
-	"disallowRightStickedOperators": [
-		"?",
-		"+",
-		"/",
-		"*",
-		":",
-		"=",
-		"==",
-		"===",
-		"!=",
-		"!==",
-		">",
-		">=",
-		"<",
-		"<="
-    ],
 	"requireLeftStickedOperators": [","],
 	"disallowSpaceAfterPrefixUnaryOperators": [
 		"++",
