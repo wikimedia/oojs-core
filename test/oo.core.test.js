@@ -342,7 +342,7 @@
 
 		assert.deepEqual(
 			oo.getObjectValues( tmp ),
-			['foo', 'bar'],
+			[ 'foo', 'bar' ],
 			'Function with properties'
 		);
 
@@ -744,7 +744,7 @@
 			b: 1,
 			c: 1,
 			// Nested array
-			d: ['x', 'y', 'z'],
+			d: [ 'x', 'y', 'z' ],
 			e: {
 				a: 2,
 				b: 2,
@@ -860,7 +860,7 @@
 		assert.deepEqual(
 			oo.simpleArrayIntersection(
 				[ 'a', 'b', 'c', 'a' ],
-				[, 'b', 'c', 'd', 'c' ]
+				[ 'b', 'c', 'd', 'c' ]
 			),
 			[ 'b', 'c' ],
 			'Simple'
@@ -879,7 +879,7 @@
 		assert.deepEqual(
 			oo.simpleArrayDifference(
 				[ 'a', 'b', 'c', 'a' ],
-				[, 'b', 'c', 'd', 'c' ]
+				[ 'b', 'c', 'd', 'c' ]
 			),
 			[ 'a', 'a' ],
 			'Simple'

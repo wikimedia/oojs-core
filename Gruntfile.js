@@ -29,22 +29,22 @@ module.exports = function ( grunt ) {
 			options: {
 				jshintrc: '.jshintrc'
 			},
-			dev: ['*.js', '{src,test}/**/*.js'],
+			dev: [ '*.js', '{src,test}/**/*.js' ],
 			dist: 'dist/**/*.js'
 		},
 		jscs: {
 			dev: '<%= jshint.dev %>'
 		},
 		qunit: {
-			all: ['test/index.html']
+			all: 'test/index.html'
 		},
 		watch: {
 			files: [
-				'<%= jshint.all %>',
+				'<%= jshint.dev %>',
 				'<%= qunit.all %>',
 				'.{jscsrc,jshintignore,jshintrc}'
 			],
-			tasks: ['test']
+			tasks: 'test'
 		}
 	} );
 
@@ -100,6 +100,6 @@ module.exports = function ( grunt ) {
 		grunt.log.ok( 'File "' + name + '" created.' );
 	} );
 
-	grunt.registerTask( 'test', ['git-build', 'build', 'jshint', 'jscs', 'qunit'] );
+	grunt.registerTask( 'test', [ 'git-build', 'build', 'jshint', 'jscs', 'qunit' ] );
 	grunt.registerTask( 'default', 'test' );
 };

@@ -12,7 +12,7 @@
 		var registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
-		registry.register( ['registry-item-2', 'registry-item-3'], 23 );
+		registry.register( [ 'registry-item-2', 'registry-item-3' ], 23 );
 
 		assert.strictEqual( registry.lookup( 'registry-item-1' ), 1 );
 		assert.strictEqual( registry.lookup( 'registry-item-2' ), 23 );
