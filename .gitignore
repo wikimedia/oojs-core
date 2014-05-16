@@ -1,4 +1,4 @@
-/dist/oojs.js
+/dist/*
 docs/
 node_modules
 npm-debug.log

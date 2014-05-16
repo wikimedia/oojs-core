@@ -4,6 +4,7 @@
 
 /*jshint node:true */
 module.exports = function ( grunt ) {
+	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
@@ -11,12 +12,29 @@ module.exports = function ( grunt ) {
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
-		build: {
-			all: {
+		clean: {
+			dist: [ 'dist/*/', 'dist/*.*' ]
+		},
+		combine: {
+			oojs: {
 				dest: 'dist/oojs.js',
 				src: [
 					'src/intro.js.txt',
 					'src/core.js',
+					'src/util.js',
+					'src/EventEmitter.js',
+					'src/Registry.js',
+					'src/Factory.js',
+					'src/export.js',
+					'src/outro.js.txt'
+				]
+			},
+			jquery: {
+				dest: 'dist/oojs.jquery.js',
+				src: [
+					'src/intro.js.txt',
+					'src/core.js',
+					'src/util/jquery.js',
 					'src/EventEmitter.js',
 					'src/Registry.js',
 					'src/Factory.js',
@@ -27,7 +45,7 @@ module.exports = function ( grunt ) {
 		},
 		jshint: {
 			options: {
-				jshintrc: '.jshintrc'
+				jshintrc: true
 			},
 			dev: [ '*.js', '{src,test}/**/*.js' ],
 			dist: 'dist/**/*.js'
@@ -36,7 +54,10 @@ module.exports = function ( grunt ) {
 			dev: '<%= jshint.dev %>'
 		},
 		qunit: {
-			all: 'test/index.html'
+			all: [
+				'test/index.html',
+				'test/index.jquery.html'
+			]
 		},
 		watch: {
 			files: [
@@ -62,7 +83,7 @@ module.exports = function ( grunt ) {
 		} );
 	} );
 
-	grunt.registerMultiTask( 'build', function () {
+	grunt.registerMultiTask( 'combine', function () {
 		var isBad = false,
 			compiled = '',
 			name = this.data.dest,
@@ -100,6 +121,7 @@ module.exports = function ( grunt ) {
 		grunt.log.ok( 'File "' + name + '" created.' );
 	} );
 
+	grunt.registerTask( 'build', [ 'clean', 'combine' ] );
 	grunt.registerTask( 'test', [ 'git-build', 'build', 'jshint', 'jscs', 'qunit' ] );
 	grunt.registerTask( 'default', 'test' );
 };

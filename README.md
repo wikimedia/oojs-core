@@ -29,6 +29,15 @@ npm install oojs
 
 Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 
+jQuery
+----------
+
+If your project uses jQuery, use the optimised `oojs.jquery.js` build instead.
+
+This build assumes jQuery is present and omits various chunks of code in favour of references to it.
+
+jQuery 1.8.3 or higher is recommended.
+
 Versioning
 ----------
 
