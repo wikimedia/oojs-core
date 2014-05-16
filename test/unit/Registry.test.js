@@ -1,12 +1,6 @@
-/*!
- * Registry test suite.
- */
-
 ( function ( oo ) {
 
-	QUnit.module( 'OO.Registry' );
-
-	/* Tests */
+	QUnit.module( 'Registry' );
 
 	QUnit.test( 'register', 3, function ( assert ) {
 		var registry = new oo.Registry();

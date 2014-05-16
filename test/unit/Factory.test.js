@@ -1,10 +1,6 @@
-/*!
- * Factory test suite.
- */
-
 ( function ( oo ) {
 
-	QUnit.module( 'OO.Factory' );
+	QUnit.module( 'Factory' );
 
 	/* Stubs */
 

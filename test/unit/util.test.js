@@ -1,7 +1,3 @@
-/*!
- * Util test suite.
- */
-
 ( function ( oo, global ) {
 
 	QUnit.module( 'util' );

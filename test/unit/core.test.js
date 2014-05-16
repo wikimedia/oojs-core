@@ -1,7 +1,3 @@
-/*!
- * Base object test suite.
- */
-
 ( function ( oo ) {
 
 	QUnit.module( 'core' );

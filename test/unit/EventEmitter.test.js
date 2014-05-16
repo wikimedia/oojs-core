@@ -1,7 +1,3 @@
-/*!
- * EventEmitter test suite.
- */
-
 ( function ( oo, global ) {
 
 	// In NodeJS the `this` as passed from the global scope to this closure is
@@ -10,7 +6,7 @@
 	// global object.
 	global = global.window ? global : this;
 
-	QUnit.module( 'OO.EventEmitter' );
+	QUnit.module( 'EventEmitter' );
 
 	QUnit.test( 'on', 7, function ( assert ) {
 		var fnMultiple, x,

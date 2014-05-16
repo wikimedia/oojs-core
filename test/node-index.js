@@ -14,11 +14,11 @@ qunit.run( {
 		namespace: 'OO'
 	},
 	tests: [
-		'./test/oo.core.test.js',
-		'./test/oo.util.test.js',
-		'./test/oo.EventEmitter.test.js',
-		'./test/oo.Registry.test.js',
-		'./test/oo.Factory.test.js'
+		'./test/unit/core.test.js',
+		'./test/unit/util.test.js',
+		'./test/unit/EventEmitter.test.js',
+		'./test/unit/Registry.test.js',
+		'./test/unit/Factory.test.js'
 	]
 }, function ( err, report ) {
 	if ( err || report.failed ) {
