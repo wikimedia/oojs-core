@@ -73,7 +73,7 @@ $ npm install && npm test
 
 # Update release notes
 # Copy the resulting list into a new section on History.md
-$ git log --format='* %s (%aN)' --no-merges v$(node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version);')...HEAD
+$ git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(JSON.parse(require("fs").readFileSync("package.json")).version);')...HEAD
 $ edit History.md
 
 # Update the version number

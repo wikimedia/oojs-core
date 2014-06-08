@@ -1,5 +1,14 @@
 # OOjs Release History
 
+## v1.0.10-pre / NOT YET RELEASED
+
+* test: Update qunitjs to v1.14.0 (Timo Tijhof)
+* build: Use .txt extension for intro.js and outro.js (Timo Tijhof)
+* package.json: Update devDependencies (update jshint and jscs config) (Timo Tijhof)
+* build: Add dot files to grunt watch (Ed Sanders)
+* build: Implement build target optimised for jQuery (Timo Tijhof)
+* test: Upgrade jQuery to v1.11.1 (paladox)
+
 ## v1.0.9 / 2014-04-01
 * core: Add initClass method for initializing static in base classes (Ed Sanders)
 * package.json: Bump jscs to 0.4.1 (James D. Forrester)
