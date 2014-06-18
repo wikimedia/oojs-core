@@ -31,8 +31,8 @@
     "grunt": "0.4.2",
     "grunt-contrib-clean": "0.5.0",
     "grunt-contrib-jshint": "0.10.0",
-    "grunt-contrib-qunit": "0.4.0",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-jscs-checker": "0.6.0"
+    "grunt-jscs-checker": "0.6.0",
+    "grunt-qunit-istanbul": "0.4.5"
   }
 }

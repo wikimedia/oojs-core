@@ -6,14 +6,14 @@
 module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
-	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-qunit-istanbul' );
 	grunt.loadNpmTasks( 'grunt-jscs-checker' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		clean: {
-			dist: [ 'dist/*/', 'dist/*.*' ]
+			dist: 'dist/*'
 		},
 		combine: {
 			oojs: {
@@ -47,13 +47,24 @@ module.exports = function ( grunt ) {
 			options: {
 				jshintrc: true
 			},
-			dev: [ '*.js', '{src,test}/**/*.js' ],
+			dev: [
+				'*.js',
+				'{src,test}/**/*.js'
+			],
 			dist: 'dist/**/*.js'
 		},
 		jscs: {
 			dev: '<%= jshint.dev %>'
 		},
 		qunit: {
+			options: {
+				coverage: {
+					src: [ 'dist/oojs.js', 'dist/oojs.jquery.js' ],
+					instrumentedFiles: 'dist/tmp/coverage',
+					htmlReport: 'dist/coverage',
+					lcovReport: 'dist/lcov'
+				}
+			},
 			all: [
 				'test/index.html',
 				'test/index.jquery.html'
