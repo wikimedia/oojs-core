@@ -22,19 +22,41 @@ Key features include inheritance, mixins and utilities for working with objects.
 Quick start
 ----------
 
-This module is available as an [npm](https://npmjs.org/) package! Install it right away:
+This library is available as an [npm](https://npmjs.org/) package! Install it right away:
 ```bash
 npm install oojs
 ```
 
 Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 
+ECMASCript 5
+----------
+
+OOjs is optimised for modern ECMAScript 5 environments. However care has been taken to maintain
+parser compatibibility with ES3 engines (such as for IE 6-8).
+
+No ES5 syntax or unpolyfillable features are used. To support ES3 engines, ensure an appropiate
+polyfill is loaded before OOjs.
+
+These are the methods used:
+* Array.isArray
+* Object.create <br><small>(basic use only, inherit from an object and assign simple properties)</small>
+* Object.keys
+* JSON.stringify
+
+While there are no plans to ship a polyfill, we recommend the following and use them ourselves in
+the unit tests to assert support for older browsers.
+
+* [json2.js](https://github.com/douglascrockford/JSON-js) <small>(only for IE6/IE7)</small>
+* [es5-shim.js](https://github.com/es-shims/es5-shim)
+* [polyfill-object-create.js](./test/polyfill-object-create.js)
+
 jQuery
 ----------
 
 If your project uses jQuery, use the optimised `oojs.jquery.js` build instead.
 
-This build assumes jQuery is present and omits various chunks of code in favour of references to it.
+This build assumes jQuery is present and omits various chunks of code in favour of references to jQuery.
 
 jQuery 1.8.3 or higher is recommended.
 

@@ -70,11 +70,12 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
  * @chainable
  */
 oo.EventEmitter.prototype.once = function ( event, listener ) {
-	var eventEmitter = this;
-	return this.on( event, function listenerWrapper() {
-		eventEmitter.off( event, listenerWrapper );
-		listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
-	} );
+	var eventEmitter = this,
+		listenerWrapper = function () {
+			eventEmitter.off( event, listenerWrapper );
+			listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
+		};
+	return this.on( event, listenerWrapper );
 };
 
 /**

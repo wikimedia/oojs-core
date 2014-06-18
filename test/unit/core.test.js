@@ -108,7 +108,12 @@
 			enumKeys.push( key );
 		}
 
-		// issue #8
+		// In compliant ES3 and ES5 engines a property is enumerable by default, and to
+		// make our restored constructor property unenumerable we'd need ES5.
+		// In IE8 this happens to work because it has a bug where certain Object.prototype
+		// keys that are unenumerable affect plain objects and thus it was never enumerable
+		// to begin with.
+		// https://developer.mozilla.org/en-US/docs/ECMAScript_DontEnum_attribute#JScript_DontEnum_Bug
 		assert.strictEqual(
 			enumKeys.indexOf( 'constructor' ),
 			-1,
@@ -266,7 +271,7 @@
 			function () {
 				oo.getObjectValues( 'hello' );
 			},
-			TypeError,
+			/^TypeError/,
 			'Throw exception for non-object (string)'
 		);
 
@@ -274,7 +279,7 @@
 			function () {
 				oo.getObjectValues( 123 );
 			},
-			TypeError,
+			/^TypeError/,
 			'Throw exception for non-object (number)'
 		);
 
@@ -282,7 +287,7 @@
 			function () {
 				oo.getObjectValues( null );
 			},
-			TypeError,
+			/^TypeError/,
 			'Throw exception for non-object (null)'
 		);
 	} );
@@ -705,25 +710,27 @@
 
 	if ( global.document ) {
 		QUnit.test( 'getHash( iframe Object )', 1, function ( assert ) {
-			var obj, hash, iframe;
+			var obj, hash;
 
-			iframe = global.document.createElement( 'iframe' );
-			global.document.getElementById( 'qunit-fixture' ).appendChild( iframe );
-			obj = new iframe.contentWindow.Object();
-			obj.c = 3;
-			obj.b = 2;
-			obj.a = 1;
+			QUnit.tmpIframe( function ( iframe, teardown ) {
+				obj = new iframe.contentWindow.Object();
+				obj.c = 3;
+				obj.b = 2;
+				obj.a = 1;
 
-			hash = '{"a":1,"b":2,"c":3}';
+				hash = '{"a":1,"b":2,"c":3}';
 
-			assert.equal(
-				oo.getHash( obj ),
-				hash,
-				// This was previously broken when we used comparison with "Object" in
-				// oo.getHash.keySortReplacer, because they are an instance of the other
-				// window's "Object".
-				'Treat objects constructed by a another window as well'
-			);
+				assert.equal(
+					oo.getHash( obj ),
+					hash,
+					// This was previously broken when we used comparison with "Object" in
+					// oo.getHash.keySortReplacer, because they are an instance of the other
+					// window's "Object".
+					'Treat objects constructed by a another window as well'
+				);
+
+				teardown();
+			} );
 		} );
 	}
 

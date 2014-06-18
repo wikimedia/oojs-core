@@ -221,6 +221,12 @@ oo.compare = function ( a, b, asymmetrical ) {
 	}
 
 	for ( k in a ) {
+		if ( !hasOwn.call( a, k ) ) {
+			// Support es3-shim: Without this filter, comparing [] to {} will be false in ES3
+			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
+			continue;
+		}
+
 		aValue = a[k];
 		bValue = b[k];
 		aType = typeof aValue;

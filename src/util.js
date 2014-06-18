@@ -7,8 +7,12 @@
  * @return {boolean}
  */
 oo.isPlainObject = function ( obj ) {
+	/*jshint eqnull:true, eqeqeq:false */
+
 	// Any object or value whose internal [[Class]] property is not "[object Object]"
-	if ( toString.call( obj ) !== '[object Object]' ) {
+	// Support IE8: Explicitly filter out DOM nodes
+	// Support IE8: Explicitly filter out Window object (needs loose comparison)
+	if ( !obj || toString.call( obj ) !== '[object Object]' || obj.nodeType || ( obj != null && obj == obj.window ) ) {
 		return false;
 	}
 
