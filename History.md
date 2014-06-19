@@ -1,6 +1,6 @@
 # OOjs Release History
 
-## v1.0.10-pre / NOT YET RELEASED
+## v1.0.10 / 2014-06-19
 
 * test: Update qunitjs to v1.14.0 (Timo Tijhof)
 * build: Use .txt extension for intro.js and outro.js (Timo Tijhof)
@@ -8,6 +8,9 @@
 * build: Add dot files to grunt watch (Ed Sanders)
 * build: Implement build target optimised for jQuery (Timo Tijhof)
 * test: Upgrade jQuery to v1.11.1 (paladox)
+* core: Use bracket notation for 'super' for ES3 compatibility (James D. Forrester)
+* test: Fix broken getHash test for iframe Object (Timo Tijhof)
+* core: Implement support for ES3 browsers (Timo Tijhof)
 
 ## v1.0.9 / 2014-04-01
 * core: Add initClass method for initializing static in base classes (Ed Sanders)
