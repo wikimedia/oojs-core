@@ -1,4 +1,4 @@
-( function ( oo ) {
+( function ( oo, global ) {
 
 	QUnit.module( 'core' );
 
@@ -649,11 +649,8 @@
 		);
 	} );
 
-	QUnit.test( 'getHash: Complex usage', function ( assert ) {
-		var obj, hash, frame,
-			doc = this && 'window' in this && this.window.document;
-
-		QUnit.expect( doc ? 3 : 2 );
+	QUnit.test( 'getHash: Complex usage', 2, function ( assert ) {
+		var obj, hash;
 
 		obj = {
 			a: 1,
@@ -704,16 +701,20 @@
 			// direct comparison would return false.
 			'Treat objects constructed by a function as well'
 		);
+	} );
 
-		// This test can only be done in a browser envrionment
-		if ( doc ) {
-			frame = doc.createElement( 'frame' );
-			frame.src = 'about:blank';
-			doc.getElementById( 'qunit-fixture' ).appendChild( frame );
-			obj = new frame.contentWindow.Object();
+	if ( global.document ) {
+		QUnit.test( 'getHash( iframe Object )', 1, function ( assert ) {
+			var obj, hash, iframe;
+
+			iframe = global.document.createElement( 'iframe' );
+			global.document.getElementById( 'qunit-fixture' ).appendChild( iframe );
+			obj = new iframe.contentWindow.Object();
 			obj.c = 3;
 			obj.b = 2;
 			obj.a = 1;
+
+			hash = '{"a":1,"b":2,"c":3}';
 
 			assert.equal(
 				oo.getHash( obj ),
@@ -723,8 +724,8 @@
 				// window's "Object".
 				'Treat objects constructed by a another window as well'
 			);
-		}
-	} );
+		} );
+	}
 
 	QUnit.test( 'simpleArrayUnion', 5, function ( assert ) {
 
@@ -803,4 +804,4 @@
 
 	} );
 
-}( OO ) );
+}( OO, this ) );
