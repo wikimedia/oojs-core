@@ -1,4 +1,6 @@
-OOjs <a href="https://badge.fury.io/js/oojs"><img src="https://badge.fury.io/js/oojs@2x.png" alt="NPM version" height="18"/></a>
+[![NPM version](https://badge.fury.io/js/oojs.svg)](http://badge.fury.io/js/oojs)
+
+OOjs
 =================
 
 OOjs is a JavaScript library for working with objects.
