@@ -7,7 +7,7 @@ OOjs is a JavaScript library for working with objects.
 
 Key features include inheritance, mixins and utilities for working with objects.
 
- ```javascript
+<pre lang="javascript">
 /* Example */
 ( function ( oo ) {
     function Animal() {}
@@ -19,15 +19,15 @@ Key features include inheritance, mixins and utilities for working with objects.
     oo.inheritClass( Unicorn, Animal );
     oo.mixinClass( Unicorn, Magic );
 }( OO ) );
- ```
+</pre>
 
 Quick start
 ----------
 
 This library is available as an [npm](https://npmjs.org/) package! Install it right away:
-```bash
+<pre lang="bash">
 npm install oojs
-```
+</pre>
 
 Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 
@@ -43,14 +43,14 @@ polyfill is loaded before OOjs.
 These are the methods used:
 
 * Array.isArray
-* Object.create <br/><small>(basic use only, inherit from an object and assign simple properties)</small>
+* Object.create<br/><sup>(basic use only, inherit from an object and assign simple properties)</sup>
 * Object.keys
 * JSON.stringify
 
 While there are no plans to ship a polyfill, we recommend the following and use them ourselves in
 the unit tests to assert support for older browsers.
 
-* [json2.js](https://github.com/douglascrockford/JSON-js) <small>(only for IE6/IE7)</small>
+* [json2.js](https://github.com/douglascrockford/JSON-js) (only for IE6/IE7)
 * [es5-shim.js](https://github.com/es-shims/es5-shim)
 * [polyfill-object-create.js](./test/polyfill-object-create.js)
 
@@ -83,8 +83,7 @@ Release
 ----------
 
 Release process:
-
-```bash
+<pre lang="bash">
 $ cd path/to/oojs/
 $ git remote update
 $ git checkout -b release -t origin/master
@@ -114,4 +113,4 @@ $ git checkout origin/master
 $ git tag "vX.X.X"
 $ git push --tags
 $ npm publish
-```
+</pre>
