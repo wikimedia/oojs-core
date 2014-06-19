@@ -41,8 +41,9 @@ No ES5 syntax or unpolyfillable features are used. To support ES3 engines, ensur
 polyfill is loaded before OOjs.
 
 These are the methods used:
+
 * Array.isArray
-* Object.create <br><small>(basic use only, inherit from an object and assign simple properties)</small>
+* Object.create <br/><small>(basic use only, inherit from an object and assign simple properties)</small>
 * Object.keys
 * JSON.stringify
 
