@@ -498,119 +498,89 @@
 		);
 	} );
 
-	QUnit.test( 'copy( Array )', 8, function ( assert ) {
-		var simpleArray = [ 'foo', 3, true, false ],
+	QUnit.test( 'copy( source )', 10, function ( assert ) {
+		var simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
+			simpleArray = [ 'foo', 3, true, false ],
 			withObj = [ { bar: 'baz', quux: 3 }, 5, null ],
-			nestedArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
+			withArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
 			sparseArray = [ 'a', undefined, undefined, 'b' ],
 			withSparseArray = [ [ 'a', undefined, undefined, 'b' ] ],
 			withFunction = [ function () { return true; } ];
 
-		function Cloneable( p ) {
-			this.p = p;
+		function Cloneable( name ) {
+			this.name = name;
 		}
+		Cloneable.prototype.clone = function () {
+			return new Cloneable( this.name + '-clone' );
+		};
 
-		function Thing( p ) {
-			this.p = p;
+		function Thing( id ) {
+			this.id = id;
 
 			// Create a trap here to make sure we explode if
 			// oo.copy tries to copy non-plain objects.
 			this.child = {
-				parrent: this
+				parent: this
 			};
 		}
-
-		Cloneable.prototype.clone = function () {
-			return new Cloneable( this.p + '-clone' );
-		};
-
-		assert.deepEqual(
-			oo.copy( simpleArray ),
-			simpleArray,
-			'Simple array'
-		);
-		assert.deepEqual(
-			oo.copy( withObj ),
-			withObj,
-			'Array containing object'
-		);
-		assert.deepEqual(
-			oo.copy( [ new Cloneable( 'bar' ) ] ),
-			[ new Cloneable( 'bar-clone' ) ],
-			'Use the .clone() method if available'
-		);
-		assert.deepEqual(
-			oo.copy( nestedArray ),
-			nestedArray,
-			'Nested array'
-		);
-		assert.deepEqual(
-			oo.copy( sparseArray ),
-			sparseArray,
-			'Sparse array'
-		);
-		assert.deepEqual(
-			oo.copy( withSparseArray ),
-			withSparseArray,
-			'Nested sparse array'
-		);
-		assert.deepEqual(
-			oo.copy( withFunction ),
-			withFunction,
-			'Array containing function'
-		);
-
-		assert.deepEqual(
-			oo.copy( [ new Thing( 42 ) ] ),
-			[ new Thing( 42 ) ]
-		);
-	} );
-
-	QUnit.test( 'copy( Object )', 7, function ( assert ) {
-		var simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
-			nestedObj = { foo: { bar: 'baz', quux: 3 }, whee: 5 },
-			withArray = { foo: [ 'a', 'b' ], bar: [ 1, 3, 4 ] },
-			withSparseArray = { foo: [ 'a', undefined, undefined, 'b' ] },
-			withFunction = { func: function () { return true; } },
-			Cloneable = function ( p ) {
-				this.p = p;
-			};
-		Cloneable.prototype.clone = function () { return new Cloneable( this.p + '-clone' ); };
 
 		assert.deepEqual(
 			oo.copy( simpleObj ),
 			simpleObj,
 			'Simple object'
 		);
+
 		assert.deepEqual(
-			oo.copy( nestedObj ),
-			nestedObj,
+			oo.copy( simpleArray ),
+			simpleArray,
+			'Simple array'
+		);
+
+		assert.deepEqual(
+			oo.copy( withObj ),
+			withObj,
 			'Nested object'
 		);
-		assert.deepEqual(
-			oo.copy( new Cloneable( 'foo' ) ),
-			new Cloneable( 'foo-clone' ),
-			'Cloneable object'
-		);
-		assert.deepEqual(
-			oo.copy( { foo: new Cloneable( 'bar' ) } ),
-			{ foo: new Cloneable( 'bar-clone' ) },
-			'Object containing object'
-		);
+
 		assert.deepEqual(
 			oo.copy( withArray ),
 			withArray,
-			'Object with array'
+			'Nested array'
 		);
+
+		assert.deepEqual(
+			oo.copy( sparseArray ),
+			sparseArray,
+			'Sparse array'
+		);
+
 		assert.deepEqual(
 			oo.copy( withSparseArray ),
 			withSparseArray,
-			'Object with sparse array'
+			'Nested sparse array'
 		);
+
 		assert.deepEqual(
 			oo.copy( withFunction ),
 			withFunction,
-			'Object with function'
+			'Nested function'
+		);
+
+		assert.deepEqual(
+			oo.copy( new Cloneable( 'bar' ) ),
+			new Cloneable( 'bar-clone' ),
+			'Cloneable object'
+		);
+
+		assert.deepEqual(
+			oo.copy( { x: new Cloneable( 'bar' ) } ),
+			{ x: new Cloneable( 'bar-clone' ) },
+			'Nested Cloneable object'
+		);
+
+		assert.deepEqual(
+			oo.copy( [ new Thing( 42 ) ] ),
+			[ new Thing( 42 ) ]
 		);
 	} );
 
