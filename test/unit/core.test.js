@@ -256,14 +256,14 @@
 		var tmp;
 
 		assert.deepEqual(
-			oo.getObjectValues( { a: 1, b: 2, c: 3, foo: 'bar' } ),
-			[ 1, 2, 3, 'bar' ],
-			'Simple object with numbers and strings as values'
+			oo.getObjectValues( { a: 1, b: false, foo: 'bar' } ),
+			[ 1, false, 'bar' ],
+			'Plain object with primitive values'
 		);
 		assert.deepEqual(
-			oo.getObjectValues( [ 1, 2, 3, 'bar' ] ),
-			[ 1, 2, 3, 'bar' ],
-			'Simple array with numbers and strings as values'
+			oo.getObjectValues( [ 1, false, 'bar' ] ),
+			[ 1, false, 'bar' ],
+			'Array with primitive values'
 		);
 
 		tmp = function () {
@@ -271,13 +271,24 @@
 
 			return this;
 		};
-		tmp.a = 'foo';
-		tmp.b = 'bar';
+		tmp.a = 1;
+		tmp.b = false;
+		tmp.foo = 'bar';
 
 		assert.deepEqual(
 			oo.getObjectValues( tmp ),
-			[ 'foo', 'bar' ],
+			[ 1, false, 'bar' ],
 			'Function with properties'
+		);
+
+		tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
+		tmp.b = true;
+		tmp.bar = 'quux';
+
+		assert.deepEqual(
+			oo.getObjectValues( tmp ),
+			[ true, 'quux' ],
+			'Only own properties'
 		);
 
 		assert.throws(
@@ -286,14 +297,6 @@
 			},
 			/^TypeError/,
 			'Throw exception for non-object (string)'
-		);
-
-		assert.throws(
-			function () {
-				oo.getObjectValues( 123 );
-			},
-			/^TypeError/,
-			'Throw exception for non-object (number)'
 		);
 
 		assert.throws(
