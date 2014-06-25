@@ -134,29 +134,36 @@
 		assert.equal( bar.eFn(), 'proto of Foo', 'inheritance is live (adding a new method deeper in the chain)' );
 	} );
 
-	QUnit.test( 'mixinClass', 4, function ( assert ) {
+	QUnit.test( 'mixinClass', 6, function ( assert ) {
 		var quux;
 
 		function Foo() {}
-		Foo.prototype.aFn = function () {
-			return 'proto of Foo';
+		oo.initClass( Foo );
+		Foo.static.xFoo = true;
+		Foo.prototype.isFoo = function () {
+			return 'method of Foo';
 		};
 
 		function Bar() {}
-		// oo.inheritClass makes the 'constructor'
-		// property an own property when it restores it.
 		oo.inheritClass( Bar, Foo );
-		Bar.prototype.bFn = function () {
-			return 'mixin of Bar';
+		Bar.static.xBar = true;
+		Bar.prototype.isBar = function () {
+			return 'method of Bar';
 		};
 
 		function Quux() {}
 		oo.mixinClass( Quux, Bar );
 
 		assert.strictEqual(
-			Quux.prototype.aFn,
+			Quux.prototype.isFoo,
 			undefined,
-			'mixin inheritance is not copied over'
+			'method inherited by mixin is not copied over'
+		);
+
+		assert.strictEqual(
+			Quux.static.xFoo,
+			undefined,
+			'static inherited by mixin is not copied over'
 		);
 
 		assert.strictEqual(
@@ -166,14 +173,20 @@
 		);
 
 		assert.strictEqual(
-			Quux.prototype.hasOwnProperty( 'bFn' ),
+			Quux.prototype.hasOwnProperty( 'isBar' ),
 			true,
-			'mixin properties are now own properties, not inherited'
+			'mixin method became own property'
+		);
+
+		assert.strictEqual(
+			Quux.static.hasOwnProperty( 'xBar' ),
+			true,
+			'mixin static property became own property'
 		);
 
 		quux = new Quux();
 
-		assert.equal( quux.bFn(), 'mixin of Bar', 'mixin method works as expected' );
+		assert.equal( quux.isBar(), 'method of Bar', 'method works as expected' );
 	} );
 
 	QUnit.test( 'cloneObject', 4, function ( assert ) {
