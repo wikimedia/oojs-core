@@ -140,7 +140,7 @@
 		assert.ok( true, 'Unbinding an unknown event does not fail' );
 	} );
 
-	QUnit.test( 'connect', 2, function ( assert ) {
+	QUnit.test( 'connect', 3, function ( assert ) {
 		var data1, host,
 			ee = new oo.EventEmitter();
 
@@ -157,11 +157,15 @@
 
 		ee.connect( host, {
 			foo: 'onFoo',
-			bar: [ 'barbara', data1 ]
+			bar: [ 'barbara', data1 ],
+			quux: function () {
+				assert.ok( true, 'Callback ran' );
+			}
 		} );
 
 		ee.emit( 'foo' );
 		ee.emit( 'bar' );
+		ee.emit( 'quux' );
 	} );
 
 	QUnit.test( 'disconnect( host )', 1, function ( assert ) {
