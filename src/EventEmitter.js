@@ -84,9 +84,7 @@ oo.EventEmitter.prototype.off = function ( event, callback, context ) {
 
 	if ( arguments.length === 1 ) {
 		// Remove all bindings for event
-		if ( event in this.bindings ) {
-			delete this.bindings[event];
-		}
+		delete this.bindings[event];
 	} else {
 		if ( typeof callback !== 'function' ) {
 			throw new Error( 'Invalid callback. Function expected.' );
