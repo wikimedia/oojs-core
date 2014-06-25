@@ -19,8 +19,6 @@ oo.EventEmitter = function OoEventEmitter() {
 /**
  * Add a listener to events of a specific event.
  *
- * If the callback/context are already bound to the event, they will not be bound again.
- *
  * @param {string} event Type of event to listen to
  * @param {Function} callback Function to call when event occurs
  * @param {Array} [args] Arguments to pass to listener, will be prepended to emitted arguments
@@ -29,7 +27,7 @@ oo.EventEmitter = function OoEventEmitter() {
  * @chainable
  */
 oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
-	var i, bindings, binding;
+	var bindings;
 
 	// Validate callback
 	if ( typeof callback !== 'function' ) {
@@ -40,15 +38,7 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
 		context = null;
 	}
 	if ( this.bindings.hasOwnProperty( event ) ) {
-		// Check for duplicate callback and context for this event
 		bindings = this.bindings[event];
-		i = bindings.length;
-		while ( i-- ) {
-			binding = bindings[i];
-			if ( bindings.callback === callback && bindings.context === context ) {
-				return this;
-			}
-		}
 	} else {
 		// Auto-initialize bindings list
 		bindings = this.bindings[event] = [];
