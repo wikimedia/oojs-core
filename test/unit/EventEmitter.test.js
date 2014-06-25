@@ -8,7 +8,7 @@
 
 	QUnit.module( 'EventEmitter' );
 
-	QUnit.test( 'on', 6, function ( assert ) {
+	QUnit.test( 'on', 8, function ( assert ) {
 		var callback, x, seq,
 			ee = new oo.EventEmitter();
 
@@ -50,6 +50,19 @@
 			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
 		} );
 		ee.emit( 'context-default' );
+
+		ee.on( 'hasOwnProperty', function () {
+			assert.ok( true, 'Bind event with name "hasOwnProperty"' );
+		} );
+		ee.emit( 'hasOwnProperty' );
+
+		ee.on( 'post', function () {
+			// Binding "hasOwnProperty" worked because the first time 'this.bindings.hasOwnProperty'
+			// is what it should be (inherited from Object.prototype). But it used to break any events
+			// bound after since EventEmitter#on used 'this.bindings.hasOwnProperty'.
+			assert.ok( true, 'Bind event after "hasOwnProperty" event exists' );
+		} );
+		ee.emit( 'post' );
 	} );
 
 	QUnit.test( 'once', 1, function ( assert ) {

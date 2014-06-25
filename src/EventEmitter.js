@@ -1,3 +1,5 @@
+/*global hasOwn */
+
 /**
  * @class OO.EventEmitter
  *
@@ -37,7 +39,7 @@ oo.EventEmitter.prototype.on = function ( event, callback, args, context ) {
 	if ( arguments.length < 4 ) {
 		context = null;
 	}
-	if ( this.bindings.hasOwnProperty( event ) ) {
+	if ( hasOwn.call( this.bindings, event ) ) {
 		bindings = this.bindings[event];
 	} else {
 		// Auto-initialize bindings list
