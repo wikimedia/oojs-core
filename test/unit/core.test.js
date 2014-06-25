@@ -308,7 +308,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object )', 12, function ( assert ) {
+	QUnit.test( 'compare( Object, Object )', 15, function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -380,6 +380,30 @@
 			'Nested structure with no difference'
 		);
 
+		x = { a: 1 };
+
+		assert.strictEqual(
+			oo.compare( x, x ),
+			true,
+			'Compare object to itself'
+		);
+
+		x = Object.create( { foo: 1, map: function () { } } );
+		x.foo = 2;
+		x.bar = true;
+
+		assert.strictEqual(
+			oo.compare( x, { foo: 2, bar: true } ),
+			true,
+			'Ignore inherited properties and methods of a'
+		);
+
+		assert.strictEqual(
+			oo.compare( { foo: 2, bar: true }, x ),
+			true,
+			'Ignore inherited properties and methods of b'
+		);
+
 		assert.strictEqual(
 			oo.compare(
 				{
@@ -401,18 +425,21 @@
 			'Nested structure with difference'
 		);
 
-		x = function X() {
-			this.name = 'X';
+		// Give each function a different number of specified arguments to
+		// also change the 'length' property of a function.
+
+		x = function X( a ) {
+			this.name = a || 'X';
 		};
 		x.foo = [ true ];
 
-		y = function Y() {
-			this.name = 'Y';
+		y = function Y( a, b ) {
+			this.name = b || 'Y';
 		};
 		y.foo = [ true ];
 
-		z = function Z() {
-			this.name = 'Z';
+		z = function Z( a, b, c ) {
+			this.name = c || 'Z';
 		};
 		z.foo = [ 1 ];
 
@@ -421,13 +448,13 @@
 		assert.strictEqual(
 			oo.compare( x, y ),
 			true,
-			'Function object with no difference'
+			'Different functions with the same properties'
 		);
 
 		assert.strictEqual(
 			oo.compare( x, z ),
 			false,
-			'Function object with difference'
+			'Different functions with different properties'
 		);
 	} );
 
