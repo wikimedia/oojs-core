@@ -584,6 +584,38 @@
 		);
 	} );
 
+	QUnit.test( 'copy( source, Function callback )', 2, function ( assert ) {
+		function Cloneable( name ) {
+			this.name = name;
+			this.clone = function () {
+				return new Cloneable( this.name + '-clone' );
+			};
+		}
+
+		assert.deepEqual(
+			oo.copy(
+				{ foo: 'bar', baz: [ 1 ] },
+				function ( val ) {
+					return 'mod-' + val;
+				}
+			),
+			{ foo: 'mod-bar', baz: [ 'mod-1' ] },
+			'Callback on primitive values'
+		);
+
+		assert.deepEqual(
+			oo.copy(
+				[ new Cloneable( 'callback' ) ],
+				function ( val ) {
+					val.name += '-mod';
+					return val;
+				}
+			),
+			[ new Cloneable( 'callback-clone-mod' ) ],
+			'Callback on cloneables'
+		);
+	} );
+
 	QUnit.test( 'getHash: Basic usage', 7, function ( assert ) {
 		var tmp, key,
 			cases = {},
