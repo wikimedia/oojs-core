@@ -8,8 +8,8 @@
 
 	QUnit.module( 'EventEmitter' );
 
-	QUnit.test( 'on', 7, function ( assert ) {
-		var fnMultiple, x,
+	QUnit.test( 'on', 6, function ( assert ) {
+		var callback, x, seq,
 			ee = new oo.EventEmitter();
 
 		assert.throws( function () {
@@ -25,13 +25,20 @@
 		} );
 		ee.emit( 'callback' );
 
-		fnMultiple = function () {
-			assert.ok( true, 'Callbacks can be bound multiple times' );
+		seq = [];
+		callback = function ( data ) {
+			seq.push( data );
 		};
 
-		ee.on( 'multiple', fnMultiple );
-		ee.on( 'multiple', fnMultiple );
-		ee.emit( 'multiple' );
+		ee.on( 'multiple', callback );
+		ee.on( 'multiple', callback );
+		ee.emit( 'multiple', 'x' );
+
+		assert.deepEqual(
+			seq,
+			[ 'x', 'x' ],
+			'Callbacks can be bound multiple times'
+		);
 
 		x = {};
 		ee.on( 'args', function ( a ) {
@@ -42,29 +49,23 @@
 		ee.on( 'context-default', function () {
 			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
 		} );
-		/*
-			Doesn't work because PhantomJS uses an outdated jsc engine that doesn't
-			support everything from ES5 yet, Strict Mode is among the lacking features.
-		( function () {
-			'use strict';
-			assert.strictEqual( this, undefined, 'closure this in strict mode is undefined' );
-		} () );
-		*/
 		ee.emit( 'context-default' );
 	} );
 
 	QUnit.test( 'once', 1, function ( assert ) {
-		var i = 0,
+		var seq,
 			ee = new oo.EventEmitter();
 
+		seq = [];
 		ee.once( 'basic', function () {
-			i++;
-			assert.equal( i, 1, 'Callback ran only once' );
+			seq.push( 'call' );
 		} );
 
 		ee.emit( 'basic' );
 		ee.emit( 'basic' );
 		ee.emit( 'basic' );
+
+		assert.deepEqual( seq, [ 'call' ], 'Callback ran only once' );
 	} );
 
 	QUnit.test( 'emit', 4, function ( assert ) {
@@ -91,34 +92,36 @@
 		ee.emit( 'dataParams', data2A, data2B, data2C );
 	} );
 
-	QUnit.test( 'off', 4, function ( assert ) {
-		var i, fn,
+	QUnit.test( 'off', 2, function ( assert ) {
+		var hits, callback,
 			ee = new oo.EventEmitter();
 
+		hits = 0;
 		ee.on( 'basic', function () {
-			i++;
-			assert.ok( i === 1 || i === 2, 'Callback unbound when unbinding the event name' );
+			hits++;
 		} );
 
-		i = 0;
 		ee.emit( 'basic' );
 		ee.emit( 'basic' );
 		ee.off( 'basic' );
 		ee.emit( 'basic' );
 		ee.emit( 'basic' );
 
-		fn = function () {
-			i++;
-			assert.ok( i === 11 || i === 12, 'Callback unbound when unbinding by function reference' );
+		assert.equal( hits, 2, 'Callback unbound after unbinding with event name' );
+
+		hits = 0;
+		callback = function () {
+			hits++;
 		};
 
-		i = 10;
-		ee.on( 'fn', fn );
+		ee.on( 'fn', callback );
 		ee.emit( 'fn' );
 		ee.emit( 'fn' );
-		ee.off( 'fn', fn );
+		ee.off( 'fn', callback );
 		ee.emit( 'fn' );
 		ee.emit( 'fn' );
+
+		assert.equal( hits, 2, 'Callback unbound after unbinding with function reference' );
 	} );
 
 	QUnit.test( 'connect', 2, function ( assert ) {
