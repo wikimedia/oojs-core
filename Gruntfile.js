@@ -53,7 +53,7 @@ module.exports = function ( grunt ) {
 			},
 			dev: [
 				'*.js',
-				'{src,test}/**/*.js'
+				'{src,tests}/**/*.js'
 			],
 			dist: 'dist/**/*.js'
 		},
@@ -70,8 +70,8 @@ module.exports = function ( grunt ) {
 				}
 			},
 			all: [
-				'test/index.html',
-				'test/index.jquery.html'
+				'tests/index.html',
+				'tests/index.jquery.html'
 			]
 		},
 		watch: {

@@ -22,7 +22,7 @@
   ],
   "main": "./src/oojs.js",
   "scripts": {
-    "test": "grunt test && node test/node-index.js",
+    "test": "grunt test && node tests/node-index.js",
     "prepublish": "grunt build"
   },
   "dependencies": {},
