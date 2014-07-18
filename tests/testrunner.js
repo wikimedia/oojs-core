@@ -1,28 +1,36 @@
-( function ( global ) {
-	/*jshint browser:true, evil:true */
-	var supportsES5 = ( function () {
-		'use strict';
-		return !this;
-	}() );
-
-	if ( !supportsES5 ) {
-		if ( global.JSON ) {
-			// Assume JSON methods are broken in non-ES5 browsers and polyfill them
-			// Support IE8: The native JSON implementation in IE8 seems to have an issue with the
-			// way OO.getHash uses the JSON.stringify with a replacer function, occasionally
-			// throwing "Unexpected call to method or property access."
-			global.JSON = undefined;
-		}
-		document.write( '<script src="../lib/json2.js"></script>' );
-		document.write( '<script src="../lib/es5-shim.js"></script>' );
-		document.write( '<script src="./polyfill-object-create.js"></script>' );
-	}
-
-	// Expose
-	QUnit.supportsES5 = supportsES5;
+( function () {
+	/*jshint browser:true */
 
 	// Configure QUnit
 	QUnit.config.requireExpects = true;
+
+	// Extend QUnit.module to provide a fixture element. This used to be in tests/index.html, but
+	// dynamic test runners like Karma build their own web page.
+	( function () {
+		var orgModule = QUnit.module;
+
+		QUnit.module = function ( name, localEnv ) {
+			localEnv = localEnv || {};
+			orgModule( name, {
+				setup: function () {
+					this.fixture = document.createElement( 'div' );
+					this.fixture.id = 'qunit-fixture';
+					document.body.appendChild( this.fixture );
+
+					if ( localEnv.setup ) {
+						localEnv.setup.call( this );
+					}
+				},
+				teardown: function () {
+					if ( localEnv.teardown ) {
+						localEnv.teardown.call( this );
+					}
+
+					this.fixture.parentNode.removeChild( this.fixture );
+				}
+			} );
+		};
+	}() );
 
 	/**
 	 * Utility for creating iframes
@@ -32,8 +40,8 @@
 	 *  QUnit runner).
 	 */
 	QUnit.tmpIframe = function ( callback ) {
-		var iframe = global.document.createElement( 'iframe' );
-		global.document.getElementById( 'qunit-fixture' ).appendChild( iframe );
+		var iframe = document.createElement( 'iframe' );
+		document.getElementById( 'qunit-fixture' ).appendChild( iframe );
 
 		// Support IE8: Without "src", the contentWindow has no 'Object' constructor.
 		/*jshint scripturl:true */
@@ -41,7 +49,7 @@
 
 		// Support IE6: Iframe contentWindow is populated asynchronously.
 		QUnit.stop();
-		global.setTimeout( function () {
+		setTimeout( function () {
 			callback( iframe, function () {
 
 				iframe.parentNode.removeChild( iframe );
@@ -51,4 +59,4 @@
 		} );
 	};
 
-}( this ) );
+}() );

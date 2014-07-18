@@ -1,5 +1,15 @@
 /*!
  * Grunt file
+ *
+ * ## Cross-browser unit testing
+ *
+ * By default tests run in PhantomJS. To use your local Chrome and Firefox, run 'grunt test karma:local'.
+ *
+ * To run tests in any other browser use: 'grunt watch' and then open http://localhost:9876/ in one
+ * or more browsers. It automatically runs tests in all connected browsers on each grunt-watch event.
+ *
+ * To use the automated Sauce Labs setup (like on Jenkins), simply set SAUCE_USERNAME and
+ * SAUCE_ACCESS_KEY from your bashrc and run 'grunt ci'. Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
 /*jshint node:true */
@@ -9,7 +19,10 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-jscs' );
-	grunt.loadNpmTasks( 'grunt-qunit-istanbul' );
+	grunt.loadNpmTasks( 'grunt-karma' );
+	grunt.renameTask( 'watch', 'runwatch' );
+
+	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
@@ -60,27 +73,74 @@ module.exports = function ( grunt ) {
 		jscs: {
 			dev: '<%= jshint.dev %>'
 		},
-		qunit: {
+		karma: {
 			options: {
-				coverage: {
-					src: [ 'dist/oojs.js', 'dist/oojs.jquery.js' ],
-					instrumentedFiles: 'dist/tmp/coverage',
-					htmlReport: 'dist/coverage',
-					lcovReport: 'dist/lcov'
+				frameworks: [ 'qunit' ],
+				files: [
+					'lib/json2.js',
+					'lib/es5-shim.js',
+					'tests/polyfill-object-create.js',
+					'dist/oojs.js',
+					'tests/testrunner.js',
+					'tests/unit/*.js'
+				],
+				reporters: [ 'dots' ],
+				singleRun: true,
+				autoWatch: false,
+				customLaunchers: sauceBrowsers,
+				sauceLabs: {
+					username: process.env.SAUCE_USERNAME || 'oojs',
+					accessKey: process.env.SAUCE_ACCESS_KEY || '0e464279-3f2a-4ca0-9eb4-db220410bef0',
+					recordScreenshots: false
+				},
+				captureTimeout: 90000
+			},
+			// Run in batches due lack of concurrency limit (https://github.com/karma-runner/karma-sauce-launcher/issues/40)
+			ci1: {
+				browsers: [ 'slChrome', 'slFirefox', 'slIE11' ]
+			},
+			ci2: {
+				browsers: [ 'slSafari5Mac', 'slIE9', 'slIE6' ],
+				// Support IE6: https://github.com/karma-runner/karma/issues/983
+				transports: [ 'jsonp-polling' ]
+			},
+			phantom: {
+				browsers: [ 'PhantomJS' ],
+				preprocessors: {
+					'dist/*.js': [ 'coverage' ]
+				},
+				reporters: [ 'dots', 'coverage' ],
+				coverageReporter: { reporters: [
+					{ type: 'html', dir: 'dist/coverage/' },
+					{ type: 'text-summary', dir: 'dist/coverage/' }
+				] }
+			},
+			jqphantom: {
+				browsers: [ 'PhantomJS' ],
+				options: {
+					files: [
+						'lib/jquery.js',
+						'dist/oojs.jquery.js',
+						'tests/testrunner.js',
+						'tests/unit/*.js'
+					]
 				}
 			},
-			all: [
-				'tests/index.html',
-				'tests/index.jquery.html'
-			]
+			local: {
+				browsers: [ 'Firefox', 'Chrome' ]
+			},
+			bg: {
+				browsers: [ 'PhantomJS', 'Firefox', 'Chrome' ],
+				singleRun: false,
+				background: true
+			}
 		},
-		watch: {
+		runwatch: {
 			files: [
-				'<%= jshint.dev %>',
-				'<%= qunit.all %>',
-				'.{jscsrc,jshintignore,jshintrc}'
+				'.{jscsrc,jshintignore,jshintrc}',
+				'<%= jshint.dev %>'
 			],
-			tasks: 'test'
+			tasks: [ '_test', 'karma:bg:run' ]
 		}
 	} );
 
@@ -99,6 +159,15 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat' ] );
-	grunt.registerTask( 'test', [ 'git-build', 'build', 'jshint', 'jscs', 'qunit' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:phantom', 'karma:jqphantom' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:ci1', 'karma:ci2' ] );
+	grunt.registerTask( 'watch', [ 'karma:bg:start', 'runwatch' ] );
+
+	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
+		grunt.registerTask( 'test', 'ci' );
+	} else {
+		grunt.registerTask( 'test', '_test' );
+	}
+
 	grunt.registerTask( 'default', 'test' );
 };
