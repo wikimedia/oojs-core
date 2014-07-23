@@ -214,7 +214,9 @@ oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
 			bindings = this.bindings[event];
 			i = bindings.length;
 			while ( i-- ) {
-				if ( bindings[i].context === context ) {
+				// bindings[i] may have been removed by the previous step's
+				// this.off so check it still exists
+				if ( bindings[i] && bindings[i].context === context ) {
 					this.off( event, bindings[i].callback, context );
 				}
 			}
