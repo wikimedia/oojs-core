@@ -30,10 +30,10 @@ module.exports = function ( grunt ) {
 			dist: 'dist/*'
 		},
 		concat: {
-			options: {
-				banner: grunt.file.read( 'src/banner.txt' )
-			},
 			oojs: {
+				options: {
+					banner: grunt.file.read( 'src/banner.txt' )
+				},
 				dest: 'dist/oojs.js',
 				src: [
 					'src/intro.js.txt',
@@ -47,6 +47,9 @@ module.exports = function ( grunt ) {
 				]
 			},
 			jquery: {
+				options: {
+					banner: grunt.file.read( 'src/banner.jquery.txt' )
+				},
 				dest: 'dist/oojs.jquery.js',
 				src: [
 					'src/intro.js.txt',
