@@ -1,5 +1,16 @@
 # OOjs Release History
 
+## v1.0.11 / 2014-07-23
+
+* EventEmitter: Remove dead code that claims to prevent double bindings (Timo Tijhof)
+* EventEmitter: Fix bug in disconnect loop for double un-bindings (Ed Sanders)
+* EventEmitter: Support events named "hasOwnProperty" (Timo Tijhof)
+* test: Added tests for a variety of previously-untested areas (Timo Tijhof)
+* build: Update jscs, now using new "wikimedia" preset (Timo Tijhof)
+* build: Use Istanbul for code coverage (Timo Tijhof)
+* build: Implement Karma module for cross-browser unit testing (Timo Tijhof)
+* readme: Cleanup and compatibility with the gitblit markdown parser (Timo Tijhof)
+
 ## v1.0.10 / 2014-06-19
 
 * test: Update qunitjs to v1.14.0 (Timo Tijhof)
