@@ -60,12 +60,12 @@ oo.Factory.prototype.register = function ( constructor ) {
  * @throws {Error} Unknown object name
  */
 oo.Factory.prototype.create = function ( name ) {
-	var args, obj, constructor;
+	var args, obj,
+		constructor = this.lookup( name );
 
-	if ( !this.registry.hasOwnProperty( name ) ) {
+	if ( !constructor ) {
 		throw new Error( 'No class registered by that name: ' + name );
 	}
-	constructor = this.registry[name];
 
 	// Convert arguments to array and shift the first argument (name) off
 	args = Array.prototype.slice.call( arguments, 1 );

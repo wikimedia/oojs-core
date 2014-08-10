@@ -1,3 +1,5 @@
+/*global hasOwn */
+
 /**
  * @class OO.Registry
  * @mixins OO.EventEmitter
@@ -59,5 +61,7 @@ oo.Registry.prototype.register = function ( name, data ) {
  * @return {Mixed|undefined} Data associated with symbolic name
  */
 oo.Registry.prototype.lookup = function ( name ) {
-	return this.registry[name];
+	if ( hasOwn.call( this.registry, name ) ) {
+		return this.registry[name];
+	}
 };
