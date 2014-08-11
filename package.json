@@ -20,7 +20,7 @@
       "url": "http://oojs.mit-license.org"
     }
   ],
-  "main": "./src/oojs.js",
+  "main": "./dist/oojs.js",
   "scripts": {
     "test": "grunt test && node tests/node-index.js",
     "prepublish": "grunt build"
