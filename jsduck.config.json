@@ -1,6 +1,5 @@
 {
 	"--title": "OOjs - Documentation",
-	"--footer": "Documentation for OOjs.",
 	"--output": "docs",
 	"--categories": "./jsduck.categories.json",
 	"--warnings-exit-nonzero": true,
