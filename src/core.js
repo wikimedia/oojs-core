@@ -247,41 +247,46 @@ oo.compare = function ( a, b, asymmetrical ) {
  * Copies are deep, and will either be an object or an array depending on `source`.
  *
  * @param {Object} source Object to copy
- * @param {Function} [callback] Applied to leaf values before they added to the clone
+ * @param {Function} [leafCallback] Applied to leaf values after they are cloned but before they are added to the clone
+ * @param {Function} [nodeCallback] Applied to all values before they are cloned.  If the nodeCallback returns a value other than undefined, the returned value is used instead of attempting to clone.
  * @return {Object} Copy of source object
  */
-oo.copy = function ( source, callback ) {
-	var key, sourceValue, sourceType, destination;
+oo.copy = function ( source, leafCallback, nodeCallback ) {
+	var key, destination;
 
-	if ( typeof source.clone === 'function' ) {
-		return source.clone();
-	}
-
-	destination = Array.isArray( source ) ? new Array( source.length ) : {};
-
-	for ( key in source ) {
-		sourceValue = source[key];
-		sourceType = typeof sourceValue;
-		if ( Array.isArray( sourceValue ) ) {
-			// Array
-			destination[key] = oo.copy( sourceValue, callback );
-		} else if ( sourceValue && typeof sourceValue.clone === 'function' ) {
-			// Duck type object with custom clone method
-			destination[key] = callback ?
-				callback( sourceValue.clone() ) : sourceValue.clone();
-		} else if ( sourceValue && typeof sourceValue.cloneNode === 'function' ) {
-			// DOM Node
-			destination[key] = callback ?
-				callback( sourceValue.cloneNode( true ) ) : sourceValue.cloneNode( true );
-		} else if ( oo.isPlainObject( sourceValue ) ) {
-			// Plain objects
-			destination[key] = oo.copy( sourceValue, callback );
-		} else {
-			// Non-plain objects (incl. functions) and primitive values
-			destination[key] = callback ? callback( sourceValue ) : sourceValue;
+	if ( nodeCallback ) {
+		// Extensibility: check before attempting to clone source.
+		destination = nodeCallback( source );
+		if ( destination !== undefined ) {
+			return destination;
 		}
 	}
 
+	if ( Array.isArray( source ) ) {
+		// Array (fall through)
+		destination = new Array( source.length );
+	} else if ( source && typeof source.clone === 'function' ) {
+		// Duck type object with custom clone method
+		return leafCallback ? leafCallback( source.clone() ) : source.clone();
+	} else if ( source && typeof source.cloneNode === 'function' ) {
+		// DOM Node
+		return leafCallback ?
+			leafCallback( source.cloneNode( true ) ) :
+			source.cloneNode( true );
+	} else if ( oo.isPlainObject( source ) ) {
+		// Plain objects (fall through)
+		destination = {};
+	} else {
+		// Non-plain objects (incl. functions) and primitive values
+		return leafCallback ? leafCallback( source ) : source;
+	}
+
+	// source is an array or a plain object
+	for ( key in source ) {
+		destination[key] = oo.copy( source[key], leafCallback, nodeCallback );
+	}
+
+	// This is an internal node, so we don't apply the leafCallback.
 	return destination;
 };
 

@@ -498,7 +498,7 @@
 		);
 	} );
 
-	QUnit.test( 'copy( source )', 10, function ( assert ) {
+	QUnit.test( 'copy( source )', 14, function ( assert ) {
 		var simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
 			simpleArray = [ 'foo', 3, true, false ],
 			withObj = [ { bar: 'baz', quux: 3 }, 5, null ],
@@ -582,9 +582,34 @@
 			oo.copy( [ new Thing( 42 ) ] ),
 			[ new Thing( 42 ) ]
 		);
+
+		assert.deepEqual(
+			oo.copy ( null ),
+			null,
+			'Copying null'
+		);
+
+		assert.deepEqual(
+			oo.copy ( undefined ),
+			undefined,
+			'Copying undefined'
+		);
+
+		assert.deepEqual(
+			oo.copy ( { a: null, b: undefined } ),
+			{ a: null, b: undefined },
+			'Copying objects with null and undefined fields'
+		);
+
+		assert.deepEqual(
+			oo.copy ( [ null, undefined ] ),
+			[ null, undefined ],
+			'Copying arrays with null and undefined elements'
+		);
+
 	} );
 
-	QUnit.test( 'copy( source, Function callback )', 2, function ( assert ) {
+	QUnit.test( 'copy( source, Function leafCallback )', 3, function ( assert ) {
 		function Cloneable( name ) {
 			this.name = name;
 			this.clone = function () {
@@ -594,13 +619,25 @@
 
 		assert.deepEqual(
 			oo.copy(
-				{ foo: 'bar', baz: [ 1 ] },
+				{ foo: 'bar', baz: [ 1 ], bat: null, bar: undefined },
 				function ( val ) {
 					return 'mod-' + val;
 				}
 			),
-			{ foo: 'mod-bar', baz: [ 'mod-1' ] },
+			{ foo: 'mod-bar', baz: [ 'mod-1' ], bat: 'mod-null', bar: 'mod-undefined' },
 			'Callback on primitive values'
+		);
+
+		assert.deepEqual(
+			oo.copy(
+				new Cloneable( 'callback' ),
+				function ( val ) {
+					val.name += '-mod';
+					return val;
+				}
+			),
+			new Cloneable( 'callback-clone-mod' ),
+			'Callback on cloneables (top-level)'
 		);
 
 		assert.deepEqual(
@@ -612,7 +649,55 @@
 				}
 			),
 			[ new Cloneable( 'callback-clone-mod' ) ],
-			'Callback on cloneables'
+			'Callback on cloneables (as array elements)'
+		);
+	} );
+
+	QUnit.test( 'copy( source, Function leafCallback, Function nodeCallback )', 2, function ( assert ) {
+		function Cloneable( name ) {
+			this.name = name;
+			this.clone = function () {
+				return new Cloneable( this.name + '-clone' );
+			};
+		}
+
+		assert.deepEqual(
+			oo.copy(
+				{ foo: 'bar', baz: [ 1 ], bat: null, bar: undefined },
+				function ( val ) {
+					return 'mod-' + val;
+				},
+				function ( val ) {
+					if ( Array.isArray( val ) ) {
+						return [ 2 ];
+					}
+					if ( val === undefined ) {
+						return '!';
+					}
+				}
+			),
+			{ foo: 'mod-bar', baz: [ 2 ], bat: 'mod-null', bar: '!' },
+			'Callback to override array clone'
+		);
+
+		assert.deepEqual(
+			oo.copy(
+				[
+					new Cloneable( 'callback' ),
+					new Cloneable( 'extension' )
+				],
+				function ( val ) {
+					val.name += '-mod';
+					return val;
+				},
+				function ( val ) {
+					if ( val && val.name === 'extension' ) {
+						return { type: 'extension' };
+					}
+				}
+			),
+			[ new Cloneable( 'callback-clone-mod' ), { type: 'extension' } ],
+			'Extension callback overriding cloneables'
 		);
 	} );
 
