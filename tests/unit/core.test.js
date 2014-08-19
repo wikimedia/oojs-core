@@ -308,7 +308,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object )', 15, function ( assert ) {
+	QUnit.test( 'compare( Object, Object )', 20, function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -324,33 +324,63 @@
 		);
 
 		assert.strictEqual(
+			oo.compare( {}, null ),
+			true,
+			'Empty plain object against null'
+		);
+
+		assert.strictEqual(
+			oo.compare( {}, undefined ),
+			true,
+			'Empty plain object against undefined'
+		);
+
+		assert.strictEqual(
+			oo.compare( null, {} ),
+			true,
+			'Null against empty plain object'
+		);
+
+		assert.strictEqual(
+			oo.compare( { a: 1 }, null ),
+			false,
+			'Plain object against null'
+		);
+
+		assert.strictEqual(
+			oo.compare( { a: 1 }, undefined ),
+			false,
+			'Plain object against null'
+		);
+
+		assert.strictEqual(
 			oo.compare( [ undefined ], [ undefined ] ),
 			true,
-			'Undefined'
+			'Undefined in array'
 		);
 
 		assert.strictEqual(
 			oo.compare( [ null ], [ null ] ),
 			true,
-			'Null'
+			'Null in array'
 		);
 
 		assert.strictEqual(
 			oo.compare( [ true ], [ true ] ),
 			true,
-			'boolean'
+			'boolean in array'
 		);
 
 		assert.strictEqual(
 			oo.compare( [ 42 ], [ 42 ] ),
 			true,
-			'number'
+			'number in array'
 		);
 
 		assert.strictEqual(
 			oo.compare( [ 'foo' ], [ 'foo' ] ),
 			true,
-			'string'
+			'string in array'
 		);
 
 		assert.strictEqual(

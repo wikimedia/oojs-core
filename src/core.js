@@ -208,8 +208,10 @@ oo.getObjectValues = function ( obj ) {
  * the other. An asymmetrical test may also be performed, which checks only that properties in the
  * first object are present in the second object, but not the inverse.
  *
- * @param {Object} a First object to compare
- * @param {Object} b Second object to compare
+ * If either a or b is null or undefined it will be treated as an empty object.
+ *
+ * @param {Object|undefined} a First object to compare
+ * @param {Object|undefined} b Second object to compare
  * @param {boolean} [asymmetrical] Whether to check only that b contains values from a
  * @return {boolean} If the objects contain the same values as each other
  */
@@ -219,6 +221,9 @@ oo.compare = function ( a, b, asymmetrical ) {
 	if ( a === b ) {
 		return true;
 	}
+
+	a = a || {};
+	b = b || {};
 
 	for ( k in a ) {
 		if ( !hasOwn.call( a, k ) ) {
