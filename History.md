@@ -1,5 +1,14 @@
 # OOjs Release History
 
+## v1.0.12 / 2014-08-20
+
+* build: Tell people which version they're using (James D. Forrester)
+* build: Update devDependencies (Timo Tijhof)
+* Registry: Guard against Object prototype keys in lookup() (Ed Sanders)
+* core: Add new oo.copy callback for all nodes, not just leaves (C. Scott Ananian)
+* EventEmitter: Look up callbacks by name at call time (divec)
+* core: Use empty object as fallback when comparing to null/undefined (Ed Sanders)
+
 ## v1.0.11 / 2014-07-23
 
 * EventEmitter: Remove dead code that claims to prevent double bindings (Timo Tijhof)
