@@ -1,4 +1,4 @@
-[![NPM version](https://badge.fury.io/js/oojs.svg)](http://badge.fury.io/js/oojs)
+[![NPM version](https://badge.fury.io/js/oojs.svg)](https://badge.fury.io/js/oojs)
 
 OOjs
 =================
@@ -34,10 +34,10 @@ Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 ECMASCript 5
 ----------
 
-OOjs is optimised for modern ECMAScript 5 environments. However care has been taken to maintain
-parser compatibibility with ES3 engines (such as for IE 6-8).
+OOjs is optimised for modern ECMAScript 5 environments. However, care has been taken to maintain
+parser compatibility with ES3 engines (such as for IE 6-8).
 
-No ES5 syntax or unpolyfillable features are used. To support ES3 engines, ensure an appropiate
+No ES5 syntax or unpolyfillable features are used. To support ES3 engines, ensure an appropriate
 polyfill is loaded before OOjs.
 
 These are the methods used:
