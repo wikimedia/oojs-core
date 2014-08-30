@@ -1,5 +1,8 @@
 # OOjs Release History
 
+## v1.1.0 / 2014-08-31
+* EventEmitter: Make #validateMethod private (Roan Kattouw)
+
 ## v1.0.12 / 2014-08-20
 
 * build: Tell people which version they're using (James D. Forrester)
