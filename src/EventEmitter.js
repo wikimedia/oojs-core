@@ -92,7 +92,7 @@
 	};
 
 	/**
-	 * Adds a one-time listener to a specific event.
+	 * Add a one-time listener to a specific event.
 	 *
 	 * @param {string} event Type of event to listen to
 	 * @param {Function} listener Listener to call when event occurs
