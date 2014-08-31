@@ -308,7 +308,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object )', 20, function ( assert ) {
+	QUnit.test( 'compare', 22, function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -339,6 +339,18 @@
 			oo.compare( null, {} ),
 			true,
 			'Null against empty plain object'
+		);
+
+		assert.strictEqual(
+			oo.compare( [ 1, 2, undefined ], [ 1, 2 ] ),
+			true,
+			'Implicit undefined against explicit undefined'
+		);
+
+		assert.strictEqual(
+			oo.compare( [], [ undefined ] ),
+			true,
+			'Implicit undefined against explicit undefined (empty array)'
 		);
 
 		assert.strictEqual(

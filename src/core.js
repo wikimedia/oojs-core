@@ -23,16 +23,16 @@ oo.initClass = function ( fn ) {
 };
 
 /**
- * Utility for common usage of Object#create for inheriting from one
- * prototype to another.
+ * Inherit from prototype to another using Object#create.
  *
  * Beware: This redefines the prototype, call before setting your prototypes.
+ *
  * Beware: This redefines the prototype, can only be called once on a function.
- *  If called multiple times on the same function, the previous prototype is lost.
- *  This is how prototypal inheritance works, it can only be one straight chain
- *  (just like classical inheritance in PHP for example). If you need to work with
- *  multiple constructors consider storing an instance of the other constructor in a
- *  property instead, or perhaps use a mixin (see OO.mixinClass).
+ * If called multiple times on the same function, the previous prototype is lost.
+ * This is how prototypal inheritance works, it can only be one straight chain
+ * (just like classical inheritance in PHP for example). If you need to work with
+ * multiple constructors consider storing an instance of the other constructor in a
+ * property instead, or perhaps use a mixin (see OO.mixinClass).
  *
  *     function Thing() {}
  *     Thing.prototype.exists = function () {};
@@ -89,13 +89,15 @@ oo.inheritClass = function ( targetFn, originFn ) {
 };
 
 /**
- * Utility to copy over *own* prototype properties of a mixin.
+ * Copy over *own* prototype properties of a mixin.
+ *
  * The 'constructor' (whether implicit or explicit) is not copied over.
  *
  * This does not create inheritance to the origin. If inheritance is needed
  * use oo.inheritClass instead.
  *
  * Beware: This can redefine a prototype property, call before setting your prototypes.
+ *
  * Beware: Don't call before oo.inheritClass.
  *
  *     function Foo() {}
@@ -202,7 +204,7 @@ oo.getObjectValues = function ( obj ) {
 };
 
 /**
- * Recursively compares properties between two objects.
+ * Recursively compare properties between two objects.
  *
  * A false result may be caused by property inequality or by properties in one object missing from
  * the other. An asymmetrical test may also be performed, which checks only that properties in the
@@ -210,8 +212,8 @@ oo.getObjectValues = function ( obj ) {
  *
  * If either a or b is null or undefined it will be treated as an empty object.
  *
- * @param {Object|undefined} a First object to compare
- * @param {Object|undefined} b Second object to compare
+ * @param {Object|undefined|null} a First object to compare
+ * @param {Object|undefined|null} b Second object to compare
  * @param {boolean} [asymmetrical] Whether to check only that b contains values from a
  * @return {boolean} If the objects contain the same values as each other
  */
@@ -316,7 +318,7 @@ oo.getHash = function ( val ) {
 };
 
 /**
- * Helper function for OO.getHash which sorts objects by key.
+ * Sort objects by key (helper function for OO.getHash).
  *
  * This is a callback passed into JSON.stringify.
  *
