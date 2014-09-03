@@ -31,7 +31,7 @@ npm install oojs
 
 Or clone the repo, `git clone https://git.wikimedia.org/git/oojs/core.git`.
 
-ECMASCript 5
+ECMAScript 5
 ----------
 
 OOjs is optimised for modern ECMAScript 5 environments. However, care has been taken to maintain
