@@ -308,7 +308,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare', 22, function ( assert ) {
+	QUnit.test( 'compare', 25, function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -384,15 +384,33 @@
 		);
 
 		assert.strictEqual(
+			oo.compare( [ true ], [ false ] ),
+			false,
+			'different booleans in array'
+		);
+
+		assert.strictEqual(
 			oo.compare( [ 42 ], [ 42 ] ),
 			true,
 			'number in array'
 		);
 
 		assert.strictEqual(
+			oo.compare( [ 42 ], [ 32 ] ),
+			false,
+			'different number in array'
+		);
+
+		assert.strictEqual(
 			oo.compare( [ 'foo' ], [ 'foo' ] ),
 			true,
 			'string in array'
+		);
+
+		assert.strictEqual(
+			oo.compare( [ 'foo' ], [ 'bar' ] ),
+			false,
+			'different string in array'
 		);
 
 		assert.strictEqual(

@@ -239,7 +239,10 @@ oo.compare = function ( a, b, asymmetrical ) {
 		aType = typeof aValue;
 		bType = typeof bValue;
 		if ( aType !== bType ||
-			( ( aType === 'string' || aType === 'number' ) && aValue !== bValue ) ||
+			(
+				( aType === 'string' || aType === 'number' || aType === 'boolean' ) &&
+				aValue !== bValue
+			) ||
 			( aValue === Object( aValue ) && !oo.compare( aValue, bValue, asymmetrical ) ) ) {
 			return false;
 		}
