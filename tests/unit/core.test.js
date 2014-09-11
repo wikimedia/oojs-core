@@ -38,11 +38,11 @@
 		Foo.static.b = 'static of Foo';
 
 		assert.notStrictEqual( Foo.static, Bar.static, 'Static property is not copied, but inheriting' );
-		assert.equal( Bar.static.a, 'static of Foo', 'Foo.static inherits from Bar.static' );
+		assert.strictEqual( Bar.static.a, 'static of Foo', 'Foo.static inherits from Bar.static' );
 
 		Bar.static.b = 'static of Bar';
 
-		assert.equal( Foo.static.b, 'static of Foo', 'Change to Bar.static does not affect Foo.static' );
+		assert.strictEqual( Foo.static.b, 'static of Foo', 'Change to Bar.static does not affect Foo.static' );
 
 		Bar.a = 'prop of Bar';
 		Bar.prototype.b = 'proto of Bar';
@@ -88,20 +88,20 @@
 			'bar instance of Bar'
 		);
 
-		assert.equal( foo.constructor, Foo, 'original constructor is unchanged' );
-		assert.equal( foo.constructedFoo, true, 'original constructor ran' );
-		assert.equal( foo.constructedBar, undefined, 'subclass did not modify parent class' );
+		assert.strictEqual( foo.constructor, Foo, 'original constructor is unchanged' );
+		assert.strictEqual( foo.constructedFoo, true, 'original constructor ran' );
+		assert.strictEqual( foo.constructedBar, undefined, 'subclass did not modify parent class' );
 
-		assert.equal( bar.constructor, Bar, 'constructor property is restored' );
-		assert.equal( bar.constructor.parent, Foo, 'super property points to parent class' );
-		assert.equal( bar.constructedFoo, true, 'parent class ran through this.constructor.super' );
-		assert.equal( bar.constructedBar, true, 'original constructor ran' );
-		assert.equal( bar.b, 'proto of Bar', 'own methods go first' );
-		assert.equal( bar.bFn(), 'proto of Bar', 'own properties go first' );
-		assert.equal( bar.c, 'proto of Foo', 'prototype properties are inherited' );
-		assert.equal( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
+		assert.strictEqual( bar.constructor, Bar, 'constructor property is restored' );
+		assert.strictEqual( bar.constructor.parent, Foo, 'super property points to parent class' );
+		assert.strictEqual( bar.constructedFoo, true, 'parent class ran through this.constructor.super' );
+		assert.strictEqual( bar.constructedBar, true, 'original constructor ran' );
+		assert.strictEqual( bar.b, 'proto of Bar', 'own methods go first' );
+		assert.strictEqual( bar.bFn(), 'proto of Bar', 'own properties go first' );
+		assert.strictEqual( bar.c, 'proto of Foo', 'prototype properties are inherited' );
+		assert.strictEqual( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
 
-		assert.equal( bar.constructor.parent, Foo, 'super property points to parent class' );
+		assert.strictEqual( bar.constructor.parent, Foo, 'super property points to parent class' );
 
 		enumKeys = [];
 		for ( key in bar ) {
@@ -130,8 +130,8 @@
 			return 'proto of Foo';
 		};
 
-		assert.equal( bar.dFn(), 'proto of Bar', 'inheritance is live (overwriting an inherited method)' );
-		assert.equal( bar.eFn(), 'proto of Foo', 'inheritance is live (adding a new method deeper in the chain)' );
+		assert.strictEqual( bar.dFn(), 'proto of Bar', 'inheritance is live (overwriting an inherited method)' );
+		assert.strictEqual( bar.eFn(), 'proto of Foo', 'inheritance is live (adding a new method deeper in the chain)' );
 	} );
 
 	QUnit.test( 'mixinClass', 6, function ( assert ) {
@@ -186,7 +186,7 @@
 
 		quux = new Quux();
 
-		assert.equal( quux.isBar(), 'method of Bar', 'method works as expected' );
+		assert.strictEqual( quux.isBar(), 'method of Bar', 'method works as expected' );
 	} );
 
 	QUnit.test( 'cloneObject', 4, function ( assert ) {
@@ -828,7 +828,7 @@
 		};
 
 		for ( key in cases ) {
-			assert.equal(
+			assert.strictEqual(
 				oo.getHash( cases[key].object ),
 				cases[key].hash,
 				key + ': object has expected hash, regardless of "property order"'
@@ -837,7 +837,7 @@
 
 		// .. and that something completely different is in face different
 		// (just incase getHash is broken and always returns the same)
-		assert.notEqual(
+		assert.notStrictEqual(
 			oo.getHash( { a: 2, b: 2 } ),
 			hash,
 			'A different object has a different hash'
@@ -860,7 +860,7 @@
 			}
 		};
 
-		assert.equal(
+		assert.strictEqual(
 			oo.getHash( obj ),
 			'{"a":1,"b":1,"c":1,"d":["x","y","z"],"e":{"a":2,"b":2,"c":2}}',
 			'Object with nested array and nested object'
@@ -887,7 +887,7 @@
 
 		hash = '{"a":1,"b":2,"c":3}';
 
-		assert.equal(
+		assert.strictEqual(
 			oo.getHash( new Foo() ),
 			hash,
 			// This was previously broken when we used .constructor === Object
@@ -910,7 +910,7 @@
 
 				hash = '{"a":1,"b":2,"c":3}';
 
-				assert.equal(
+				assert.strictEqual(
 					oo.getHash( obj ),
 					hash,
 					// This was previously broken when we used comparison with "Object" in

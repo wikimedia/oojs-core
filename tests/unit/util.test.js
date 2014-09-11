@@ -65,7 +65,7 @@
 			QUnit.tmpIframe( function ( iframe, teardown ) {
 				IframeObject = iframe.contentWindow.Object;
 
-				assert.equal(
+				assert.strictEqual(
 					typeof IframeObject,
 					'function',
 					'Object constructor found'

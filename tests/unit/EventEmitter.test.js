@@ -120,7 +120,7 @@
 		ee.emit( 'basic' );
 		ee.emit( 'basic' );
 
-		assert.equal( hits, 2, 'Callback unbound after unbinding with event name' );
+		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with event name' );
 
 		hits = 0;
 		callback = function () {
@@ -134,7 +134,7 @@
 		ee.emit( 'fn' );
 		ee.emit( 'fn' );
 
-		assert.equal( hits, 2, 'Callback unbound after unbinding with function reference' );
+		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with function reference' );
 
 		ee.off( 'unknown' );
 		assert.ok( true, 'Unbinding an unknown event does not fail' );
