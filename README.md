@@ -1,5 +1,4 @@
-[![NPM version](https://badge.fury.io/js/oojs.svg)](https://badge.fury.io/js/oojs)
-
+[![NPM version](https://badge.fury.io/js/oojs.svg)](https://badge.fury.io/js/oojs) [![devDependency Status](https://david-dm.org/wikimedia/oojs/dev-status.svg)](https://david-dm.org/wikimedia/oojs#info=devDependencies)
 OOjs
 =================
 
