@@ -98,7 +98,8 @@ module.exports = function ( grunt ) {
 				},
 				captureTimeout: 90000
 			},
-			// Run in batches due lack of concurrency limit (https://github.com/karma-runner/karma-sauce-launcher/issues/40)
+			// Run sauce labs browsers in batches due lack of concurrency limit
+			// (https://github.com/karma-runner/karma-sauce-launcher/issues/40)
 			ci1: {
 				browsers: [ 'slChrome', 'slFirefox', 'slIE11' ]
 			},
@@ -107,7 +108,8 @@ module.exports = function ( grunt ) {
 				// Support IE6: https://github.com/karma-runner/karma/issues/983
 				transports: [ 'jsonp-polling' ]
 			},
-			phantom: {
+			// Primary unit test run (includes code coverage)
+			main: {
 				browsers: [ 'PhantomJS' ],
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
@@ -118,7 +120,8 @@ module.exports = function ( grunt ) {
 					{ type: 'text-summary', dir: 'dist/coverage/' }
 				] }
 			},
-			jqphantom: {
+			// Primary run for the -jquery build.
+			jqmain: {
 				browsers: [ 'PhantomJS' ],
 				options: {
 					files: [
@@ -129,11 +132,12 @@ module.exports = function ( grunt ) {
 					]
 				}
 			},
+			// Other supported local browsers
 			local: {
-				browsers: [ 'Firefox', 'Chrome' ]
+				browsers: [ 'Chrome', 'Firefox' ]
 			},
 			bg: {
-				browsers: [ 'PhantomJS', 'Firefox', 'Chrome' ],
+				browsers: [ 'Chrome', 'Firefox' ],
 				singleRun: false,
 				background: true
 			}
@@ -162,12 +166,14 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:phantom', 'karma:jqphantom' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jqmain' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci1', 'karma:ci2' ] );
 	grunt.registerTask( 'watch', [ 'karma:bg:start', 'runwatch' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		grunt.registerTask( 'test', 'ci' );
+	} else if ( process.env.ZUUL_PIPELINE ) {
+		grunt.registerTask( 'test', [ '_test', 'karma:local' ] );
 	} else {
 		grunt.registerTask( 'test', '_test' );
 	}
