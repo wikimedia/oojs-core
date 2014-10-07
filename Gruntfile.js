@@ -3,8 +3,6 @@
  *
  * ## Cross-browser unit testing
  *
- * By default tests run in PhantomJS. To use your local Chrome and Firefox, run 'grunt test karma:local'.
- *
  * To run tests in any other browser use: 'grunt watch' and then open http://localhost:9876/ in one
  * or more browsers. It automatically runs tests in all connected browsers on each grunt-watch event.
  *
@@ -20,7 +18,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-jscs' );
 	grunt.loadNpmTasks( 'grunt-karma' );
-	grunt.renameTask( 'watch', 'runwatch' );
 
 	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
 
@@ -120,8 +117,7 @@ module.exports = function ( grunt ) {
 					{ type: 'text-summary', dir: 'dist/coverage/' }
 				] }
 			},
-			// Primary run for the -jquery build.
-			jqmain: {
+			jquery: {
 				browsers: [ 'PhantomJS' ],
 				options: {
 					files: [
@@ -132,22 +128,16 @@ module.exports = function ( grunt ) {
 					]
 				}
 			},
-			// Other supported local browsers
-			local: {
+			other: {
 				browsers: [ 'Chrome', 'Firefox' ]
-			},
-			bg: {
-				browsers: [ 'Chrome', 'Firefox' ],
-				singleRun: false,
-				background: true
 			}
 		},
-		runwatch: {
+		watch: {
 			files: [
 				'.{jscsrc,jshintignore,jshintrc}',
 				'<%= jshint.dev %>'
 			],
-			tasks: [ '_test', 'karma:bg:run' ]
+			tasks: '_test'
 		}
 	} );
 
@@ -166,14 +156,11 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jqmain' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci1', 'karma:ci2' ] );
-	grunt.registerTask( 'watch', [ 'karma:bg:start', 'runwatch' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		grunt.registerTask( 'test', 'ci' );
-	} else if ( process.env.ZUUL_PIPELINE ) {
-		grunt.registerTask( 'test', [ '_test', 'karma:local' ] );
 	} else {
 		grunt.registerTask( 'test', '_test' );
 	}
