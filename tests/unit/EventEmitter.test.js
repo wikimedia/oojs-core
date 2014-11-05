@@ -8,7 +8,7 @@
 
 	QUnit.module( 'EventEmitter' );
 
-	QUnit.test( 'on', 8, function ( assert ) {
+	QUnit.test( 'on', 9, function ( assert ) {
 		var callback, x, seq,
 			ee = new oo.EventEmitter();
 
@@ -50,6 +50,8 @@
 			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
 		} );
 		ee.emit( 'context-default' );
+
+		assert.deepEqual( ee.emit( 'hasOwnProperty' ), false, 'Event with name "hasOwnProperty" doesn\'t exist by default' );
 
 		ee.on( 'hasOwnProperty', function () {
 			assert.ok( true, 'Bind event with name "hasOwnProperty"' );
