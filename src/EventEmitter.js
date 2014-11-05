@@ -128,7 +128,7 @@
 
 		validateMethod( method, context );
 
-		if ( !( event in this.bindings ) || !this.bindings[event].length ) {
+		if ( !hasOwn.call( this.bindings, event ) || !this.bindings[event].length ) {
 			// No matching bindings
 			return this;
 		}

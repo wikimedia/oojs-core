@@ -107,7 +107,7 @@
 		ee.emit( 'dataParams', data2A, data2B, data2C );
 	} );
 
-	QUnit.test( 'off', 3, function ( assert ) {
+	QUnit.test( 'off', 5, function ( assert ) {
 		var hits, callback,
 			ee = new oo.EventEmitter();
 
@@ -139,7 +139,13 @@
 		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with function reference' );
 
 		ee.off( 'unknown' );
-		assert.ok( true, 'Unbinding an unknown event does not fail' );
+		assert.ok( true, 'Unbinding an unknown event' );
+
+		ee.off( 'unknown', callback );
+		assert.ok( true, 'Unbinding an unknown callback' );
+
+		ee.off( 'hasOwnProperty', callback );
+		assert.ok( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
 	} );
 
 	QUnit.test( 'connect', 3, function ( assert ) {
