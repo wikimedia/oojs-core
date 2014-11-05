@@ -148,7 +148,7 @@
 		assert.ok( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
 	} );
 
-	QUnit.test( 'connect', 3, function ( assert ) {
+	QUnit.test( 'connect', 5, function ( assert ) {
 		var data1, host,
 			ee = new oo.EventEmitter();
 
@@ -160,7 +160,8 @@
 			},
 			barbara: function ( a ) {
 				assert.strictEqual( a, data1, 'Connect takes variadic list of arguments to be passed' );
-			}
+			},
+			bazoon: [ 'not', 'a', 'function' ]
 		};
 
 		ee.connect( host, {
@@ -174,6 +175,18 @@
 		ee.emit( 'foo' );
 		ee.emit( 'bar' );
 		ee.emit( 'quux' );
+
+		assert.throws( function () {
+			ee.connect( host, {
+				baz: 'onBaz'
+			} );
+		}, 'Connecting to unknown method' );
+
+		assert.throws( function () {
+			ee.connect( host, {
+				baz: 'bazoon'
+			} );
+		}, 'Connecting to invalid method' );
 	} );
 
 	QUnit.test( 'disconnect( host )', 1, function ( assert ) {

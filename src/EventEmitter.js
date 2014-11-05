@@ -41,11 +41,6 @@
 			if ( context === undefined || context === null ) {
 				throw new Error( 'Method name "' + method + '" has no context.' );
 			}
-			if ( !( method in context ) ) {
-				// Technically the method does not need to exist yet: it could be
-				// added before call time. But this probably signals a typo.
-				throw new Error( 'Method not found: "' + method + '"' );
-			}
 			if ( typeof context[method] !== 'function' ) {
 				// Technically the property could be replaced by a function before
 				// call time. But this probably signals a typo.
