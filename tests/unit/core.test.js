@@ -189,6 +189,112 @@
 		assert.strictEqual( quux.isBar(), 'method of Bar', 'method works as expected' );
 	} );
 
+	( function () {
+		function testGetSetProp( type, obj ) {
+			QUnit.test( 'getProp( ' + type + ' )', 9, function ( assert ) {
+				assert.strictEqual(
+					oo.getProp( obj, 'foo' ),
+					3,
+					'single key'
+				);
+				assert.deepEqual(
+					oo.getProp( obj, 'bar' ),
+					{ baz: null, quux: { whee: 'yay' } },
+					'single key, returns object'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'bar', 'baz' ),
+					null,
+					'two keys, returns null'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'bar', 'quux', 'whee' ),
+					'yay',
+					'three keys'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'x' ),
+					undefined,
+					'missing property returns undefined'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'foo', 'bar' ),
+					undefined,
+					'missing 2nd-level property returns undefined'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'foo', 'bar', 'baz', 'quux', 'whee' ),
+					undefined,
+					'multiple missing properties don\'t cause an error'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'bar', 'baz', 'quux' ),
+					undefined,
+					'accessing property of null returns undefined, doesn\'t cause an error'
+				);
+				assert.strictEqual(
+					oo.getProp( obj, 'bar', 'baz', 'quux', 'whee', 'yay' ),
+					undefined,
+					'accessing multiple properties of null'
+				);
+			} );
+
+			QUnit.test( 'setProp( ' + type + ' )', 7, function ( assert ) {
+				oo.setProp( obj, 'foo', 4 );
+				assert.strictEqual( 4, obj.foo, 'setting an existing key with depth 1' );
+
+				oo.setProp( obj, 'test', 'TEST' );
+				assert.strictEqual( 'TEST', obj.test, 'setting a new key with depth 1' );
+
+				oo.setProp( obj, 'bar', 'quux', 'whee', 'YAY' );
+				assert.strictEqual( 'YAY', obj.bar.quux.whee, 'setting an existing key with depth 3' );
+
+				oo.setProp( obj, 'bar', 'a', 'b', 'c' );
+				assert.strictEqual( 'c', obj.bar.a.b, 'setting two new keys within an existing key' );
+
+				oo.setProp( obj, 'a', 'b', 'c', 'd', 'e', 'f' );
+				assert.strictEqual( 'f', obj.a.b.c.d.e, 'setting new keys with depth 5' );
+
+				oo.setProp( obj, 'bar', 'baz', 'whee', 'wheee', 'wheeee' );
+				assert.strictEqual( null, obj.bar.baz, 'descending into null fails silently' );
+
+				oo.setProp( obj, 'foo', 'bar', 5 );
+				assert.strictEqual( 4, obj.foo, 'descending into primitive (number) preserves fails silently' );
+			} );
+		}
+
+		var plainObj, funcObj, arrObj;
+		plainObj = {
+			foo: 3,
+			bar: {
+				baz: null,
+				quux: {
+					whee: 'yay'
+				}
+			}
+		};
+		funcObj = function abc( d ) { return d; };
+		funcObj.foo = 3;
+		funcObj.bar = {
+			baz: null,
+			quux: {
+				whee: 'yay'
+			}
+		};
+		arrObj = [ 'a', 'b', 'c' ];
+		arrObj.foo = 3;
+		arrObj.bar = {
+			baz: null,
+			quux: {
+				whee: 'yay'
+			}
+		};
+
+		testGetSetProp( 'Object', plainObj );
+		testGetSetProp( 'Function', funcObj );
+		testGetSetProp( 'Array', arrObj );
+	}() );
+
 	QUnit.test( 'cloneObject', 4, function ( assert ) {
 		var myfoo, myfooClone, expected;
 

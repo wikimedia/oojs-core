@@ -145,6 +145,64 @@ oo.mixinClass = function ( targetFn, originFn ) {
 /* Object Methods */
 
 /**
+ * Get a deeply nested property of an object using variadic arguments, protecting against
+ * undefined property errors.
+ *
+ * `quux = oo.getProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `quux = obj.foo.bar.baz;`
+ * except that the former protects against JS errors if one of the intermediate properties
+ * is undefined. Instead of throwing an error, this function will return undefined in
+ * that case.
+ *
+ * @param {Object} obj
+ * @param {Mixed...} [keys]
+ * @returns obj[arguments[1]][arguments[2]].... or undefined
+ */
+oo.getProp = function ( obj ) {
+	var i,
+		retval = obj;
+	for ( i = 1; i < arguments.length; i++ ) {
+		if ( retval === undefined || retval === null ) {
+			// Trying to access a property of undefined or null causes an error
+			return undefined;
+		}
+		retval = retval[arguments[i]];
+	}
+	return retval;
+};
+
+/**
+ * Set a deeply nested property of an object using variadic arguments, protecting against
+ * undefined property errors.
+ *
+ * `oo.setProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `obj.foo.bar = baz;` except that
+ * the former protects against JS errors if one of the intermediate properties is
+ * undefined. Instead of throwing an error, undefined intermediate properties will be
+ * initialized to an empty object. If an intermediate property is not an object, or if obj itself
+ * is not an object, this function will silently abort.
+ *
+ * @param {Object} obj
+ * @param {Mixed...} [keys]
+ * @param {Mixed} [value]
+ */
+oo.setProp = function ( obj ) {
+	var i,
+		prop = obj;
+	if ( Object( obj ) !== obj ) {
+		return;
+	}
+	for ( i = 1; i < arguments.length - 2; i++ ) {
+		if ( prop[arguments[i]] === undefined ) {
+			prop[arguments[i]] = {};
+		}
+		if ( Object( prop[arguments[i]] ) !== prop[arguments[i]] ) {
+			return;
+		}
+		prop = prop[arguments[i]];
+	}
+	prop[arguments[arguments.length - 2]] = arguments[arguments.length - 1];
+};
+
+/**
  * Create a new object that is an instance of the same
  * constructor as the input, inherits from the same object
  * and contains the same own properties.
