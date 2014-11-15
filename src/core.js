@@ -6,6 +6,7 @@ var
 	 * @singleton
 	 */
 	oo = {},
+	// Optimisation: Local reference to Object.prototype.hasOwnProperty
 	hasOwn = oo.hasOwnProperty,
 	toString = oo.toString;
 
