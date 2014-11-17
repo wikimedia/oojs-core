@@ -273,7 +273,8 @@ oo.getObjectValues = function ( obj ) {
  *
  * @param {Object|undefined|null} a First object to compare
  * @param {Object|undefined|null} b Second object to compare
- * @param {boolean} [asymmetrical] Whether to check only that b contains values from a
+ * @param {boolean} [asymmetrical] Whether to check only that a's values are equal to b's
+ *  (i.e. a is a subset of b)
  * @return {boolean} If the objects contain the same values as each other
  */
 oo.compare = function ( a, b, asymmetrical ) {
@@ -287,9 +288,11 @@ oo.compare = function ( a, b, asymmetrical ) {
 	b = b || {};
 
 	for ( k in a ) {
-		if ( !hasOwn.call( a, k ) ) {
-			// Support es3-shim: Without this filter, comparing [] to {} will be false in ES3
+		if ( !hasOwn.call( a, k ) || a[k] === undefined ) {
+			// Support es3-shim: Without the hasOwn filter, comparing [] to {} will be false in ES3
 			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
+			// Also ignore undefined values, because there is no conceptual difference between
+			// a key that is absent and a key that is present but whose value is undefined.
 			continue;
 		}
 

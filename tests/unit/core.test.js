@@ -414,7 +414,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare', 25, function ( assert ) {
+	QUnit.test( 'compare', 26, function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -526,6 +526,12 @@
 		);
 
 		assert.strictEqual(
+			oo.compare( { a: 5 }, { a: 5, b: undefined } ),
+			true,
+			'Missing key and undefined are treated the same'
+		);
+
+		assert.strictEqual(
 			oo.compare(
 				{
 					foo: [ true, 42 ],
@@ -624,25 +630,28 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 3, function ( assert ) {
+	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 4, function ( assert ) {
 		var x, y, z;
 
 		x = {
-			foo: [ true, 42 ]
+			foo: [ true, 42 ],
+			baz: undefined
 		};
 		y = {
 			foo: [ true, 42, 10 ],
 			bar: [ {
 				x: {},
 				y: [ 'test' ]
-			} ]
+			} ],
+			baz: 1701
 		};
 		z = {
 			foo: [ 1, 42 ],
 			bar: [ {
 				x: {},
 				y: [ 'test' ]
-			} ]
+			} ],
+			baz: 1701
 		};
 
 		assert.strictEqual(
@@ -661,6 +670,12 @@
 			oo.compare( x, z, true ),
 			false,
 			'A subset of B with differences (asymmetrical: true)'
+		);
+
+		assert.strictEqual(
+			oo.compare( [ undefined, 'val2' ], [ 'val1', 'val2', 'val3' ], true ),
+			true,
+			'A subset of B with sparse array'
 		);
 	} );
 
