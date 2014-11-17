@@ -1,5 +1,9 @@
 # OOjs Release History
 
+## v1.1.3 / 2014-11-17
+* core: Explicitly bypass undefined values in oo.compare() (Roan Kattouw)
+* core: Add getProp() and setProp() methods (Roan Kattouw)
+
 ## v1.1.2 / 2014-11-05
 * build: Bump miscellaneous devDependencies to latest (James D. Forrester)
 * build: Use local Chrome and Firefox in ci task (Timo Tijhof)
