@@ -156,7 +156,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
  *
  * @param {Object} obj
  * @param {Mixed...} [keys]
- * @returns obj[arguments[1]][arguments[2]].... or undefined
+ * @return obj[arguments[1]][arguments[2]].... or undefined
  */
 oo.getProp = function ( obj ) {
 	var i,
