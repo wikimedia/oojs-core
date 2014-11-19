@@ -17,7 +17,7 @@ oo.isPlainObject = function ( obj ) {
 	}
 
 	// The try/catch suppresses exceptions thrown when attempting to access
-	// the "constructor" property of certain host objects suich as window.location
+	// the "constructor" property of certain host objects such as Location
 	// in Firefox < 20 (https://bugzilla.mozilla.org/814622)
 	try {
 		if ( obj.constructor &&
