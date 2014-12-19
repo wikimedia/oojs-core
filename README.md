@@ -1,4 +1,5 @@
-[![NPM version](https://badge.fury.io/js/oojs.svg)](https://badge.fury.io/js/oojs) [![devDependency Status](https://david-dm.org/wikimedia/oojs/dev-status.svg)](https://david-dm.org/wikimedia/oojs#info=devDependencies)
+[![npm](https://img.shields.io/npm/v/oojs.svg?style=flat)](https://www.npmjs.com/package/oojs) [![David](https://img.shields.io/david/dev/wikimedia/oojs.svg?style=flat)](https://david-dm.org/wikimedia/oojs#info=devDependencies)
+
 OOjs
 =================
 
