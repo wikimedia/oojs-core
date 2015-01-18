@@ -60,7 +60,8 @@ oo.Factory.prototype.register = function ( constructor ) {
  * @throws {Error} Unknown object name
  */
 oo.Factory.prototype.create = function ( name ) {
-	var args, obj,
+	var obj, i,
+		args = [],
 		constructor = this.lookup( name );
 
 	if ( !constructor ) {
@@ -68,7 +69,9 @@ oo.Factory.prototype.create = function ( name ) {
 	}
 
 	// Convert arguments to array and shift the first argument (name) off
-	args = Array.prototype.slice.call( arguments, 1 );
+	for ( i = 1; i < arguments.length; i++ ) {
+		args.push( arguments[i] );
+	}
 
 	// We can't use the "new" operator with .apply directly because apply needs a
 	// context. So instead just do what "new" does: create an object that inherits from
