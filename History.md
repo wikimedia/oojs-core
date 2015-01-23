@@ -1,5 +1,14 @@
 # OOjs Release History
 
+## v1.1.4 / 2015-01-23
+* build: Update devDependencies (James D. Forrester)
+* Consistently use @return annotation (Bartosz Dziewoński)
+* util: Fix typo "siuch" in comment (Timo Tijhof)
+* readme: Update badges (Timo Tijhof)
+* build: Bump copyright notice to 2015 (James D. Forrester)
+* Factory: Enable v8 optimisation for #create (Ori Livneh)
+* EventEmitter: Enable v8 optimisation for #emit (Ori Livneh)
+
 ## v1.1.3 / 2014-11-17
 * core: Explicitly bypass undefined values in oo.compare() (Roan Kattouw)
 * core: Add getProp() and setProp() methods (Roan Kattouw)
