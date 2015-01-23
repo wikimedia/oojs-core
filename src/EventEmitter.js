@@ -160,12 +160,15 @@
 	 * @return {boolean} If event was handled by at least one listener
 	 */
 	oo.EventEmitter.prototype.emit = function ( event ) {
-		var i, len, binding, bindings, args, method;
+		var args = [],
+			i, len, binding, bindings, method;
 
 		if ( hasOwn.call( this.bindings, event ) ) {
 			// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
 			bindings = this.bindings[event].slice();
-			args = Array.prototype.slice.call( arguments, 1 );
+			for ( i = 1, len = arguments.length; i < len; i++ ) {
+				args.push( arguments[i] );
+			}
 			for ( i = 0, len = bindings.length; i < len; i++ ) {
 				binding = bindings[i];
 				if ( typeof binding.method === 'string' ) {
