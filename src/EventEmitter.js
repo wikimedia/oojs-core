@@ -95,11 +95,11 @@
 	 */
 	oo.EventEmitter.prototype.once = function ( event, listener ) {
 		var eventEmitter = this,
-			listenerWrapper = function () {
-				eventEmitter.off( event, listenerWrapper );
-				listener.apply( eventEmitter, Array.prototype.slice.call( arguments, 0 ) );
+			wrapper = function () {
+				eventEmitter.off( event, wrapper );
+				return listener.apply( this, arguments );
 			};
-		return this.on( event, listenerWrapper );
+		return this.on( event, wrapper );
 	};
 
 	/**
