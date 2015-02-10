@@ -38,7 +38,7 @@
 		Thing.prototype.time = function () {};
 
 		assert.strictEqual( oo.isPlainObject( new Thing() ), false, 'Instance of constructor function with prototype' );
-	});
+	} );
 
 	if ( global.document ) {
 		QUnit.test( 'isPlainObject - browser specific', 7, function ( assert ) {
@@ -93,7 +93,7 @@
 				assert.strictEqual( threw, false, 'native host object' );
 
 				teardown();
-			});
+			} );
 		} );
 	}
 

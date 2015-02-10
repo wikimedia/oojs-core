@@ -765,25 +765,25 @@
 		);
 
 		assert.deepEqual(
-			oo.copy ( null ),
+			oo.copy( null ),
 			null,
 			'Copying null'
 		);
 
 		assert.deepEqual(
-			oo.copy ( undefined ),
+			oo.copy( undefined ),
 			undefined,
 			'Copying undefined'
 		);
 
 		assert.deepEqual(
-			oo.copy ( { a: null, b: undefined } ),
+			oo.copy( { a: null, b: undefined } ),
 			{ a: null, b: undefined },
 			'Copying objects with null and undefined fields'
 		);
 
 		assert.deepEqual(
-			oo.copy ( [ null, undefined ] ),
+			oo.copy( [ null, undefined ] ),
 			[ null, undefined ],
 			'Copying arrays with null and undefined elements'
 		);
