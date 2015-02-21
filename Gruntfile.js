@@ -121,7 +121,7 @@ module.exports = function ( grunt ) {
 				browsers: [ 'PhantomJS' ],
 				options: {
 					files: [
-						'lib/jquery.js',
+						'node_modules/jquery/dist/jquery.js',
 						'dist/oojs.jquery.js',
 						'tests/testrunner.js',
 						'tests/unit/*.js'
