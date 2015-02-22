@@ -2,109 +2,87 @@
 
 	QUnit.module( 'core' );
 
-	QUnit.test( 'inheritClass', 26, function ( assert ) {
-		var foo, bar, key, enumKeys;
-
+	QUnit.test( 'initClass', 1, function ( assert ) {
 		function Foo() {
-			this.constructedFoo = true;
 		}
+		oo.initClass( Foo );
 
-		Foo.a = 'prop of Foo';
-		Foo.b = 'prop of Foo';
-		Foo.prototype.b = 'proto of Foo';
-		Foo.prototype.c = 'proto of Foo';
-		Foo.prototype.bFn = function () {
-			return 'proto of Foo';
-		};
-		Foo.prototype.cFn = function () {
-			return 'proto of Foo';
-		};
+		assert.deepEqual( Foo.static, {}, 'A "static" property (empty object) is created' );
+	} );
 
-		foo = new Foo();
+	QUnit.test( 'inheritClass', 27, function ( assert ) {
+		var base, child, key, enumKeys;
 
-		function Bar() {
-			Bar.parent.call( this );
-			this.constructedBar = true;
+		function InitA() {}
+		function InitB() {}
+		oo.inheritClass( InitB, InitA );
+
+		assert.deepEqual( InitA.static, {}, 'initialise static of parent class' );
+		assert.deepEqual( InitB.static, {}, 'initialise static of child class' );
+		assert.notStrictEqual( InitA.static, InitB.static, 'static container is unique' );
+
+		function Base() {
+			this.instanceA = 'Base';
+			this.instanceB = 'Base';
 		}
-		oo.inheritClass( Bar, Foo );
-
-		assert.deepEqual(
-			Foo.static,
-			{},
-			'A "static" property (empty object) is automatically created if absent'
-		);
-
-		Foo.static.a = 'static of Foo';
-		Foo.static.b = 'static of Foo';
-
-		assert.notStrictEqual( Foo.static, Bar.static, 'Static property is not copied, but inheriting' );
-		assert.strictEqual( Bar.static.a, 'static of Foo', 'Foo.static inherits from Bar.static' );
-
-		Bar.static.b = 'static of Bar';
-
-		assert.strictEqual( Foo.static.b, 'static of Foo', 'Change to Bar.static does not affect Foo.static' );
-
-		Bar.a = 'prop of Bar';
-		Bar.prototype.b = 'proto of Bar';
-		Bar.prototype.bFn = function () {
-			return 'proto of Bar';
+		oo.initClass( Base );
+		Base.static.stat = 'Base';
+		Base.prototype.protoA = 'Base';
+		Base.prototype.protoB = function () {
+			return 'Base';
 		};
+		Base.prototype.protoC = function () {
+			return 'Base';
+		};
+		base = new Base();
+
+		function Child() {
+			Child.parent.call( this );
+			this.instanceB = 'Child';
+			this.instanceC = 'Child';
+		}
+		oo.inheritClass( Child, Base );
+		Child.prototype.protoC = function () {
+			return 'Child';
+		};
+		child = new Child();
+
+		assert.strictEqual( base instanceof Object, true, 'base instance of Object' );
+		assert.strictEqual( base instanceof Base, true, 'base instance of Base' );
+		assert.strictEqual( base instanceof Child, false, 'base not instance of Child' );
+		assert.strictEqual( child instanceof Object, true, 'base instance of Object' );
+		assert.strictEqual( child instanceof Base, true, 'base instance of Base' );
+		assert.strictEqual( child instanceof Child, true, 'base instance of Child' );
+
+		assert.strictEqual( Child.static.stat, 'Base', 'inherit static' );
+
+		Child.static.stat = 'Child';
+
+		assert.strictEqual( Base.static.stat, 'Base', 'Change to Child static does not affect Base' );
+
+		assert.strictEqual( base.constructor, Base, 'preserve Base constructor property' );
+		assert.strictEqual( base.instanceA, 'Base', 'constructor function ran' );
+		assert.strictEqual( base.instanceC, undefined, 'child constructor did not run' );
+
+		assert.strictEqual( child.constructor, Child, 'preserve Child constructor property' );
+		assert.strictEqual( Child.parent, Base, 'parent property refers to parent class' );
+		assert.strictEqual( child.instanceA, 'Base', 'parent constructor ran' );
+		assert.strictEqual( child.instanceB, 'Child', 'original constructor ran after parent' );
+		assert.strictEqual( child.instanceC, 'Child', 'original constructor ran' );
+		assert.strictEqual( child.protoB(), 'Base', 'inherit parent prototype (function value)' );
+		assert.strictEqual( child.protoA, 'Base', 'inherit parent prototype (non-function value)' );
+		assert.strictEqual( child.protoC(), 'Child', 'own properties go first' );
 
 		assert.throws( function () {
-			oo.inheritClass( Bar, Foo );
+			oo.inheritClass( Child, Base );
 		}, 'Throw if target already inherits from source (from an earlier call)' );
 
 		assert.throws( function () {
-			oo.inheritClass( Bar, Object );
+			oo.inheritClass( Child, Object );
 		}, 'Throw if target already inherits from source (naturally, Object)' );
 
-		bar = new Bar();
-
-		assert.strictEqual(
-			Bar.b,
-			undefined,
-			'Constructor properties are not inherited'
-		);
-
-		assert.strictEqual(
-			foo instanceof Foo,
-			true,
-			'foo instance of Foo'
-		);
-		assert.strictEqual(
-			foo instanceof Bar,
-			false,
-			'foo not instance of Bar'
-		);
-
-		assert.strictEqual(
-			bar instanceof Foo,
-			true,
-			'bar instance of Foo'
-		);
-		assert.strictEqual(
-			bar instanceof Bar,
-			true,
-			'bar instance of Bar'
-		);
-
-		assert.strictEqual( foo.constructor, Foo, 'original constructor is unchanged' );
-		assert.strictEqual( foo.constructedFoo, true, 'original constructor ran' );
-		assert.strictEqual( foo.constructedBar, undefined, 'subclass did not modify parent class' );
-
-		assert.strictEqual( bar.constructor, Bar, 'constructor property is restored' );
-		assert.strictEqual( bar.constructor.parent, Foo, 'super property points to parent class' );
-		assert.strictEqual( bar.constructedFoo, true, 'parent class ran through this.constructor.super' );
-		assert.strictEqual( bar.constructedBar, true, 'original constructor ran' );
-		assert.strictEqual( bar.b, 'proto of Bar', 'own methods go first' );
-		assert.strictEqual( bar.bFn(), 'proto of Bar', 'own properties go first' );
-		assert.strictEqual( bar.c, 'proto of Foo', 'prototype properties are inherited' );
-		assert.strictEqual( bar.cFn(), 'proto of Foo', 'prototype methods are inherited' );
-
-		assert.strictEqual( bar.constructor.parent, Foo, 'super property points to parent class' );
-
 		enumKeys = [];
-		for ( key in bar ) {
+		for ( key in child ) {
 			enumKeys.push( key );
 		}
 
@@ -120,73 +98,81 @@
 			'The restored "constructor" property should not be enumerable'
 		);
 
-		Bar.prototype.dFn = function () {
-			return 'proto of Bar';
+		Base.prototype.protoD = function () {
+			return 'Base';
 		};
-		Foo.prototype.dFn = function () {
-			return 'proto of Foo';
-		};
-		Foo.prototype.eFn = function () {
-			return 'proto of Foo';
+		Child.prototype.protoB = function () {
+			return 'Child';
 		};
 
-		assert.strictEqual( bar.dFn(), 'proto of Bar', 'inheritance is live (overwriting an inherited method)' );
-		assert.strictEqual( bar.eFn(), 'proto of Foo', 'inheritance is live (adding a new method deeper in the chain)' );
+		assert.strictEqual( child.protoD(), 'Base', 'inheritance is live (adding a new method deeper in the chain)' );
+		assert.strictEqual( child.protoB(), 'Child', 'inheritance is live (overwriting an inherited method)' );
 	} );
 
-	QUnit.test( 'mixinClass', 6, function ( assert ) {
-		var quux;
+	QUnit.test( 'mixinClass', 8, function ( assert ) {
+		var obj;
 
-		function Foo() {}
-		oo.initClass( Foo );
-		Foo.static.xFoo = true;
-		Foo.prototype.isFoo = function () {
-			return 'method of Foo';
+		function Init() {}
+		function Init2() {}
+		OO.mixinClass( Init2, Init );
+
+		assert.deepEqual( Init.static, {}, 'initialise static of parent class' );
+		assert.deepEqual( Init2.static, {}, 'initialise static of child class' );
+
+		function Base() {}
+		oo.initClass( Base );
+		Base.static.stat = 'Base';
+		Base.prototype.protoFunction = function () {
+			return 'Base';
 		};
 
-		function Bar() {}
-		oo.inheritClass( Bar, Foo );
-		Bar.static.xBar = true;
-		Bar.prototype.isBar = function () {
-			return 'method of Bar';
+		function Mixin() {}
+		oo.initClass( Mixin );
+
+		function Child() {}
+		oo.inheritClass( Child, Base );
+		oo.mixinClass( Child, Mixin );
+		Child.static.stat2 = 'Child';
+		Child.prototype.protoFunction2 = function () {
+			return 'Child';
 		};
 
-		function Quux() {}
-		oo.mixinClass( Quux, Bar );
+		function Mixer() {}
+		oo.mixinClass( Mixer, Child );
 
 		assert.strictEqual(
-			Quux.prototype.isFoo,
+			Mixer.prototype.protoFunction,
 			undefined,
-			'method inherited by mixin is not copied over'
+			'mixin does not copy inherited prototype'
 		);
 
 		assert.strictEqual(
-			Quux.static.xFoo,
+			Mixer.static.stat,
 			undefined,
-			'static inherited by mixin is not copied over'
+			'mixin does not copy inherited static'
 		);
 
 		assert.strictEqual(
-			Quux.prototype.constructor,
-			Quux,
-			'constructor property skipped'
+			Mixer.prototype.constructor,
+			Mixer,
+			'mixin preserves constructor property'
 		);
 
 		assert.strictEqual(
-			Quux.prototype.hasOwnProperty( 'isBar' ),
+			Mixer.prototype.hasOwnProperty( 'protoFunction2' ),
 			true,
-			'mixin method became own property'
+			'mixin copies method'
 		);
 
 		assert.strictEqual(
-			Quux.static.hasOwnProperty( 'xBar' ),
+			Mixer.static.hasOwnProperty( 'stat2' ),
 			true,
-			'mixin static property became own property'
+			'mixin copies static member'
 		);
 
-		quux = new Quux();
+		obj = new Mixer();
 
-		assert.strictEqual( quux.isBar(), 'method of Bar', 'method works as expected' );
+		assert.strictEqual( obj.protoFunction2(), 'Child', 'method works as expected' );
 	} );
 
 	( function () {
