@@ -1,5 +1,13 @@
 # OOjs Release History
 
+## v1.1.5 / 2015-02-25
+* EventEmitter: Remove unneeded Array.prototype.slice call (Timo Tijhof)
+* build: Bump various devDependencies (James D. Forrester)
+* build: Remove unused generateDocs.sh script (Timo Tijhof)
+* Build: Use jquery from npm instead of embedded in the repo (Timo Tijhof)
+* Use Node#isEqualNode to compare node objects (Ori Livneh)
+* Recurse more frugally in oo.compare (David Chan)
+
 ## v1.1.4 / 2015-01-23
 * build: Update devDependencies (James D. Forrester)
 * Consistently use @return annotation (Bartosz Dziewoński)
