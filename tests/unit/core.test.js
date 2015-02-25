@@ -630,8 +630,8 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 4, function ( assert ) {
-		var x, y, z;
+	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 5, function ( assert ) {
+		var x, y, z, i, depth, compare;
 
 		x = {
 			foo: [ true, 42 ],
@@ -677,6 +677,31 @@
 			true,
 			'A subset of B with sparse array'
 		);
+
+		x = null;
+		y = null;
+		depth = 15;
+		for ( i = 0; i < depth; i++ ) {
+			x = [ x, x ];
+			y = [ y, y ];
+		}
+		compare = oo.compare;
+		try {
+			oo.compare = function () {
+				oo.compare.callCount += 1;
+				return compare.apply( null, arguments );
+			};
+			oo.compare.callCount = 0;
+			oo.compare( x, y );
+			/**jshint bitwise: true */
+			assert.strictEqual(
+				oo.compare.callCount,
+				Math.pow( 2, depth + 1 ) - 2,
+				'Efficient depth recursion'
+			);
+		} finally {
+			oo.compare = compare;
+		}
 	} );
 
 	QUnit.test( 'copy( source )', 14, function ( assert ) {
