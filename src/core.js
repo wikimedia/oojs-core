@@ -287,8 +287,12 @@ oo.compare = function ( a, b, asymmetrical ) {
 	a = a || {};
 	b = b || {};
 
+	if ( typeof a.nodeType === 'number' && typeof a.isEqualNode === 'function' ) {
+		return a.isEqualNode( b );
+	}
+
 	for ( k in a ) {
-		if ( !hasOwn.call( a, k ) || a[k] === undefined ) {
+		if ( !hasOwn.call( a, k ) || a[k] === undefined || a[k] === b[k] ) {
 			// Support es3-shim: Without the hasOwn filter, comparing [] to {} will be false in ES3
 			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
 			// Also ignore undefined values, because there is no conceptual difference between
