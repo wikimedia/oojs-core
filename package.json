@@ -23,6 +23,7 @@
   "main": "./dist/oojs.js",
   "scripts": {
     "test": "grunt test && node tests/node-index.js",
+    "doc": "jsduck",
     "prepublish": "grunt build"
   },
   "dependencies": {},

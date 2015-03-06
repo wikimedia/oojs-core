@@ -3,6 +3,7 @@
 /**
  * Assert whether a value is a plain object or not.
  *
+ * @member OO
  * @param {Mixed} obj
  * @return {boolean}
  */
