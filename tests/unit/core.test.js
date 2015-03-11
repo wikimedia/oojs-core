@@ -1056,6 +1056,46 @@
 		} );
 	}
 
+	QUnit.test( 'unique', 6, function ( assert ) {
+
+		assert.deepEqual(
+			oo.unique( [] ),
+			[],
+			'Empty'
+		);
+
+		assert.deepEqual(
+			oo.unique( [ 'a', 'b', 'a' ] ),
+			[ 'a', 'b' ],
+			'Simple string duplication'
+		);
+
+		assert.deepEqual(
+			oo.unique( [ 'o', 'o', 'j', 's' ] ),
+			[ 'o', 'j', 's' ],
+			'Simple string duplication'
+		);
+
+		assert.deepEqual(
+			oo.unique( [ 3, 3, 2, 4, 3, 1, 2, 1, 1, 2 ] ),
+			[ 3, 2, 4, 1 ],
+			'Simple number duplication'
+		);
+
+		assert.deepEqual(
+			oo.unique( [ 1, '1', 1, '1', { a: 1 }, { a: 1 } ] ),
+			[ 1, '1', { a: 1 }, { a: 1 } ],
+			'Strict equality de-duplication only'
+		);
+
+		assert.deepEqual(
+			oo.unique( [ 1, 2, 3 ] ),
+			[ 1, 2, 3 ],
+			'No duplication'
+		);
+
+	} );
+
 	QUnit.test( 'simpleArrayUnion', 5, function ( assert ) {
 
 		assert.deepEqual(

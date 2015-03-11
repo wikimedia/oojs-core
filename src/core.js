@@ -422,6 +422,21 @@ oo.getHash.keySortReplacer = function ( key, val ) {
 };
 
 /**
+ * Get the unique values of an array, removing duplicates
+ *
+ * @param {Array} arr Array
+ * @return {Array} Unique values in array
+ */
+oo.unique = function ( arr ) {
+	return arr.reduce( function ( result, current ) {
+		if ( result.indexOf( current ) === -1 ) {
+			result.push( current );
+		}
+		return result;
+	}, [] );
+};
+
+/**
  * Compute the union (duplicate-free merge) of a set of arrays.
  *
  * Arrays values must be convertable to object keys (strings).
