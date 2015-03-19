@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v1.1.6 / 2015-03-18
+* core: Improve class related unit tests (Timo Tijhof)
+* jsduck: Set --processes=0 to fix warnings-exit-nonzero (Timo Tijhof)
+* core: Provide OO.unique for removing duplicates from arrays (Ed Sanders)
+
 ## v1.1.5 / 2015-02-25
 * EventEmitter: Remove unneeded Array.prototype.slice call (Timo Tijhof)
 * build: Bump various devDependencies (James D. Forrester)
