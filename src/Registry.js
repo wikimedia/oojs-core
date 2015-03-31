@@ -31,7 +31,7 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
 /**
  * Associate one or more symbolic names with some data.
  *
- * Only the base name will be registered, overriding any existing entry with the same base name.
+ * Any existing entry with the same name will be overridden.
  *
  * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Mixed} data Data to associate with symbolic name
@@ -54,8 +54,6 @@ oo.Registry.prototype.register = function ( name, data ) {
 
 /**
  * Get data for a given symbolic name.
- *
- * Lookups are done using the base name.
  *
  * @param {string} name Symbolic name
  * @return {Mixed|undefined} Data associated with symbolic name
