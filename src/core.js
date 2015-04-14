@@ -94,12 +94,12 @@ oo.inheritClass = function ( targetFn, originFn ) {
  *
  * The 'constructor' (whether implicit or explicit) is not copied over.
  *
- * This does not create inheritance to the origin. If inheritance is needed
- * use oo.inheritClass instead.
+ * This does not create inheritance to the origin. If you need inheritance,
+ * use OO.inheritClass instead.
  *
  * Beware: This can redefine a prototype property, call before setting your prototypes.
  *
- * Beware: Don't call before oo.inheritClass.
+ * Beware: Don't call before OO.inheritClass.
  *
  *     function Foo() {}
  *     function Context() {}
