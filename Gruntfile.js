@@ -114,7 +114,7 @@ module.exports = function ( grunt ) {
 				reporters: [ 'dots', 'coverage' ],
 				coverageReporter: { reporters: [
 					{ type: 'html', dir: 'coverage/' },
-					{ type: 'text-summary', dir: 'coverage/' }
+					{ type: 'text-summary' }
 				] }
 			},
 			jquery: {
