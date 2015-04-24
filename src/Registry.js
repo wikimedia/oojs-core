@@ -26,6 +26,12 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
  * @param {Mixed} data
  */
 
+/**
+ * @event unregister
+ * @param {string} name
+ * @param {Mixed} data Data removed from registry
+ */
+
 /* Methods */
 
 /**
@@ -46,6 +52,30 @@ oo.Registry.prototype.register = function ( name, data ) {
 	} else if ( Array.isArray( name ) ) {
 		for ( i = 0, len = name.length; i < len; i++ ) {
 			this.register( name[i], data );
+		}
+	} else {
+		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );
+	}
+};
+
+/**
+ * Remove one or more symbolic names from the registry
+ *
+ * @param {string|string[]} name Symbolic name or list of symbolic names
+ * @fires unregister
+ * @throws {Error} Name argument must be a string or array
+ */
+oo.Registry.prototype.unregister = function ( name ) {
+	var i, len, data;
+	if ( typeof name === 'string' ) {
+		data = this.lookup( name );
+		if ( data !== undefined ) {
+			delete this.registry[name];
+			this.emit( 'unregister', name, data );
+		}
+	} else if ( Array.isArray( name ) ) {
+		for ( i = 0, len = name.length; i < len; i++ ) {
+			this.unregister( name[i] );
 		}
 	} else {
 		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );

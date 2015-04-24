@@ -2,7 +2,7 @@
 
 	QUnit.module( 'Registry' );
 
-	QUnit.test( 'register', 3, function ( assert ) {
+	QUnit.test( 'register/unregister', 7, function ( assert ) {
 		var registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
@@ -11,6 +11,15 @@
 		assert.strictEqual( registry.lookup( 'registry-item-1' ), 1 );
 		assert.strictEqual( registry.lookup( 'registry-item-2' ), 23 );
 		assert.strictEqual( registry.lookup( 'registry-item-3' ), 23 );
+
+		registry.unregister( 'registry-item-1', 1 );
+		assert.strictEqual( registry.lookup( 'registry-item-1' ), undefined );
+		assert.strictEqual( registry.lookup( 'registry-item-2' ), 23 );
+
+		registry.unregister( [ 'registry-item-2', 'registry-item-3' ], 23 );
+		assert.strictEqual( registry.lookup( 'registry-item-2' ), undefined );
+		assert.strictEqual( registry.lookup( 'registry-item-3' ), undefined );
+
 	} );
 
 	QUnit.test( 'lookup', 6, function ( assert ) {

@@ -17,7 +17,7 @@
 
 	/* Tests */
 
-	QUnit.test( 'register', 2, function ( assert ) {
+	QUnit.test( 'register/unregister', 4, function ( assert ) {
 		var factory = new oo.Factory();
 		assert.throws(
 			function () {
@@ -29,6 +29,17 @@
 
 		factory.register( oo.FactoryObjectStub );
 		assert.strictEqual( factory.lookup( 'factory-object-stub' ), oo.FactoryObjectStub );
+
+		assert.throws(
+			function () {
+				factory.unregister( 'not-a-function' );
+			},
+			Error,
+			'Throws an exception when trying to unregister a non-function value as a constructor'
+		);
+
+		factory.unregister( oo.FactoryObjectStub );
+		assert.strictEqual( factory.lookup( 'factory-object-stub' ), undefined );
 	} );
 
 	QUnit.test( 'create', 3, function ( assert ) {

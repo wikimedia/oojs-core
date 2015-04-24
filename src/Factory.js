@@ -5,6 +5,7 @@
  * @constructor
  */
 oo.Factory = function OoFactory() {
+	// Parent constructor
 	oo.Factory.parent.call( this );
 };
 
@@ -41,7 +42,30 @@ oo.Factory.prototype.register = function ( constructor ) {
 		throw new Error( 'Name must be a string and must not be empty' );
 	}
 
+	// Parent method
 	oo.Factory.parent.prototype.register.call( this, name, constructor );
+};
+
+/**
+ * Unregister a constructor from the factory.
+ *
+ * @param {Function} constructor Constructor to unregister
+ * @throws {Error} Name must be a string and must not be empty
+ * @throws {Error} Constructor must be a function
+ */
+oo.Factory.prototype.unregister = function ( constructor ) {
+	var name;
+
+	if ( typeof constructor !== 'function' ) {
+		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
+	}
+	name = constructor.static && constructor.static.name;
+	if ( typeof name !== 'string' || name === '' ) {
+		throw new Error( 'Name must be a string and must not be empty' );
+	}
+
+	// Parent method
+	oo.Factory.parent.prototype.unregister.call( this, name );
 };
 
 /**
