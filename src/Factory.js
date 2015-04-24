@@ -6,9 +6,6 @@
  */
 oo.Factory = function OoFactory() {
 	oo.Factory.parent.call( this );
-
-	// Properties
-	this.entries = [];
 };
 
 /* Inheritance */
@@ -43,7 +40,6 @@ oo.Factory.prototype.register = function ( constructor ) {
 	if ( typeof name !== 'string' || name === '' ) {
 		throw new Error( 'Name must be a string and must not be empty' );
 	}
-	this.entries.push( name );
 
 	oo.Factory.parent.prototype.register.call( this, name, constructor );
 };
