@@ -1,5 +1,9 @@
 # OOjs Release History
 
+## v1.1.7 / 2015-04-28
+* Factory: Remove unused, undocumented 'entries' property (Ed Sanders)
+* Registry: Provide an unregister method (Ed Sanders)
+
 ## v1.1.6 / 2015-03-18
 * core: Improve class related unit tests (Timo Tijhof)
 * jsduck: Set --processes=0 to fix warnings-exit-nonzero (Timo Tijhof)
