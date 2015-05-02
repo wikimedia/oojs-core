@@ -83,9 +83,15 @@
 		assert.deepEqual( seq, [ 'call' ], 'Callback ran only once' );
 	} );
 
-	QUnit.test( 'emit', 4, function ( assert ) {
+	QUnit.test( 'emit', 7, function ( assert ) {
 		var data1, data2A, data2B, data2C,
 			ee = new oo.EventEmitter();
+
+		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when no handlers are registered' );
+		ee.on( 'return', function () {} );
+		assert.strictEqual( ee.emit( 'return' ), true, 'Return value when a handler is registered' );
+		ee.off( 'return' );
+		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when handlers were removed' );
 
 		ee.on( 'dataParam', function ( data ) {
 			assert.strictEqual( data, data1, 'Data is passed on to event handler' );
@@ -267,13 +273,12 @@
 		}, 'method must exist on host object even if event has no listeners' );
 	} );
 
-	QUnit.test( 'chainable', 6, function ( assert ) {
+	QUnit.test( 'chainable', 5, function ( assert ) {
 		var fn = function () {},
 			ee = new oo.EventEmitter();
 
 		assert.strictEqual( ee.on( 'basic', fn ), ee, 'on() is chainable' );
 		assert.strictEqual( ee.once( 'basic', fn ), ee, 'once() is chainable' );
-		assert.strictEqual( ee.emit( 'basic' ), true, 'emit() is NOT chainable' );
 		assert.strictEqual( ee.off( 'basic' ), ee, 'off() is chainable' );
 		assert.strictEqual( ee.connect( {}, {} ), ee, 'connect() is chainable' );
 		assert.strictEqual( ee.disconnect( {} ), ee, 'disconnect() is chainable' );

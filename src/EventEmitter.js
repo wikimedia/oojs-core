@@ -152,12 +152,9 @@
 	/**
 	 * Emit an event.
 	 *
-	 * TODO: Should this be chainable? What is the usefulness of the boolean
-	 * return value here?
-	 *
 	 * @param {string} event Type of event
 	 * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
-	 * @return {boolean} If event was handled by at least one listener
+	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	oo.EventEmitter.prototype.emit = function ( event ) {
 		var args = [],
