@@ -15,6 +15,7 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-jscs' );
 	grunt.loadNpmTasks( 'grunt-karma' );
@@ -68,10 +69,25 @@ module.exports = function ( grunt ) {
 				'*.js',
 				'{src,tests}/**/*.js'
 			],
-			dist: 'dist/**/*.js'
+			// Skipping the minimised distribution files
+			dist: 'dist/**/oojs{.jquery,}.js'
 		},
 		jscs: {
 			dev: '<%= jshint.dev %>'
+		},
+		uglify: {
+			options: {
+				banner: '/*! OOjs v<%= pkg.version %> | http://oojs.mit-license.org */',
+				sourceMap: true,
+				sourceMapIncludeSources: true,
+				report: 'gzip'
+			},
+			js: {
+				expand: true,
+				src: 'dist/*.js',
+				ext: '.min.js',
+				extDot: 'last'
+			}
 		},
 		karma: {
 			options: {
@@ -155,7 +171,7 @@ module.exports = function ( grunt ) {
 		} );
 	} );
 
-	grunt.registerTask( 'build', [ 'clean', 'concat' ] );
+	grunt.registerTask( 'build', [ 'clean', 'concat', 'uglify' ] );
 	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci1', 'karma:ci2' ] );
 
