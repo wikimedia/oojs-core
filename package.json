@@ -16,6 +16,7 @@
   },
   "license": "MIT",
   "main": "./dist/oojs.js",
+  "filename": "oojs.min.js",
   "scripts": {
     "test": "grunt test && node tests/node-index.js",
     "doc": "jsduck",
