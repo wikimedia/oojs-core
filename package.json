@@ -14,12 +14,7 @@
     "type": "git",
     "url": "https://git.wikimedia.org/git/oojs/core.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://oojs.mit-license.org"
-    }
-  ],
+  "license": "MIT",
   "main": "./dist/oojs.js",
   "scripts": {
     "test": "grunt test && node tests/node-index.js",
