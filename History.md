@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v1.1.8 / 2015-07-23
+* EventEmitter: Remove TODO about return value of #emit and tweak tests (Bartosz Dziewoński)
+* build: Add explicit dependency upon grunt-cli (Kunal Mehta)
+* build: Various fixes for cdnjs support (James D. Forrester)
+
 ## v1.1.7 / 2015-04-28
 * Factory: Remove unused, undocumented 'entries' property (Ed Sanders)
 * Registry: Provide an unregister method (Ed Sanders)
