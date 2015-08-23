@@ -43,16 +43,17 @@ polyfill is loaded before OOjs.
 These are the methods used:
 
 * Array.isArray
-* Object.create<br/><sup>(basic use only, inherit from an object and assign simple properties)</sup>
 * Object.keys
 * JSON.stringify
 
-While there are no plans to ship a polyfill, we recommend the following and use them ourselves in
-the unit tests to assert support for older browsers.
+Additionally, Object.create is used if available. As it is impossible to fully polyfill, OOjs
+includes a fallback implementing the minimal set of required features.
+
+While there are no plans to ship a polyfill for remaining methods, we recommend the following and
+use them ourselves in the unit tests to assert support for older browsers.
 
 * [json2.js](https://github.com/douglascrockford/JSON-js) (only for IE6/IE7)
 * [es5-shim.js](https://github.com/es-shims/es5-shim)
-* [polyfill-object-create.js](./test/polyfill-object-create.js)
 
 jQuery
 ----------

@@ -1,3 +1,5 @@
+/*global createObject */
+
 /**
  * @class OO.Factory
  * @extends OO.Registry
@@ -98,7 +100,7 @@ oo.Factory.prototype.create = function ( name ) {
 	// the constructor's prototype (which also makes it an "instanceof" the constructor),
 	// then invoke the constructor with the object as context, and return it (ignoring
 	// the constructor's return value).
-	obj = Object.create( constructor.prototype );
+	obj = createObject( constructor.prototype );
 	constructor.apply( obj, args );
 	return obj;
 };

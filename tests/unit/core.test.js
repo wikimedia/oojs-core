@@ -373,15 +373,19 @@
 			'Function with properties'
 		);
 
-		tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
-		tmp.b = true;
-		tmp.bar = 'quux';
+		if ( !Object.create ) {
+			assert.strictEqual( true, true, '[skipped] Only own properties' );
+		} else {
+			tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
+			tmp.b = true;
+			tmp.bar = 'quux';
 
-		assert.deepEqual(
-			oo.getObjectValues( tmp ),
-			[ true, 'quux' ],
-			'Only own properties'
-		);
+			assert.deepEqual(
+				oo.getObjectValues( tmp ),
+				[ true, 'quux' ],
+				'Only own properties'
+			);
+		}
 
 		assert.throws(
 			function () {
@@ -546,21 +550,26 @@
 			'Compare object to itself'
 		);
 
-		x = Object.create( { foo: 1, map: function () { } } );
-		x.foo = 2;
-		x.bar = true;
+		if ( !Object.create ) {
+			assert.strictEqual( true, true, '[skipped] Ignore inherited properties and methods of a' );
+			assert.strictEqual( true, true, '[skipped] Ignore inherited properties and methods of b' );
+		} else {
+			x = Object.create( { foo: 1, map: function () { } } );
+			x.foo = 2;
+			x.bar = true;
 
-		assert.strictEqual(
-			oo.compare( x, { foo: 2, bar: true } ),
-			true,
-			'Ignore inherited properties and methods of a'
-		);
+			assert.strictEqual(
+				oo.compare( x, { foo: 2, bar: true } ),
+				true,
+				'Ignore inherited properties and methods of a'
+			);
 
-		assert.strictEqual(
-			oo.compare( { foo: 2, bar: true }, x ),
-			true,
-			'Ignore inherited properties and methods of b'
-		);
+			assert.strictEqual(
+				oo.compare( { foo: 2, bar: true }, x ),
+				true,
+				'Ignore inherited properties and methods of b'
+			);
+		}
 
 		assert.strictEqual(
 			oo.compare(

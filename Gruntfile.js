@@ -95,7 +95,6 @@ module.exports = function ( grunt ) {
 				files: [
 					'lib/json2.js',
 					'lib/es5-shim.js',
-					'tests/polyfill-object-create.js',
 					'dist/oojs.js',
 					'tests/testrunner.js',
 					'tests/unit/*.js'
