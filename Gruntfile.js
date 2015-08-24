@@ -117,7 +117,7 @@ module.exports = function ( grunt ) {
 				browsers: [ 'slChrome', 'slFirefox', 'slIE11' ]
 			},
 			ci2: {
-				browsers: [ 'slSafari5Mac', 'slIE9', 'slIE6' ],
+				browsers: [ 'slSafari6', 'slIE9', 'slIE6' ],
 				// Support IE6: https://github.com/karma-runner/karma/issues/983
 				transports: [ 'jsonp-polling' ]
 			},

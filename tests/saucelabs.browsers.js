@@ -21,11 +21,10 @@ module.exports = {
 		base: 'SauceLabs',
 		browserName: 'firefox'
 	},
-	slSafari5Mac: {
+	slSafari6: {
 		base: 'SauceLabs',
-		platform: 'OSX 10.6',
 		browserName: 'safari',
-		version: '5'
+		version: '6'
 	},
 	slIE11: {
 		base: 'SauceLabs',
