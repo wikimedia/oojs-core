@@ -8,7 +8,7 @@
 		// Plain objects
 		assert.strictEqual( oo.isPlainObject( {} ), true, 'empty plain object' );
 		assert.strictEqual( oo.isPlainObject( { a: 1 } ), true, 'non-empty plain object' );
-		if ( !QUnit.supportsES5 ) {
+		if ( !Object.create ) {
 			// We test Object.create(null) when the environment supports it for modern browsers
 			// However Object.create(null) itself is not an OOjs feature and if the environment
 			// doesn't support it, we skip the test.
