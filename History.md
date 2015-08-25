@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v1.1.9 / 2015-08-25
+* build: Fix the build by downgrading Karma and removing testing of Safari 5 (Timo Tijhof)
+* core: Remove dependency on Object.create (Bartosz Dziewoński)
+* test: Don't use QUnit.supportsES5 (Bartosz Dziewoński)
+
 ## v1.1.8 / 2015-07-23
 * EventEmitter: Remove TODO about return value of #emit and tweak tests (Bartosz Dziewoński)
 * build: Add explicit dependency upon grunt-cli (Kunal Mehta)
