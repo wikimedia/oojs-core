@@ -77,7 +77,7 @@ oo.Factory.prototype.unregister = function ( constructor ) {
  * constructor directly, so leaving one out will pass an undefined to the constructor.
  *
  * @param {string} name Object name
- * @param {Mixed...} [args] Arguments to pass to the constructor
+ * @param {...Mixed} [args] Arguments to pass to the constructor
  * @return {Object} The new object
  * @throws {Error} Unknown object name
  */
@@ -92,7 +92,7 @@ oo.Factory.prototype.create = function ( name ) {
 
 	// Convert arguments to array and shift the first argument (name) off
 	for ( i = 1; i < arguments.length; i++ ) {
-		args.push( arguments[i] );
+		args.push( arguments[ i ] );
 	}
 
 	// We can't use the "new" operator with .apply directly because apply needs a

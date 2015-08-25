@@ -47,11 +47,11 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
 oo.Registry.prototype.register = function ( name, data ) {
 	var i, len;
 	if ( typeof name === 'string' ) {
-		this.registry[name] = data;
+		this.registry[ name ] = data;
 		this.emit( 'register', name, data );
 	} else if ( Array.isArray( name ) ) {
 		for ( i = 0, len = name.length; i < len; i++ ) {
-			this.register( name[i], data );
+			this.register( name[ i ], data );
 		}
 	} else {
 		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );
@@ -70,12 +70,12 @@ oo.Registry.prototype.unregister = function ( name ) {
 	if ( typeof name === 'string' ) {
 		data = this.lookup( name );
 		if ( data !== undefined ) {
-			delete this.registry[name];
+			delete this.registry[ name ];
 			this.emit( 'unregister', name, data );
 		}
 	} else if ( Array.isArray( name ) ) {
 		for ( i = 0, len = name.length; i < len; i++ ) {
-			this.unregister( name[i] );
+			this.unregister( name[ i ] );
 		}
 	} else {
 		throw new Error( 'Name must be a string or array, cannot be a ' + typeof name );
@@ -90,6 +90,6 @@ oo.Registry.prototype.unregister = function ( name ) {
  */
 oo.Registry.prototype.lookup = function ( name ) {
 	if ( hasOwn.call( this.registry, name ) ) {
-		return this.registry[name];
+		return this.registry[ name ];
 	}
 };

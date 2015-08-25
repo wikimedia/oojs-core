@@ -76,17 +76,19 @@ oo.initClass = function ( fn ) {
  * @throws {Error} If target already inherits from origin
  */
 oo.inheritClass = function ( targetFn, originFn ) {
+	var targetConstructor;
+
 	if ( targetFn.prototype instanceof originFn ) {
 		throw new Error( 'Target already inherits from origin' );
 	}
 
-	var targetConstructor = targetFn.prototype.constructor;
+	targetConstructor = targetFn.prototype.constructor;
 
 	// Using ['super'] instead of .super because 'super' is not supported
 	// by IE 8 and below (bug 63303).
 	// Provide .parent as alias for code supporting older browsers which
 	// allows people to comply with their style guide.
-	targetFn['super'] = targetFn.parent = originFn;
+	targetFn[ 'super' ] = targetFn.parent = originFn;
 
 	targetFn.prototype = createObject( originFn.prototype, {
 		// Restore constructor property of targetFn
@@ -140,7 +142,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 	// Copy prototype properties
 	for ( key in originFn.prototype ) {
 		if ( key !== 'constructor' && hasOwn.call( originFn.prototype, key ) ) {
-			targetFn.prototype[key] = originFn.prototype[key];
+			targetFn.prototype[ key ] = originFn.prototype[ key ];
 		}
 	}
 
@@ -149,7 +151,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 	if ( originFn.static ) {
 		for ( key in originFn.static ) {
 			if ( hasOwn.call( originFn.static, key ) ) {
-				targetFn.static[key] = originFn.static[key];
+				targetFn.static[ key ] = originFn.static[ key ];
 			}
 		}
 	} else {
@@ -169,8 +171,8 @@ oo.mixinClass = function ( targetFn, originFn ) {
  * that case.
  *
  * @param {Object} obj
- * @param {Mixed...} [keys]
- * @return obj[arguments[1]][arguments[2]].... or undefined
+ * @param {...Mixed} [keys]
+ * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
 oo.getProp = function ( obj ) {
 	var i,
@@ -180,7 +182,7 @@ oo.getProp = function ( obj ) {
 			// Trying to access a property of undefined or null causes an error
 			return undefined;
 		}
-		retval = retval[arguments[i]];
+		retval = retval[ arguments[ i ] ];
 	}
 	return retval;
 };
@@ -196,7 +198,7 @@ oo.getProp = function ( obj ) {
  * is not an object, this function will silently abort.
  *
  * @param {Object} obj
- * @param {Mixed...} [keys]
+ * @param {...Mixed} [keys]
  * @param {Mixed} [value]
  */
 oo.setProp = function ( obj ) {
@@ -206,15 +208,15 @@ oo.setProp = function ( obj ) {
 		return;
 	}
 	for ( i = 1; i < arguments.length - 2; i++ ) {
-		if ( prop[arguments[i]] === undefined ) {
-			prop[arguments[i]] = {};
+		if ( prop[ arguments[ i ] ] === undefined ) {
+			prop[ arguments[ i ] ] = {};
 		}
-		if ( Object( prop[arguments[i]] ) !== prop[arguments[i]] ) {
+		if ( Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ] ) {
 			return;
 		}
-		prop = prop[arguments[i]];
+		prop = prop[ arguments[ i ] ];
 	}
-	prop[arguments[arguments.length - 2]] = arguments[arguments.length - 1];
+	prop[ arguments[ arguments.length - 2 ] ] = arguments[ arguments.length - 1 ];
 };
 
 /**
@@ -246,7 +248,7 @@ oo.cloneObject = function ( origin ) {
 
 	for ( key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
-			r[key] = origin[key];
+			r[ key ] = origin[ key ];
 		}
 	}
 
@@ -256,7 +258,7 @@ oo.cloneObject = function ( origin ) {
 /**
  * Get an array of all property values in an object.
  *
- * @param {Object} Object to get values from
+ * @param {Object} obj Object to get values from
  * @return {Array} List of object values
  */
 oo.getObjectValues = function ( obj ) {
@@ -269,7 +271,7 @@ oo.getObjectValues = function ( obj ) {
 	values = [];
 	for ( key in obj ) {
 		if ( hasOwn.call( obj, key ) ) {
-			values[values.length] = obj[key];
+			values[ values.length ] = obj[ key ];
 		}
 	}
 
@@ -306,7 +308,7 @@ oo.compare = function ( a, b, asymmetrical ) {
 	}
 
 	for ( k in a ) {
-		if ( !hasOwn.call( a, k ) || a[k] === undefined || a[k] === b[k] ) {
+		if ( !hasOwn.call( a, k ) || a[ k ] === undefined || a[ k ] === b[ k ] ) {
 			// Support es3-shim: Without the hasOwn filter, comparing [] to {} will be false in ES3
 			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
 			// Also ignore undefined values, because there is no conceptual difference between
@@ -314,8 +316,8 @@ oo.compare = function ( a, b, asymmetrical ) {
 			continue;
 		}
 
-		aValue = a[k];
-		bValue = b[k];
+		aValue = a[ k ];
+		bValue = b[ k ];
 		aType = typeof aValue;
 		bType = typeof bValue;
 		if ( aType !== bType ||
@@ -373,7 +375,7 @@ oo.copy = function ( source, leafCallback, nodeCallback ) {
 
 	// source is an array or a plain object
 	for ( key in source ) {
-		destination[key] = oo.copy( source[key], leafCallback, nodeCallback );
+		destination[ key ] = oo.copy( source[ key ], leafCallback, nodeCallback );
 	}
 
 	// This is an internal node, so we don't apply the leafCallback.
@@ -424,7 +426,7 @@ oo.getHash.keySortReplacer = function ( key, val ) {
 		i = 0;
 		len = keys.length;
 		for ( ; i < len; i += 1 ) {
-			normalized[keys[i]] = val[keys[i]];
+			normalized[ keys[ i ] ] = val[ keys[ i ] ];
 		}
 		return normalized;
 
@@ -458,7 +460,7 @@ oo.unique = function ( arr ) {
  * By building an object (with the values for keys) in parallel with
  * the array, a new item's existence in the union can be computed faster.
  *
- * @param {Array...} arrays Arrays to union
+ * @param {...Array} arrays Arrays to union
  * @return {Array} Union of the arrays
  */
 oo.simpleArrayUnion = function () {
@@ -467,11 +469,11 @@ oo.simpleArrayUnion = function () {
 		result = [];
 
 	for ( i = 0, ilen = arguments.length; i < ilen; i++ ) {
-		arr = arguments[i];
+		arr = arguments[ i ];
 		for ( j = 0, jlen = arr.length; j < jlen; j++ ) {
-			if ( !obj[ arr[j] ] ) {
-				obj[ arr[j] ] = true;
-				result.push( arr[j] );
+			if ( !obj[ arr[ j ] ] ) {
+				obj[ arr[ j ] ] = true;
+				result.push( arr[ j ] );
 			}
 		}
 	}
@@ -501,13 +503,13 @@ function simpleArrayCombine( a, b, includeB ) {
 		result = [];
 
 	for ( i = 0, ilen = b.length; i < ilen; i++ ) {
-		bObj[ b[i] ] = true;
+		bObj[ b[ i ] ] = true;
 	}
 
 	for ( i = 0, ilen = a.length; i < ilen; i++ ) {
-		isInB = !!bObj[ a[i] ];
+		isInB = !!bObj[ a[ i ] ];
 		if ( isInB === includeB ) {
-			result.push( a[i] );
+			result.push( a[ i ] );
 		}
 	}
 

@@ -12,6 +12,8 @@
 
 /*jshint node:true */
 module.exports = function ( grunt ) {
+	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
+
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
@@ -19,8 +21,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-jscs' );
 	grunt.loadNpmTasks( 'grunt-karma' );
-
-	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),

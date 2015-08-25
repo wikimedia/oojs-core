@@ -41,7 +41,7 @@
 			if ( context === undefined || context === null ) {
 				throw new Error( 'Method name "' + method + '" has no context.' );
 			}
-			if ( typeof context[method] !== 'function' ) {
+			if ( typeof context[ method ] !== 'function' ) {
 				// Technically the property could be replaced by a function before
 				// call time. But this probably signals a typo.
 				throw new Error( 'Property "' + method + '" is not a function' );
@@ -72,10 +72,10 @@
 		validateMethod( method, context );
 
 		if ( hasOwn.call( this.bindings, event ) ) {
-			bindings = this.bindings[event];
+			bindings = this.bindings[ event ];
 		} else {
 			// Auto-initialize bindings list
-			bindings = this.bindings[event] = [];
+			bindings = this.bindings[ event ] = [];
 		}
 		// Add binding
 		bindings.push( {
@@ -117,13 +117,13 @@
 
 		if ( arguments.length === 1 ) {
 			// Remove all bindings for event
-			delete this.bindings[event];
+			delete this.bindings[ event ];
 			return this;
 		}
 
 		validateMethod( method, context );
 
-		if ( !hasOwn.call( this.bindings, event ) || !this.bindings[event].length ) {
+		if ( !hasOwn.call( this.bindings, event ) || !this.bindings[ event ].length ) {
 			// No matching bindings
 			return this;
 		}
@@ -134,17 +134,17 @@
 		}
 
 		// Remove matching handlers
-		bindings = this.bindings[event];
+		bindings = this.bindings[ event ];
 		i = bindings.length;
 		while ( i-- ) {
-			if ( bindings[i].method === method && bindings[i].context === context ) {
+			if ( bindings[ i ].method === method && bindings[ i ].context === context ) {
 				bindings.splice( i, 1 );
 			}
 		}
 
 		// Cleanup if now empty
 		if ( bindings.length === 0 ) {
-			delete this.bindings[event];
+			delete this.bindings[ event ];
 		}
 		return this;
 	};
@@ -153,7 +153,7 @@
 	 * Emit an event.
 	 *
 	 * @param {string} event Type of event
-	 * @param {Mixed} args First in a list of variadic arguments passed to event handler (optional)
+	 * @param {...Mixed} args First in a list of variadic arguments passed to event handler (optional)
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	oo.EventEmitter.prototype.emit = function ( event ) {
@@ -162,12 +162,12 @@
 
 		if ( hasOwn.call( this.bindings, event ) ) {
 			// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
-			bindings = this.bindings[event].slice();
+			bindings = this.bindings[ event ].slice();
 			for ( i = 1, len = arguments.length; i < len; i++ ) {
-				args.push( arguments[i] );
+				args.push( arguments[ i ] );
 			}
 			for ( i = 0, len = bindings.length; i < len; i++ ) {
-				binding = bindings[i];
+				binding = bindings[ i ];
 				if ( typeof binding.method === 'string' ) {
 					// Lookup method by name (late binding)
 					method = binding.context[ binding.method ];
@@ -198,11 +198,11 @@
 		var method, args, event;
 
 		for ( event in methods ) {
-			method = methods[event];
+			method = methods[ event ];
 			// Allow providing additional args
 			if ( Array.isArray( method ) ) {
 				args = method.slice( 1 );
-				method = method[0];
+				method = method[ 0 ];
 			} else {
 				args = [];
 			}
@@ -227,18 +227,18 @@
 		if ( methods ) {
 			// Remove specific connections to the context
 			for ( event in methods ) {
-				this.off( event, methods[event], context );
+				this.off( event, methods[ event ], context );
 			}
 		} else {
 			// Remove all connections to the context
 			for ( event in this.bindings ) {
-				bindings = this.bindings[event];
+				bindings = this.bindings[ event ];
 				i = bindings.length;
 				while ( i-- ) {
 					// bindings[i] may have been removed by the previous step's
 					// this.off so check it still exists
-					if ( bindings[i] && bindings[i].context === context ) {
-						this.off( event, bindings[i].method, context );
+					if ( bindings[ i ] && bindings[ i ].context === context ) {
+						this.off( event, bindings[ i ].method, context );
 					}
 				}
 			}

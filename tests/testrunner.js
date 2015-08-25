@@ -34,6 +34,7 @@
 
 	/**
 	 * Utility for creating iframes
+	 *
 	 * @param {Function} callback Called when the iframe is done
 	 * @param {HTMLElement} callback.iframe
 	 * @param {Function} callback.teardown To be called when user is done (performs cleanup and resumes

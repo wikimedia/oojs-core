@@ -176,6 +176,8 @@
 	} );
 
 	( function () {
+		var plainObj, funcObj, arrObj;
+
 		function testGetSetProp( type, obj ) {
 			QUnit.test( 'getProp( ' + type + ' )', 9, function ( assert ) {
 				assert.strictEqual(
@@ -249,7 +251,6 @@
 			} );
 		}
 
-		var plainObj, funcObj, arrObj;
 		plainObj = {
 			foo: 3,
 			bar: {
@@ -908,7 +909,7 @@
 			hash = '{"a":1,"b":1,"c":1}',
 			customHash = '{"first":1,"last":1}';
 
-		cases['a-z literal'] = {
+		cases[ 'a-z literal' ] = {
 			object: {
 				a: 1,
 				b: 1,
@@ -917,7 +918,7 @@
 			hash: hash
 		};
 
-		cases['z-a literal'] = {
+		cases[ 'z-a literal' ] = {
 			object: {
 				c: 1,
 				b: 1,
@@ -927,7 +928,7 @@
 		};
 
 		tmp = {};
-		cases['a-z augmented'] = {
+		cases[ 'a-z augmented' ] = {
 			object: tmp,
 			hash: hash
 		};
@@ -936,7 +937,7 @@
 		tmp.c = 1;
 
 		tmp = {};
-		cases['z-a augmented'] = {
+		cases[ 'z-a augmented' ] = {
 			object: tmp,
 			hash: hash
 		};
@@ -944,7 +945,7 @@
 		tmp.b = 1;
 		tmp.a = 1;
 
-		cases['custom hash'] = {
+		cases[ 'custom hash' ] = {
 			object: {
 				getHashObject: function () {
 					return {
@@ -956,7 +957,7 @@
 			hash: customHash
 		};
 
-		cases['custom hash reversed'] = {
+		cases[ 'custom hash reversed' ] = {
 			object: {
 				getHashObject: function () {
 					return {
@@ -970,8 +971,8 @@
 
 		for ( key in cases ) {
 			assert.strictEqual(
-				oo.getHash( cases[key].object ),
-				cases[key].hash,
+				oo.getHash( cases[ key ].object ),
+				cases[ key ].hash,
 				key + ': object has expected hash, regardless of "property order"'
 			);
 		}
