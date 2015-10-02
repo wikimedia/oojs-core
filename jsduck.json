@@ -6,10 +6,6 @@
 	"--warnings-exit-nonzero": true,
 	"--builtin-classes": true,
 	"--": [
-		"src/core.js",
-		"src/util.js",
-		"src/EventEmitter.js",
-		"src/Registry.js",
-		"src/Factory.js"
+		"src/"
 	]
 }
