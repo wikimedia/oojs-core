@@ -222,12 +222,16 @@
 	 * @chainable
 	 */
 	oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
-		var i, event, bindings;
+		var i, event, method, bindings;
 
 		if ( methods ) {
 			// Remove specific connections to the context
 			for ( event in methods ) {
-				this.off( event, methods[ event ], context );
+				method = methods[ event ];
+				if ( Array.isArray( method ) ) {
+					method = method[ 0 ];
+				}
+				this.off( event, method, context );
 			}
 		} else {
 			// Remove all connections to the context

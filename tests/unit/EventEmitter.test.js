@@ -251,6 +251,34 @@
 		assert.deepEqual( hits, { foo: 1, bar: 2 } );
 	} );
 
+	QUnit.test( 'disconnect( host, array methods )', 1, function ( assert ) {
+		var host,
+			hits = { foo: 0, barbara: 0 },
+			ee = new oo.EventEmitter();
+
+		host = {
+			onFoo: function () {
+				hits.foo++;
+			},
+			barbara: function () {
+				hits.barbara++;
+			}
+		};
+
+		ee.connect( host, {
+			foo: 'onFoo',
+			bar: [ 'barbara', 'some', 'parameter' ]
+		} );
+		ee.emit( 'foo' );
+		ee.emit( 'bar' );
+
+		ee.disconnect( host, { bar: [ 'barbara' ] } );
+		ee.emit( 'foo' );
+		ee.emit( 'bar' );
+
+		assert.deepEqual( hits, { foo: 2, barbara: 1 } );
+	} );
+
 	QUnit.test( 'disconnect( host, unbound methods )', 1, function ( assert ) {
 		var host,
 			ee = new oo.EventEmitter();
