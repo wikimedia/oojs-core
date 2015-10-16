@@ -405,6 +405,53 @@
 		);
 	} );
 
+	QUnit.test( 'binarySearch', function ( assert ) {
+		var data = [ -42, -10, 0, 2, 5, 7, 12, 21, 42, 70, 144, 1001 ];
+
+		function dir( target, item ) {
+			return target > item ? 1 : ( target < item ? -1 : 0 );
+		}
+
+		function assertSearch( target, expectedPath, expectedRet ) {
+			var ret, path = [];
+
+			ret = oo.binarySearch( data, function ( item ) {
+				path.push( item );
+				return dir( target, item );
+			} );
+
+			assert.deepEqual( path, expectedPath, 'Search ' + target );
+			assert.strictEqual( ret, expectedRet, 'Search ' + target + ' (index)' );
+		}
+
+		assertSearch( 12, [ 12 ], 6 );
+		assertSearch( -42, [ 12, 2, -10, -42 ], 0 );
+		assertSearch( 42, [ 12, 70, 42 ], 8 );
+
+		// Out of bounds
+		assertSearch( -2000, [ 12, 2, -10, -42 ], null );
+		assertSearch( 2000, [ 12, 70, 1001 ], null );
+
+		assert.strictEqual(
+			0,
+			oo.binarySearch( data, function ( item ) { return dir( -2000, item ); }, true ),
+			'forInsertion at start'
+		);
+
+		assert.strictEqual(
+			2,
+			oo.binarySearch( [ 1, 2, 4, 5 ], function ( item ) { return dir( 3, item ); }, true ),
+			'forInsertion in the middle'
+		);
+
+		assert.strictEqual(
+			12,
+			oo.binarySearch( data, function ( item ) { return dir( 2000, item ); }, true ),
+			'forInsertion at end'
+		);
+
+	} );
+
 	QUnit.test( 'compare', function ( assert ) {
 		var x, y, z;
 
