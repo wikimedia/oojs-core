@@ -7,6 +7,7 @@
 	 *
 	 * This mixin must be used in a class that also mixes in OO.EventEmitter.
 	 *
+	 * @abstract
 	 * @class OO.EmitterList
 	 * @constructor
 	 */
