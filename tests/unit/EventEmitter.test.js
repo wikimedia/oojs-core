@@ -8,7 +8,7 @@
 
 	QUnit.module( 'EventEmitter' );
 
-	QUnit.test( 'on', 9, function ( assert ) {
+	QUnit.test( 'on', function ( assert ) {
 		var callback, x, seq,
 			ee = new oo.EventEmitter();
 
@@ -67,7 +67,7 @@
 		ee.emit( 'post' );
 	} );
 
-	QUnit.test( 'once', 1, function ( assert ) {
+	QUnit.test( 'once', function ( assert ) {
 		var seq,
 			ee = new oo.EventEmitter();
 
@@ -83,7 +83,7 @@
 		assert.deepEqual( seq, [ 'call' ], 'Callback ran only once' );
 	} );
 
-	QUnit.test( 'emit', 7, function ( assert ) {
+	QUnit.test( 'emit', function ( assert ) {
 		var data1, data2A, data2B, data2C,
 			ee = new oo.EventEmitter();
 
@@ -113,7 +113,7 @@
 		ee.emit( 'dataParams', data2A, data2B, data2C );
 	} );
 
-	QUnit.test( 'off', 5, function ( assert ) {
+	QUnit.test( 'off', function ( assert ) {
 		var hits, callback,
 			ee = new oo.EventEmitter();
 
@@ -154,7 +154,7 @@
 		assert.ok( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
 	} );
 
-	QUnit.test( 'connect', 5, function ( assert ) {
+	QUnit.test( 'connect', function ( assert ) {
 		var data1, host,
 			ee = new oo.EventEmitter();
 
@@ -195,7 +195,7 @@
 		}, 'Connecting to invalid method' );
 	} );
 
-	QUnit.test( 'disconnect( host )', 1, function ( assert ) {
+	QUnit.test( 'disconnect( host )', function ( assert ) {
 		var host,
 			hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
@@ -223,7 +223,7 @@
 		assert.deepEqual( hits, { foo: 1, bar: 1 } );
 	} );
 
-	QUnit.test( 'disconnect( host, methods )', 1, function ( assert ) {
+	QUnit.test( 'disconnect( host, methods )', function ( assert ) {
 		var host,
 			hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
@@ -251,7 +251,7 @@
 		assert.deepEqual( hits, { foo: 1, bar: 2 } );
 	} );
 
-	QUnit.test( 'disconnect( host, array methods )', 1, function ( assert ) {
+	QUnit.test( 'disconnect( host, array methods )', function ( assert ) {
 		var host,
 			hits = { foo: 0, barbara: 0 },
 			ee = new oo.EventEmitter();
@@ -279,7 +279,7 @@
 		assert.deepEqual( hits, { foo: 2, barbara: 1 } );
 	} );
 
-	QUnit.test( 'disconnect( host, unbound methods )', 1, function ( assert ) {
+	QUnit.test( 'disconnect( host, unbound methods )', function ( assert ) {
 		var host,
 			ee = new oo.EventEmitter();
 
@@ -301,7 +301,7 @@
 		}, 'method must exist on host object even if event has no listeners' );
 	} );
 
-	QUnit.test( 'chainable', 5, function ( assert ) {
+	QUnit.test( 'chainable', function ( assert ) {
 		var fn = function () {},
 			ee = new oo.EventEmitter();
 

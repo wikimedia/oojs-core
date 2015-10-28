@@ -2,7 +2,7 @@
 
 	QUnit.module( 'util' );
 
-	QUnit.test( 'isPlainObject', 17, function ( assert ) {
+	QUnit.test( 'isPlainObject', function ( assert ) {
 		function Thing() {}
 
 		// Plain objects
@@ -41,7 +41,7 @@
 	} );
 
 	if ( global.document ) {
-		QUnit.test( 'isPlainObject - browser specific', 7, function ( assert ) {
+		QUnit.test( 'isPlainObject - browser specific', function ( assert ) {
 			var IframeObject, threw;
 
 			assert.strictEqual(

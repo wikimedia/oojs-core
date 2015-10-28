@@ -2,7 +2,7 @@
 
 	QUnit.module( 'core' );
 
-	QUnit.test( 'initClass', 1, function ( assert ) {
+	QUnit.test( 'initClass', function ( assert ) {
 		function Foo() {
 		}
 		oo.initClass( Foo );
@@ -10,7 +10,7 @@
 		assert.deepEqual( Foo.static, {}, 'A "static" property (empty object) is created' );
 	} );
 
-	QUnit.test( 'inheritClass', 27, function ( assert ) {
+	QUnit.test( 'inheritClass', function ( assert ) {
 		var base, child, key, enumKeys;
 
 		function InitA() {}
@@ -109,7 +109,7 @@
 		assert.strictEqual( child.protoB(), 'Child', 'inheritance is live (overwriting an inherited method)' );
 	} );
 
-	QUnit.test( 'mixinClass', 8, function ( assert ) {
+	QUnit.test( 'mixinClass', function ( assert ) {
 		var obj;
 
 		function Init() {}
@@ -179,7 +179,7 @@
 		var plainObj, funcObj, arrObj;
 
 		function testGetSetProp( type, obj ) {
-			QUnit.test( 'getProp( ' + type + ' )', 9, function ( assert ) {
+			QUnit.test( 'getProp( ' + type + ' )', function ( assert ) {
 				assert.strictEqual(
 					oo.getProp( obj, 'foo' ),
 					3,
@@ -227,7 +227,7 @@
 				);
 			} );
 
-			QUnit.test( 'setProp( ' + type + ' )', 7, function ( assert ) {
+			QUnit.test( 'setProp( ' + type + ' )', function ( assert ) {
 				oo.setProp( obj, 'foo', 4 );
 				assert.strictEqual( 4, obj.foo, 'setting an existing key with depth 1' );
 
@@ -282,7 +282,7 @@
 		testGetSetProp( 'Array', arrObj );
 	}() );
 
-	QUnit.test( 'cloneObject', 4, function ( assert ) {
+	QUnit.test( 'cloneObject', function ( assert ) {
 		var myfoo, myfooClone, expected;
 
 		function Foo( x ) {
@@ -345,7 +345,7 @@
 
 	} );
 
-	QUnit.test( 'getObjectValues', 6, function ( assert ) {
+	QUnit.test( 'getObjectValues', function ( assert ) {
 		var tmp;
 
 		assert.deepEqual(
@@ -405,7 +405,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare', 26, function ( assert ) {
+	QUnit.test( 'compare', function ( assert ) {
 		var x, y, z;
 
 		assert.strictEqual(
@@ -626,7 +626,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', 5, function ( assert ) {
+	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', function ( assert ) {
 		var x, y, z, i, depth, compare;
 
 		x = {
@@ -700,7 +700,7 @@
 		}
 	} );
 
-	QUnit.test( 'copy( source )', 14, function ( assert ) {
+	QUnit.test( 'copy( source )', function ( assert ) {
 		var simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
 			simpleArray = [ 'foo', 3, true, false ],
 			withObj = [ { bar: 'baz', quux: 3 }, 5, null ],
@@ -811,7 +811,7 @@
 
 	} );
 
-	QUnit.test( 'copy( source, Function leafCallback )', 3, function ( assert ) {
+	QUnit.test( 'copy( source, Function leafCallback )', function ( assert ) {
 		function Cloneable( name ) {
 			this.name = name;
 			this.clone = function () {
@@ -855,7 +855,7 @@
 		);
 	} );
 
-	QUnit.test( 'copy( source, Function leafCallback, Function nodeCallback )', 2, function ( assert ) {
+	QUnit.test( 'copy( source, Function leafCallback, Function nodeCallback )', function ( assert ) {
 		function Cloneable( name ) {
 			this.name = name;
 			this.clone = function () {
@@ -903,7 +903,7 @@
 		);
 	} );
 
-	QUnit.test( 'getHash: Basic usage', 7, function ( assert ) {
+	QUnit.test( 'getHash: Basic usage', function ( assert ) {
 		var tmp, key,
 			cases = {},
 			hash = '{"a":1,"b":1,"c":1}',
@@ -986,7 +986,7 @@
 		);
 	} );
 
-	QUnit.test( 'getHash: Complex usage', 2, function ( assert ) {
+	QUnit.test( 'getHash: Complex usage', function ( assert ) {
 		var obj, hash;
 
 		obj = {
@@ -1041,7 +1041,7 @@
 	} );
 
 	if ( global.document ) {
-		QUnit.test( 'getHash( iframe Object )', 1, function ( assert ) {
+		QUnit.test( 'getHash( iframe Object )', function ( assert ) {
 			var obj, hash;
 
 			QUnit.tmpIframe( function ( iframe, teardown ) {
@@ -1066,7 +1066,7 @@
 		} );
 	}
 
-	QUnit.test( 'unique', 6, function ( assert ) {
+	QUnit.test( 'unique', function ( assert ) {
 
 		assert.deepEqual(
 			oo.unique( [] ),
@@ -1106,7 +1106,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayUnion', 5, function ( assert ) {
+	QUnit.test( 'simpleArrayUnion', function ( assert ) {
 
 		assert.deepEqual(
 			oo.simpleArrayUnion( [] ),
@@ -1145,7 +1145,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayIntersection', 2, function ( assert ) {
+	QUnit.test( 'simpleArrayIntersection', function ( assert ) {
 
 		assert.deepEqual(
 			oo.simpleArrayIntersection( [], [] ),
@@ -1164,7 +1164,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayDifference', 2, function ( assert ) {
+	QUnit.test( 'simpleArrayDifference', function ( assert ) {
 
 		assert.deepEqual(
 			oo.simpleArrayDifference( [], [] ),

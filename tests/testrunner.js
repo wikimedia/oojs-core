@@ -1,9 +1,6 @@
 ( function () {
 	/*jshint browser:true */
 
-	// Configure QUnit
-	QUnit.config.requireExpects = true;
-
 	// Extend QUnit.module to provide a fixture element. This used to be in tests/index.html, but
 	// dynamic test runners like Karma build their own web page.
 	( function () {

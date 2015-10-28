@@ -17,7 +17,7 @@
 
 	/* Tests */
 
-	QUnit.test( 'register/unregister', 4, function ( assert ) {
+	QUnit.test( 'register/unregister', function ( assert ) {
 		var factory = new oo.Factory();
 		assert.throws(
 			function () {
@@ -42,7 +42,7 @@
 		assert.strictEqual( factory.lookup( 'factory-object-stub' ), undefined );
 	} );
 
-	QUnit.test( 'create', 3, function ( assert ) {
+	QUnit.test( 'create', function ( assert ) {
 		var obj,
 			factory = new oo.Factory();
 
@@ -71,7 +71,7 @@
 		);
 	} );
 
-	QUnit.test( 'lookup', 1, function ( assert ) {
+	QUnit.test( 'lookup', function ( assert ) {
 		var factory = new oo.Factory();
 		factory.register( oo.FactoryObjectStub );
 		assert.strictEqual( factory.lookup( 'factory-object-stub' ), oo.FactoryObjectStub );

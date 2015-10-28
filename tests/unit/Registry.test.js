@@ -2,7 +2,7 @@
 
 	QUnit.module( 'Registry' );
 
-	QUnit.test( 'register/unregister', 7, function ( assert ) {
+	QUnit.test( 'register/unregister', function ( assert ) {
 		var registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
@@ -22,7 +22,7 @@
 
 	} );
 
-	QUnit.test( 'lookup', 6, function ( assert ) {
+	QUnit.test( 'lookup', function ( assert ) {
 		var registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
