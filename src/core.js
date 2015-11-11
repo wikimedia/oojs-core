@@ -8,21 +8,7 @@ var
 	oo = {},
 	// Optimisation: Local reference to Object.prototype.hasOwnProperty
 	hasOwn = oo.hasOwnProperty,
-	toString = oo.toString,
-	// Object.create() is impossible to fully polyfill, so don't require it
-	createObject = Object.create || ( function () {
-		// Reusable constructor function
-		function Empty() {}
-		return function ( prototype, properties ) {
-			var obj;
-			Empty.prototype = prototype;
-			obj = new Empty();
-			if ( properties && hasOwn.call( properties, 'constructor' ) ) {
-				obj.constructor = properties.constructor.value;
-			}
-			return obj;
-		};
-	}() );
+	toString = oo.toString;
 
 /* Class Methods */
 
@@ -94,7 +80,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	// eslint-disable-next-line dot-notation
 	targetFn[ 'super' ] = targetFn.parent = originFn;
 
-	targetFn.prototype = createObject( originFn.prototype, {
+	targetFn.prototype = Object.create( originFn.prototype, {
 		// Restore constructor property of targetFn
 		constructor: {
 			value: targetConstructor,
@@ -106,7 +92,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	// Extend static properties - always initialize both sides
 	oo.initClass( originFn );
-	targetFn.static = createObject( originFn.static );
+	targetFn.static = Object.create( originFn.static );
 };
 
 /**
@@ -293,7 +279,7 @@ oo.deleteProp = function ( obj ) {
 oo.cloneObject = function ( origin ) {
 	var key, r;
 
-	r = createObject( origin.constructor.prototype );
+	r = Object.create( origin.constructor.prototype );
 
 	for ( key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
