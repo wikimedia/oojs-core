@@ -1,5 +1,14 @@
 # OOjs Release History
 
+## v1.1.10 / 2015-11-11
+* EventEmitter: Allow disconnecting event handlers given by array (Moriel Schottlender)
+* Add EmitterList class (Moriel Schottlender)
+* Add SortedEmitterList class (Moriel Schottlender)
+* core: Add binarySearch() utility from VisualEditor (Ed Sanders)
+* build: Bump various devDependencies to latest (James D. Forrester)
+* tests: Add QUnit web interface (Moriel Schottlender)
+* AUTHORS: Update for the past few months (James D. Forrester)
+
 ## v1.1.9 / 2015-08-25
 * build: Fix the build by downgrading Karma and removing testing of Safari 5 (Timo Tijhof)
 * core: Remove dependency on Object.create (Bartosz Dziewoński)
