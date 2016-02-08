@@ -229,25 +229,25 @@
 
 			QUnit.test( 'setProp( ' + type + ' )', function ( assert ) {
 				oo.setProp( obj, 'foo', 4 );
-				assert.strictEqual( 4, obj.foo, 'setting an existing key with depth 1' );
+				assert.strictEqual( obj.foo, 4, 'setting an existing key with depth 1' );
 
 				oo.setProp( obj, 'test', 'TEST' );
-				assert.strictEqual( 'TEST', obj.test, 'setting a new key with depth 1' );
+				assert.strictEqual( obj.test, 'TEST', 'setting a new key with depth 1' );
 
 				oo.setProp( obj, 'bar', 'quux', 'whee', 'YAY' );
-				assert.strictEqual( 'YAY', obj.bar.quux.whee, 'setting an existing key with depth 3' );
+				assert.strictEqual( obj.bar.quux.whee, 'YAY', 'setting an existing key with depth 3' );
 
 				oo.setProp( obj, 'bar', 'a', 'b', 'c' );
-				assert.strictEqual( 'c', obj.bar.a.b, 'setting two new keys within an existing key' );
+				assert.strictEqual( obj.bar.a.b, 'c', 'setting two new keys within an existing key' );
 
 				oo.setProp( obj, 'a', 'b', 'c', 'd', 'e', 'f' );
-				assert.strictEqual( 'f', obj.a.b.c.d.e, 'setting new keys with depth 5' );
+				assert.strictEqual( obj.a.b.c.d.e, 'f', 'setting new keys with depth 5' );
 
 				oo.setProp( obj, 'bar', 'baz', 'whee', 'wheee', 'wheeee' );
-				assert.strictEqual( null, obj.bar.baz, 'descending into null fails silently' );
+				assert.strictEqual( obj.bar.baz, null, 'descending into null fails silently' );
 
 				oo.setProp( obj, 'foo', 'bar', 5 );
-				assert.strictEqual( 4, obj.foo, 'descending into primitive (number) preserves fails silently' );
+				assert.strictEqual( obj.foo, 4, 'descending into primitive (number) preserves fails silently' );
 			} );
 		}
 
