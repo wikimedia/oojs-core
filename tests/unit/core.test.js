@@ -176,9 +176,10 @@
 	} );
 
 	( function () {
-		var plainObj, funcObj, arrObj;
+		var method, plainObj, funcObj, arrObj,
+			runners = {};
 
-		function testGetSetProp( type, obj ) {
+		runners.testGetProp = function ( type, obj ) {
 			QUnit.test( 'getProp( ' + type + ' )', function ( assert ) {
 				assert.strictEqual(
 					oo.getProp( obj, 'foo' ),
@@ -226,7 +227,9 @@
 					'accessing multiple properties of null'
 				);
 			} );
+		};
 
+		runners.testSetProp = function ( type, obj ) {
 			QUnit.test( 'setProp( ' + type + ' )', function ( assert ) {
 				var emptyObj = {};
 
@@ -254,37 +257,67 @@
 				oo.setProp( obj, 'foo', 'bar', 5 );
 				assert.strictEqual( obj.foo, 4, 'descending into primitive (number) preserves fails silently' );
 			} );
-		}
+		};
 
-		plainObj = {
-			foo: 3,
-			bar: {
+		runners.testDeleteProp = function ( type, obj ) {
+			QUnit.test( 'deleteProp( ' + type + ' )', function ( assert ) {
+				var clone = OO.copy( obj );
+
+				oo.deleteProp( clone );
+				assert.deepEqual( clone, obj, 'deleting with insufficient arguments is a no-op' );
+
+				oo.deleteProp( obj, 'foo' );
+				assert.strictEqual( obj.hasOwnProperty( 'foo' ), false, 'deleting an existing key with depth 1' );
+				oo.setProp( obj, 'foo', 3 );
+
+				oo.deleteProp( obj, 'test' );
+				assert.strictEqual( obj.hasOwnProperty( 'test' ), false, 'deleting an non-exsiting key is a silent no-op' );
+
+				oo.deleteProp( obj, 'bar', 'quux', 'whee' );
+				assert.strictEqual( obj.bar.hasOwnProperty( 'quux' ), false, 'deleting an existing key with depth 3 cleans up empty object' );
+				oo.setProp( obj, 'bar', 'quux', 'whee', 'yay' );
+
+				oo.deleteProp( obj, 'bar', 'baz' );
+				oo.deleteProp( obj, 'bar', 'quux', 'whee' );
+				assert.strictEqual( obj.hasOwnProperty( 'bar' ), false, 'deleting an existing key causes two cleanups' );
+
+				oo.deleteProp( obj, 'foo', 'bar' );
+				assert.strictEqual( obj.hasOwnProperty( 'foo' ), true, 'descending into primitive (number) preserves fails silently' );
+			} );
+		};
+
+		for ( method in runners ) {
+			plainObj = {
+				foo: 3,
+				bar: {
+					baz: null,
+					quux: {
+						whee: 'yay'
+					}
+				}
+			};
+			/*jshint loopfunc:true */
+			funcObj = function abc( d ) { return d; };
+			funcObj.foo = 3;
+			funcObj.bar = {
 				baz: null,
 				quux: {
 					whee: 'yay'
 				}
-			}
-		};
-		funcObj = function abc( d ) { return d; };
-		funcObj.foo = 3;
-		funcObj.bar = {
-			baz: null,
-			quux: {
-				whee: 'yay'
-			}
-		};
-		arrObj = [ 'a', 'b', 'c' ];
-		arrObj.foo = 3;
-		arrObj.bar = {
-			baz: null,
-			quux: {
-				whee: 'yay'
-			}
-		};
+			};
+			arrObj = [ 'a', 'b', 'c' ];
+			arrObj.foo = 3;
+			arrObj.bar = {
+				baz: null,
+				quux: {
+					whee: 'yay'
+				}
+			};
 
-		testGetSetProp( 'Object', plainObj );
-		testGetSetProp( 'Function', funcObj );
-		testGetSetProp( 'Array', arrObj );
+			runners[ method ]( 'Object', plainObj );
+			runners[ method ]( 'Function', funcObj );
+			runners[ method ]( 'Array', arrObj );
+		}
 	}() );
 
 	QUnit.test( 'cloneObject', function ( assert ) {

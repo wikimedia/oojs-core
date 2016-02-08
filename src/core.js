@@ -220,6 +220,34 @@ oo.setProp = function ( obj ) {
 };
 
 /**
+ * Delete a deeply nested property of an object using variadic arguments, protecting against
+ * undefined property errors, and deleting resulting empty objects.
+ *
+ * @param {Object} obj
+ * @param {...Mixed} [keys]
+ */
+oo.deleteProp = function ( obj ) {
+	var i,
+		prop = obj,
+		props = [ prop ];
+	if ( Object( obj ) !== obj || arguments.length < 2 ) {
+		return;
+	}
+	for ( i = 1; i < arguments.length - 1; i++ ) {
+		if ( prop[ arguments[ i ] ] === undefined || Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ] ) {
+			return;
+		}
+		prop = prop[ arguments[ i ] ];
+		props.push( prop );
+	}
+	delete prop[ arguments[ i ] ];
+	// Walk back through props removing any plain empty objects
+	while ( ( prop = props.pop() ) && oo.isPlainObject( prop ) && !Object.keys( prop ).length ) {
+		delete props[ props.length - 1 ][ arguments[ props.length ] ];
+	}
+};
+
+/**
  * Create a new object that is an instance of the same
  * constructor as the input, inherits from the same object
  * and contains the same own properties.
