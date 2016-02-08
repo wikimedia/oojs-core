@@ -204,7 +204,7 @@ oo.getProp = function ( obj ) {
 oo.setProp = function ( obj ) {
 	var i,
 		prop = obj;
-	if ( Object( obj ) !== obj ) {
+	if ( Object( obj ) !== obj || arguments.length < 2 ) {
 		return;
 	}
 	for ( i = 1; i < arguments.length - 2; i++ ) {

@@ -228,6 +228,11 @@
 			} );
 
 			QUnit.test( 'setProp( ' + type + ' )', function ( assert ) {
+				var emptyObj = {};
+
+				oo.setProp( emptyObj );
+				assert.deepEqual( emptyObj, {}, 'setting with insufficient arguments is a no-op' );
+
 				oo.setProp( obj, 'foo', 4 );
 				assert.strictEqual( obj.foo, 4, 'setting an existing key with depth 1' );
 
