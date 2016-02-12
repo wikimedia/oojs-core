@@ -112,17 +112,18 @@ module.exports = function ( grunt ) {
 					accessKey: process.env.SAUCE_ACCESS_KEY || '0e464279-3f2a-4ca0-9eb4-db220410bef0',
 					recordScreenshots: false
 				},
+				concurrency: 3,
 				captureTimeout: 90000
 			},
-			// Run sauce labs browsers in batches due lack of concurrency limit
-			// (https://github.com/karma-runner/karma-sauce-launcher/issues/40)
 			ci1: {
-				browsers: [ 'slChrome', 'slFirefox', 'slIE11' ]
+				browsers: [ 'slChrome', 'slFirefox', 'slSafari6', 'slIE11', 'slIE9' ]
 			},
 			ci2: {
-				browsers: [ 'slSafari6', 'slIE9', 'slIE6' ],
-				// Support IE6: https://github.com/karma-runner/karma/issues/983
-				transports: [ 'jsonp-polling' ]
+				// Support IE6: https://github.com/karma-runner/karma/issues/1564
+				browsers: [ 'slIE6' ],
+				options: {
+					forceJSONP: true
+				}
 			},
 			// Primary unit test run (includes code coverage)
 			main: {
