@@ -1,5 +1,3 @@
 {
-	"preset": "wikimedia",
-
-	"requireDotNotation": { "allExcept": [ "keywords" ] }
+	"preset": "wikimedia"
 }
