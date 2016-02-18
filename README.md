@@ -59,7 +59,7 @@ For more information on SemVer, please visit http://semver.org/.
 Bug tracker
 -----------
 
-Found a bug? Please report it in the [issue tracker](https://phabricator.wikimedia.org/maniphest/task/create/?projects=OOjs)!
+Found a bug? Please report it in the [issue tracker](https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=OOjs)!
 
 Release
 ----------
