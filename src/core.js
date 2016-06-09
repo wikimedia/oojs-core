@@ -493,10 +493,9 @@ oo.getHash.keySortReplacer = function ( key, val ) {
 			normalized[ keys[ i ] ] = val[ keys[ i ] ];
 		}
 		return normalized;
-
-	// Primitive values and arrays get stable hashes
-	// by default. Lets those be stringified as-is.
 	} else {
+		// Primitive values and arrays get stable hashes
+		// by default. Lets those be stringified as-is.
 		return val;
 	}
 };
