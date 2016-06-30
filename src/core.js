@@ -159,6 +159,19 @@ oo.mixinClass = function ( targetFn, originFn ) {
 	}
 };
 
+/**
+ * Test whether one class is a subclass of another, without instantiating it.
+ *
+ * Every class is considered a subclass of Object and of itself.
+ *
+ * @param {Function} testFn The class to be tested
+ * @param {Function} baseFn The base class
+ * @return {boolean} Whether testFn is a subclass of baseFn (or equal to it)
+ */
+oo.isSubclass = function ( testFn, baseFn ) {
+	return testFn === baseFn || testFn.prototype instanceof baseFn;
+};
+
 /* Object Methods */
 
 /**
