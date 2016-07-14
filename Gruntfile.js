@@ -97,8 +97,6 @@ module.exports = function ( grunt ) {
 			options: {
 				frameworks: [ 'qunit' ],
 				files: [
-					'lib/json2.js',
-					'lib/es5-shim.js',
 					'dist/oojs.js',
 					'tests/testrunner.js',
 					'tests/unit/*.js'
@@ -115,19 +113,19 @@ module.exports = function ( grunt ) {
 				concurrency: 3,
 				captureTimeout: 90000
 			},
-			ci1: {
-				browsers: [ 'slChrome', 'slFirefox', 'slSafari6', 'slIE11', 'slIE9' ]
-			},
-			ci2: {
-				// Support IE6: https://github.com/karma-runner/karma/issues/1564
-				browsers: [ 'slIE6' ],
-				options: {
-					forceJSONP: true
-				}
+			ci: {
+				browsers: [
+					// Latest versions of major browsers
+					'slChrome', 'slFirefox', 'slEdge',
+					// Latest versions of complicated browsers
+					'slSafari', 'slIE',
+					// Earliest-supported versions of complicated browsers
+					'slSafari6', 'slIE9'
+				]
 			},
 			// Primary unit test run (includes code coverage)
 			main: {
-				browsers: [ 'PhantomJS' ],
+				browsers: [ 'Chrome' ],
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
 				},
@@ -138,7 +136,7 @@ module.exports = function ( grunt ) {
 				] }
 			},
 			jquery: {
-				browsers: [ 'PhantomJS' ],
+				browsers: [ 'Chrome' ],
 				options: {
 					files: [
 						'node_modules/jquery/dist/jquery.js',
@@ -149,7 +147,7 @@ module.exports = function ( grunt ) {
 				}
 			},
 			other: {
-				browsers: [ 'Chrome', 'Firefox' ]
+				browsers: [ 'Firefox' ]
 			}
 		},
 		watch: {
@@ -177,7 +175,7 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'build', [ 'clean', 'concat', 'uglify' ] );
 	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jquery', 'karma:other' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:ci1', 'karma:ci2' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		grunt.registerTask( 'test', 'ci' );

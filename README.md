@@ -34,26 +34,7 @@ Or clone the repo, `git clone https://phabricator.wikimedia.org/diffusion/GOJS/o
 ECMAScript 5
 ----------
 
-OOjs is optimised for modern ECMAScript 5 environments. However, care has been taken to maintain
-parser compatibility with ES3 engines (such as for IE 6-8).
-
-No ES5 syntax or unpolyfillable features are used. To support ES3 engines, ensure an appropriate
-polyfill is loaded before OOjs.
-
-These are the methods used:
-
-* Array.isArray
-* Object.keys
-* JSON.stringify
-
-Additionally, Object.create is used if available. As it is impossible to fully polyfill, OOjs
-includes a fallback implementing the minimal set of required features.
-
-While there are no plans to ship a polyfill for remaining methods, we recommend the following and
-use them ourselves in the unit tests to assert support for older browsers.
-
-* [json2.js](https://github.com/douglascrockford/JSON-js) (only for IE6/IE7)
-* [es5-shim.js](https://github.com/es-shims/es5-shim)
+OOjs requires a modern ECMAScript 5 environment. It is not necessarily compatible with ES3 engines (such as for IE 6-8). For ES3 environments, the old 1.x releases are available but not recommended.
 
 jQuery
 ----------
