@@ -175,6 +175,26 @@
 		assert.strictEqual( obj.protoFunction2(), 'Child', 'method works as expected' );
 	} );
 
+	QUnit.test( 'isSubclass', function ( assert ) {
+		function Base() {}
+		function Child() {}
+		function GrandChild() {}
+		function Unrelated() {}
+		oo.initClass( Base );
+		oo.inheritClass( Child, Base );
+		oo.inheritClass( GrandChild, Child );
+		oo.initClass( Unrelated );
+		assert.strictEqual( oo.isSubclass( Base, Object ), true, 'Base is subclass of Object' );
+		assert.strictEqual( oo.isSubclass( Base, Base ), true, 'Base is subclass of Base' );
+		assert.strictEqual( oo.isSubclass( Base, Child ), false, 'Base not subclass of Child' );
+		assert.strictEqual( oo.isSubclass( Base, GrandChild ), false, 'Base not subclass of GrandChild' );
+
+		assert.strictEqual( oo.isSubclass( GrandChild, Base ), true, 'GrandChild is subclass of Base' );
+		assert.strictEqual( oo.isSubclass( GrandChild, Child ), true, 'GrandChild is subclass of Child' );
+		assert.strictEqual( oo.isSubclass( GrandChild, GrandChild ), true, 'GrandChild is subclass of GrandChild' );
+		assert.strictEqual( oo.isSubclass( Unrelated, Base ), false, 'Unrelated not subclass of Base' );
+	} );
+
 	( function () {
 		var method, plainObj, funcObj, arrObj,
 			runners = {};
