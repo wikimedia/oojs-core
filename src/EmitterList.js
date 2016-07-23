@@ -238,7 +238,18 @@
 	 * Don't call this directly unless you know what you're doing.
 	 * Use #addItems instead.
 	 *
-	 * @private
+	 * This method can be extended in child classes to produce
+	 * different behavior when an item is inserted. For example,
+	 * inserted items may also be attached to the DOM or may
+	 * interact with some other nodes in certain ways. Extending
+	 * this method is allowed, but if overriden, the aggregation
+	 * of events must be preserved, or behavior of emitted events
+	 * will be broken.
+	 *
+	 * If you are extending this method, please make sure the
+	 * parent method is called.
+	 *
+	 * @protected
 	 * @param {OO.EventEmitter} item Items to add
 	 * @param {number} index Index to add items at
 	 * @return {number} The index the item was added at
