@@ -78,8 +78,11 @@ oo.initClass = function ( fn ) {
 oo.inheritClass = function ( targetFn, originFn ) {
 	var targetConstructor;
 
+	if ( !originFn ) {
+		throw new Error( 'inheritClass: Origin is not a function (actually ' + originFn + ')' );
+	}
 	if ( targetFn.prototype instanceof originFn ) {
-		throw new Error( 'Target already inherits from origin' );
+		throw new Error( 'inheritClass: Target already inherits from origin' );
 	}
 
 	targetConstructor = targetFn.prototype.constructor;
@@ -138,6 +141,10 @@ oo.inheritClass = function ( targetFn, originFn ) {
  */
 oo.mixinClass = function ( targetFn, originFn ) {
 	var key;
+
+	if ( !originFn ) {
+		throw new Error( 'mixinClass: Origin is not a function (actually ' + originFn + ')' );
+	}
 
 	// Copy prototype properties
 	for ( key in originFn.prototype ) {

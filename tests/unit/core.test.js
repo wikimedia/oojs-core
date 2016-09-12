@@ -81,6 +81,10 @@
 			oo.inheritClass( Child, Object );
 		}, 'Throw if target already inherits from source (naturally, Object)' );
 
+		assert.throws( function () {
+			oo.inheritClass( Child, undefined );
+		}, /Origin is not a function/, 'Throw if source is undefined (e.g. due to missing dependency)' );
+
 		enumKeys = [];
 		for ( key in child ) {
 			enumKeys.push( key );
@@ -173,6 +177,10 @@
 		obj = new Mixer();
 
 		assert.strictEqual( obj.protoFunction2(), 'Child', 'method works as expected' );
+
+		assert.throws( function () {
+			oo.mixinClass( Mixer, undefined );
+		}, /Origin is not a function/, 'Throw if source is undefined (e.g. due to missing dependency)' );
 	} );
 
 	QUnit.test( 'isSubclass', function ( assert ) {
