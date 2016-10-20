@@ -185,7 +185,7 @@ oo.isSubclass = function ( testFn, baseFn ) {
  * Get a deeply nested property of an object using variadic arguments, protecting against
  * undefined property errors.
  *
- * `quux = oo.getProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `quux = obj.foo.bar.baz;`
+ * `quux = OO.getProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `quux = obj.foo.bar.baz;`
  * except that the former protects against JS errors if one of the intermediate properties
  * is undefined. Instead of throwing an error, this function will return undefined in
  * that case.
