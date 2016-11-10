@@ -1,4 +1,4 @@
-/*global hasOwn, toString */
+/* global hasOwn, toString */
 
 /**
  * Assert whether a value is a plain object or not.
@@ -8,11 +8,10 @@
  * @return {boolean}
  */
 oo.isPlainObject = function ( obj ) {
-	/*jshint eqnull:true, eqeqeq:false */
-
 	// Any object or value whose internal [[Class]] property is not "[object Object]"
 	// Support IE8: Explicitly filter out DOM nodes
 	// Support IE8: Explicitly filter out Window object (needs loose comparison)
+	// eslint-disable-next-line eqeqeq
 	if ( !obj || toString.call( obj ) !== '[object Object]' || obj.nodeType || ( obj != null && obj == obj.window ) ) {
 		return false;
 	}

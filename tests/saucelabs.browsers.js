@@ -1,4 +1,4 @@
-/*jshint node:true */
+/* eslint-env node */
 
 /**
  * Cover a wide range of browsers with (ideally) no more than 9 browsers (3 batches of 3).

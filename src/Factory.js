@@ -1,4 +1,4 @@
-/*global createObject */
+/* global createObject */
 
 /**
  * @class OO.Factory

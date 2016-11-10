@@ -1,6 +1,4 @@
 ( function () {
-	/*jshint browser:true */
-
 	// Extend QUnit.module to provide a fixture element. This used to be in tests/index.html, but
 	// dynamic test runners like Karma build their own web page.
 	( function () {
@@ -42,7 +40,7 @@
 		document.getElementById( 'qunit-fixture' ).appendChild( iframe );
 
 		// Support IE8: Without "src", the contentWindow has no 'Object' constructor.
-		/*jshint scripturl:true */
+		// eslint-disable-next-line no-script-url
 		iframe.src = 'javascript:';
 
 		// Support IE6: Iframe contentWindow is populated asynchronously.

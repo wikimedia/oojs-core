@@ -1,0 +1,20 @@
+{
+    "extends": "wikimedia",
+
+    "ecmaVersion": 5,
+    "env": {
+        "browser": true,
+        "jquery": true,
+        "qunit": true
+    },
+    "globals": {
+        "oo": true,
+        "OO": false
+    },
+
+    "rules": {
+        "dot-notation": 0,
+        "valid-jsdoc": 0,
+        "wrap-iife": 0
+    }
+}

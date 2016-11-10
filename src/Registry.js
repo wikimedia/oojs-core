@@ -1,4 +1,4 @@
-/*global hasOwn */
+/* global hasOwn */
 
 /**
  * @class OO.Registry

@@ -20,8 +20,8 @@
 		// Primitives
 		assert.strictEqual( oo.isPlainObject( undefined ), false, 'undefined' );
 		assert.strictEqual( oo.isPlainObject( null ), false, 'null' );
-		assert.strictEqual( oo.isPlainObject( false ), false,  'boolean false' );
-		assert.strictEqual( oo.isPlainObject( true ), false,  'boolean true' );
+		assert.strictEqual( oo.isPlainObject( false ), false, 'boolean false' );
+		assert.strictEqual( oo.isPlainObject( true ), false, 'boolean true' );
 		assert.strictEqual( oo.isPlainObject( 0 ), false, 'number 0' );
 		assert.strictEqual( oo.isPlainObject( 42 ), false, 'positive number' );
 		assert.strictEqual( oo.isPlainObject( -42 ), false, 'negative number' );

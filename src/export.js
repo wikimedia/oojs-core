@@ -1,4 +1,4 @@
-/*jshint node:true */
+/* eslint-env node */
 if ( typeof module !== 'undefined' && module.exports ) {
 	module.exports = oo;
 } else {

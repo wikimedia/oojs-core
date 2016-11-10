@@ -324,7 +324,6 @@
 					}
 				}
 			};
-			/*jshint loopfunc:true */
 			funcObj = function abc( d ) { return d; };
 			funcObj.foo = 3;
 			funcObj.bar = {
@@ -802,7 +801,6 @@
 			};
 			oo.compare.callCount = 0;
 			oo.compare( x, y );
-			/**jshint bitwise: true */
 			assert.strictEqual(
 				oo.compare.callCount,
 				Math.pow( 2, depth + 1 ) - 2,

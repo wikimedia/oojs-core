@@ -90,7 +90,7 @@
 					msg: 'Passing an item instead of an array to addItems'
 				},
 				{
-					items:  initialItems,
+					items: initialItems,
 					newSortingCallback: function ( a, b ) {
 						// Flip the sort
 						return a.getContent() > b.getContent() ? -1 :

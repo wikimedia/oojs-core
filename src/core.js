@@ -1,4 +1,4 @@
-/*exported toString */
+/* exported toString */
 var
 	/**
 	 * Namespace for all classes, static methods and static properties.
@@ -348,7 +348,7 @@ oo.binarySearch = function ( arr, searchFunc, forInsertion ) {
 		right = arr.length;
 	while ( left < right ) {
 		// Equivalent to Math.floor( ( left + right ) / 2 ) but much faster
-		/*jshint bitwise:false */
+		// eslint-disable-next-line no-bitwise
 		mid = ( left + right ) >> 1;
 		cmpResult = searchFunc( arr[ mid ] );
 		if ( cmpResult < 0 ) {

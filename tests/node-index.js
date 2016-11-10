@@ -1,4 +1,4 @@
-/*jshint node:true */
+/* eslint-env node */
 var qunit = require( 'qunit' );
 
 qunit.setup( {

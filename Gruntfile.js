@@ -10,16 +10,15 @@
  * SAUCE_ACCESS_KEY from your bashrc and run 'grunt ci'. Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
-/*jshint node:true */
+/* eslint-env node */
 module.exports = function ( grunt ) {
 	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
-	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	grunt.loadNpmTasks( 'grunt-jscs' );
+	grunt.loadNpmTasks( 'grunt-eslint' );
 	grunt.loadNpmTasks( 'grunt-karma' );
 
 	grunt.initConfig( {
@@ -65,19 +64,19 @@ module.exports = function ( grunt ) {
 				]
 			}
 		},
-		jshint: {
-			options: {
-				jshintrc: true
+		eslint: {
+			fix: {
+				options: {
+					fix: true
+				},
+				src: [
+					'<%= eslint.dev %>'
+				]
 			},
 			dev: [
 				'*.js',
 				'{src,tests}/**/*.js'
-			],
-			// Skipping the minimised distribution files
-			dist: 'dist/**/oojs{.jquery,}.js'
-		},
-		jscs: {
-			dev: '<%= jshint.dev %>'
+			]
 		},
 		uglify: {
 			options: {
@@ -152,8 +151,8 @@ module.exports = function ( grunt ) {
 		},
 		watch: {
 			files: [
-				'.{jscsrc,jshintignore,jshintrc}',
-				'<%= jshint.dev %>'
+				'.eslintrc.json',
+				'<%= eslint.dev %>'
 			],
 			tasks: '_test'
 		}
@@ -174,7 +173,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'build', 'jshint', 'jscs', 'karma:main', 'karma:jquery', 'karma:other' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'build', 'eslint', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
