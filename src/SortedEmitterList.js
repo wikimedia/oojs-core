@@ -120,7 +120,7 @@ oo.SortedEmitterList.prototype.addItems = function ( items ) {
 
 		// Insert item at the insertion index
 		index = this.insertItem( items[ i ], insertionIndex );
-		this.emit( 'add', items[ i ], insertionIndex );
+		this.emit( 'add', items[ i ], index );
 	}
 
 	return this;
