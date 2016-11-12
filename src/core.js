@@ -22,7 +22,7 @@ var
 			}
 			return obj;
 		};
-	} )();
+	}() );
 
 /* Class Methods */
 
@@ -91,6 +91,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	// by IE 8 and below (bug 63303).
 	// Provide .parent as alias for code supporting older browsers which
 	// allows people to comply with their style guide.
+	// eslint-disable-next-line dot-notation
 	targetFn[ 'super' ] = targetFn.parent = originFn;
 
 	targetFn.prototype = createObject( originFn.prototype, {
