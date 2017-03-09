@@ -6,7 +6,7 @@
  */
 oo.Factory = function OoFactory() {
 	// Parent constructor
-	oo.Factory.parent.call( this );
+	oo.Factory.super.call( this );
 };
 
 /* Inheritance */
@@ -43,7 +43,7 @@ oo.Factory.prototype.register = function ( constructor ) {
 	}
 
 	// Parent method
-	oo.Factory.parent.prototype.register.call( this, name, constructor );
+	oo.Factory.super.prototype.register.call( this, name, constructor );
 };
 
 /**
@@ -65,7 +65,7 @@ oo.Factory.prototype.unregister = function ( constructor ) {
 	}
 
 	// Parent method
-	oo.Factory.parent.prototype.unregister.call( this, name );
+	oo.Factory.super.prototype.unregister.call( this, name );
 };
 
 /**

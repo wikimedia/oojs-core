@@ -173,7 +173,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'build', 'eslint', 'karma:main', 'karma:jquery', 'karma:other' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'build', 'eslint:dev', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
