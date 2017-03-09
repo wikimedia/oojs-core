@@ -1,5 +1,27 @@
 # OOjs Release History
 
+## v2.0.0 / 2017-04-04
+
+This release drops support for ES3 environments. Where previously OOjs was
+supported in IE 6-8 with an ES5 shim, it is no longer.
+
+* [BREAKING CHANGE] core: Drop support for ES3 environments (James D. Forrester)
+* core: Add `OO.isSubclass`, to test class inheritance (David Chan)
+* core: Guard `OO.setProp()` against insufficient arguments (Ed Sanders)
+* core: Implement `OO.deleteProp` (Ed Sanders)
+* core: Improve error message for `inheritClass`/`mixinClass` called with undefined (Bartosz Dziewoński)
+* core: Switch from `.parent` hack to use `.super` directly (James D. Forrester)
+* EmitterList: Change insertItem from `@private` to `@protected` (Moriel Schottlender)
+* SortedEmitterList: Emit the actual inserted index (Ed Sanders)
+* doc: Make OO uppercase (Prateek Saxena)
+* doc: Update Phabricator URL (James D. Forrester)
+* doc: Replace git.wikimedia.org URL with Phabricator one (Paladox)
+* tests: Correct order of expected/actual in setProp tests (Ed Sanders)
+* tests: Remove IE6/IE8 compat in QUnit.tmpIframe() utility (Timo Tijhof)
+* build: Bump development dependencies to latest (James D. Forrester)
+* build: Bump file copyright notices for year change (James D. Forrester)
+* build: Replace jscs+jshint with eslint (Ed Sanders)
+
 ## v1.1.10 / 2015-11-11
 * EventEmitter: Allow disconnecting event handlers given by array (Moriel Schottlender)
 * Add EmitterList class (Moriel Schottlender)
