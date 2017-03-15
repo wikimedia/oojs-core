@@ -62,38 +62,34 @@
 				'instance of Window'
 			);
 
-			QUnit.tmpIframe( function ( iframe, teardown ) {
-				IframeObject = iframe.contentWindow.Object;
+			IframeObject = QUnit.tmpIframe().contentWindow.Object;
 
-				assert.strictEqual(
-					typeof IframeObject,
-					'function',
-					'Object constructor found'
-				);
+			assert.strictEqual(
+				typeof IframeObject,
+				'function',
+				'Object constructor found'
+			);
 
-				assert.notStrictEqual(
-					IframeObject,
-					Object,
-					'Object constructor from other window is different'
-				);
+			assert.notStrictEqual(
+				IframeObject,
+				Object,
+				'Object constructor from other window is different'
+			);
 
-				assert.strictEqual(
-					oo.isPlainObject( new IframeObject() ),
-					true,
-					'instance of iframeObject'
-				);
+			assert.strictEqual(
+				oo.isPlainObject( new IframeObject() ),
+				true,
+				'instance of iframeObject'
+			);
 
-				// https://bugzilla.mozilla.org/814622
-				threw = false;
-				try {
-					oo.isPlainObject( global.location );
-				} catch ( e ) {
-					threw = true;
-				}
-				assert.strictEqual( threw, false, 'native host object' );
-
-				teardown();
-			} );
+			// https://bugzilla.mozilla.org/814622
+			threw = false;
+			try {
+				oo.isPlainObject( global.location );
+			} catch ( e ) {
+				threw = true;
+			}
+			assert.strictEqual( threw, false, 'native host object' );
 		} );
 	}
 

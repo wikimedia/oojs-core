@@ -28,31 +28,14 @@
 	}() );
 
 	/**
-	 * Utility for creating iframes
-	 *
-	 * @param {Function} callback Called when the iframe is done
-	 * @param {HTMLElement} callback.iframe
-	 * @param {Function} callback.teardown To be called when user is done (performs cleanup and resumes
-	 *  QUnit runner).
+	 * Utility for creating iframes.
+	 * @return {HTMLElement}
 	 */
-	QUnit.tmpIframe = function ( callback ) {
+	QUnit.tmpIframe = function () {
 		var iframe = document.createElement( 'iframe' );
+		// Will be removed automatically by module teardown
 		document.getElementById( 'qunit-fixture' ).appendChild( iframe );
-
-		// Support IE8: Without "src", the contentWindow has no 'Object' constructor.
-		// eslint-disable-next-line no-script-url
-		iframe.src = 'javascript:';
-
-		// Support IE6: Iframe contentWindow is populated asynchronously.
-		QUnit.stop();
-		setTimeout( function () {
-			callback( iframe, function () {
-
-				iframe.parentNode.removeChild( iframe );
-				iframe = undefined;
-				QUnit.start();
-			} );
-		} );
+		return iframe;
 	};
 
 }() );

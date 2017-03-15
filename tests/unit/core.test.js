@@ -1153,27 +1153,24 @@
 
 	if ( global.document ) {
 		QUnit.test( 'getHash( iframe Object )', function ( assert ) {
-			var obj, hash;
+			var IframeObject, obj, hash;
 
-			QUnit.tmpIframe( function ( iframe, teardown ) {
-				obj = new iframe.contentWindow.Object();
-				obj.c = 3;
-				obj.b = 2;
-				obj.a = 1;
+			IframeObject = QUnit.tmpIframe().contentWindow.Object;
+			obj = new IframeObject();
+			obj.c = 3;
+			obj.b = 2;
+			obj.a = 1;
 
-				hash = '{"a":1,"b":2,"c":3}';
+			hash = '{"a":1,"b":2,"c":3}';
 
-				assert.strictEqual(
-					oo.getHash( obj ),
-					hash,
-					// This was previously broken when we used comparison with "Object" in
-					// oo.getHash.keySortReplacer, because they are an instance of the other
-					// window's "Object".
-					'Treat objects constructed by a another window as well'
-				);
-
-				teardown();
-			} );
+			assert.strictEqual(
+				oo.getHash( obj ),
+				hash,
+				// This was previously broken when we used comparison with "Object" in
+				// oo.getHash.keySortReplacer, because they are an instance of the other
+				// window's "Object".
+				'Treat objects constructed by a another window as well'
+			);
 		} );
 	}
 
