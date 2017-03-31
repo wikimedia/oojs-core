@@ -4,7 +4,7 @@
  *
  * Copyright 2011-<%= grunt.template.today("yyyy") %> OOjs Team and other contributors.
  * Released under the MIT license
- * http://oojs.mit-license.org
+ * https://oojs.mit-license.org
  *
  * Date: <%= grunt.template.today("isoUtcDateTime") %>
  */

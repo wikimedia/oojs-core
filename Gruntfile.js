@@ -80,7 +80,7 @@ module.exports = function ( grunt ) {
 		},
 		uglify: {
 			options: {
-				banner: '/*! OOjs v<%= pkg.version %> | http://oojs.mit-license.org */',
+				banner: '/*! OOjs v<%= pkg.version %> | https://oojs.mit-license.org */',
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				report: 'gzip'
