@@ -3,19 +3,24 @@
 	QUnit.module( 'util' );
 
 	QUnit.test( 'isPlainObject', function ( assert ) {
+		var obj;
 		function Thing() {}
 
 		// Plain objects
 		assert.strictEqual( oo.isPlainObject( {} ), true, 'empty plain object' );
 		assert.strictEqual( oo.isPlainObject( { a: 1 } ), true, 'non-empty plain object' );
-		if ( !Object.create ) {
-			// We test Object.create(null) when the environment supports it for modern browsers
-			// However Object.create(null) itself is not an OOjs feature and if the environment
-			// doesn't support it, we skip the test.
-			assert.strictEqual( true, true, '[skipped] Objects with no prototype from Object.create( null )' );
-		} else {
-			assert.strictEqual( oo.isPlainObject( Object.create( null ) ), true, 'Objects with no prototype from Object.create( null )' );
-		}
+		assert.strictEqual( oo.isPlainObject( Object.create( null ) ), true, 'empty object with no prototype, via Object.create( null )' );
+		obj = Object.create( null );
+		obj.foo = true;
+		assert.strictEqual( oo.isPlainObject( obj ), true, 'non-empty object with no prototype' );
+
+		// Non-plain objects (any inheritance other than Object.prototype is not plain)
+		obj = Object.create( Object.create( null ) );
+		assert.strictEqual( oo.isPlainObject( obj ), false, 'empty object inheriting from object with no prototype' );
+		obj.foo = true;
+		assert.strictEqual( oo.isPlainObject( obj ), false, 'non-empty object inheriting from object with no prototype' );
+		obj = Object.create( {} );
+		assert.strictEqual( oo.isPlainObject( obj ), false, 'object inheriting from plain object' );
 
 		// Primitives
 		assert.strictEqual( oo.isPlainObject( undefined ), false, 'undefined' );
@@ -89,7 +94,7 @@
 			} catch ( e ) {
 				threw = true;
 			}
-			assert.strictEqual( threw, false, 'native host object' );
+			assert.strictEqual( threw, false, 'native Location object' );
 		} );
 	}
 

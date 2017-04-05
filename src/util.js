@@ -8,25 +8,20 @@
  * @return {boolean}
  */
 oo.isPlainObject = function ( obj ) {
-	// Any object or value whose internal [[Class]] property is not "[object Object]"
-	// Support IE8: Explicitly filter out DOM nodes
-	// Support IE8: Explicitly filter out Window object (needs loose comparison)
-	// eslint-disable-next-line eqeqeq
-	if ( !obj || toString.call( obj ) !== '[object Object]' || obj.nodeType || ( obj != null && obj == obj.window ) ) {
+	var proto;
+
+	// Optimise for common case where internal [[Class]] property is not "Object"
+	if ( !obj || toString.call( obj ) !== '[object Object]' ) {
 		return false;
 	}
 
-	// The try/catch suppresses exceptions thrown when attempting to access
-	// the "constructor" property of certain host objects such as Location
-	// in Firefox < 20 (https://bugzilla.mozilla.org/814622)
-	try {
-		if ( obj.constructor &&
-				!hasOwn.call( obj.constructor.prototype, 'isPrototypeOf' ) ) {
-			return false;
-		}
-	} catch ( e ) {
-		return false;
+	proto = Object.getPrototypeOf( obj );
+
+	// Objects without prototype (e.g., `Object.create( null )`) are considered plain
+	if ( !proto ) {
+		return true;
 	}
 
-	return true;
+	// The 'isPrototypeOf' method is set on Object.prototype.
+	return hasOwn.call( proto, 'isPrototypeOf' );
 };
