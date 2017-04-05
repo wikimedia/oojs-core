@@ -43,7 +43,7 @@ If your project uses jQuery, use the optimised `oojs.jquery.js` build instead.
 
 This build assumes jQuery is present and omits various chunks of code in favour of references to jQuery.
 
-jQuery 1.8.3 or higher is recommended.
+jQuery 3.0.0 or higher is required.
 
 Versioning
 ----------
