@@ -253,30 +253,52 @@
 
 	QUnit.test( 'disconnect( host, array methods )', function ( assert ) {
 		var host,
-			hits = { foo: 0, barbara: 0 },
+			hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
 			ee = new oo.EventEmitter();
 
 		host = {
 			onFoo: function () {
 				hits.foo++;
 			},
-			barbara: function () {
-				hits.barbara++;
+			barbara: function ( param ) {
+				if ( param === 'alt' ) {
+					hits.barbaraAlt++;
+				} else {
+					hits.barbara++;
+				}
 			}
 		};
 
 		ee.connect( host, {
 			foo: 'onFoo',
-			bar: [ 'barbara', 'some', 'parameter' ]
+			bar: [ 'barbara', 'regular' ]
 		} );
 		ee.emit( 'foo' );
 		ee.emit( 'bar' );
+		assert.deepEqual( hits, { foo: 1, barbara: 1, barbaraAlt: 0 } );
 
+		// disconnect finds "barbara" by method name, parameters not needed
 		ee.disconnect( host, { bar: [ 'barbara' ] } );
 		ee.emit( 'foo' );
 		ee.emit( 'bar' );
+		assert.deepEqual( hits, { foo: 2, barbara: 1, barbaraAlt: 0 } );
 
-		assert.deepEqual( hits, { foo: 2, barbara: 1 } );
+		ee.connect( host, {
+			bar: [ 'barbara', 'regular' ]
+		} );
+		ee.connect( host, {
+			bar: [ 'barbara', 'alt' ]
+		} );
+		ee.emit( 'bar' );
+		// both barbara's increase
+		assert.deepEqual( hits, { foo: 2, barbara: 2, barbaraAlt: 1 } );
+
+		// disconnect finds both "barbara" by method name, parameters ignored
+		ee.disconnect( host, { bar: [ 'barbara', 'ignored' ] } );
+		ee.emit( 'bar' );
+
+		// foo increased, but barabara not (following disconnect of both)
+		assert.deepEqual( hits, { foo: 2, barbara: 2, barbaraAlt: 1 } );
 	} );
 
 	QUnit.test( 'disconnect( host, unbound methods )', function ( assert ) {

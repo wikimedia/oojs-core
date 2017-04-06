@@ -191,7 +191,7 @@
 	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} methods List of
 	 *  event bindings keyed by event name containing either method names, functions or arrays containing
 	 *  method name or function followed by a list of arguments to be passed to callback before emitted
-	 *  arguments
+	 *  arguments.
 	 * @chainable
 	 */
 	oo.EventEmitter.prototype.connect = function ( context, methods ) {
@@ -217,8 +217,13 @@
 	 *
 	 * @param {Object} context Object to disconnect methods from
 	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} [methods] List of
-	 * event bindings keyed by event name. Values can be either method names or functions, but must be
-	 * consistent with those used in the corresponding call to "connect".
+	 *  event bindings keyed by event name. Values can be either method names, functions or arrays
+	 *  containing a method name.
+	 *  NOTE: To allow matching call sites with connect(), array values are allowed to contain the
+	 *  parameters as well, but only the method name is used to find bindings. Tt is discouraged to
+	 *  have multiple bindings for the same event to the same listener, but if used (and only the
+	 *  parameters vary), disconnecting one variation of (event name, event listener, parameters)
+	 *  will disconnect other variations as well.
 	 * @chainable
 	 */
 	oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
