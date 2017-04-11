@@ -19,12 +19,19 @@
 
 	QUnit.test( 'register/unregister', function ( assert ) {
 		var factory = new oo.Factory();
+
 		assert.throws(
 			function () {
 				factory.register( 'not-a-function' );
 			},
 			Error,
 			'Throws an exception when trying to register a non-function value as a constructor'
+		);
+		assert.throws(
+			function () {
+				factory.register( function UnnamedExample() {} );
+			},
+			'Constructor without .static.name'
 		);
 
 		factory.register( oo.FactoryObjectStub );
@@ -36,6 +43,12 @@
 			},
 			Error,
 			'Throws an exception when trying to unregister a non-function value as a constructor'
+		);
+		assert.throws(
+			function () {
+				factory.unregister( function UnnamedExample() {} );
+			},
+			'Constructor without .static.name'
 		);
 
 		factory.unregister( oo.FactoryObjectStub );

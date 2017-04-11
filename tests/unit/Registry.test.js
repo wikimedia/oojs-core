@@ -12,14 +12,29 @@
 		assert.strictEqual( registry.lookup( 'registry-item-2' ), 23 );
 		assert.strictEqual( registry.lookup( 'registry-item-3' ), 23 );
 
-		registry.unregister( 'registry-item-1', 1 );
+		registry.unregister( 'registry-item-1' );
 		assert.strictEqual( registry.lookup( 'registry-item-1' ), undefined );
 		assert.strictEqual( registry.lookup( 'registry-item-2' ), 23 );
 
-		registry.unregister( [ 'registry-item-2', 'registry-item-3' ], 23 );
+		registry.unregister( [ 'registry-item-2', 'registry-item-3' ] );
 		assert.strictEqual( registry.lookup( 'registry-item-2' ), undefined );
 		assert.strictEqual( registry.lookup( 'registry-item-3' ), undefined );
 
+		// Unknown name should not throw
+		registry.unregister( 'not-registered' );
+
+		assert.throws(
+			function () {
+				registry.register( null );
+			},
+			'Invalid name'
+		);
+		assert.throws(
+			function () {
+				registry.unregister( null );
+			},
+			'Invalid name'
+		);
 	} );
 
 	QUnit.test( 'lookup', function ( assert ) {
