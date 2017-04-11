@@ -12,7 +12,19 @@
 
 /* eslint-env node */
 module.exports = function ( grunt ) {
-	var sauceBrowsers = require( './tests/saucelabs.browsers.js' );
+	var sauceBrowsers = require( './tests/saucelabs.browsers.js' ),
+		concatFiles = [
+			'src/intro.js.txt',
+			'src/core.js',
+			'src/util.js',
+			'src/EventEmitter.js',
+			'src/EmitterList.js',
+			'src/SortedEmitterList.js',
+			'src/Registry.js',
+			'src/Factory.js',
+			'src/export.js',
+			'src/outro.js.txt'
+		];
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
@@ -32,18 +44,15 @@ module.exports = function ( grunt ) {
 					banner: grunt.file.read( 'src/banner.txt' )
 				},
 				dest: 'dist/oojs.js',
-				src: [
-					'src/intro.js.txt',
-					'src/core.js',
-					'src/util.js',
-					'src/EventEmitter.js',
-					'src/EmitterList.js',
-					'src/SortedEmitterList.js',
-					'src/Registry.js',
-					'src/Factory.js',
-					'src/export.js',
-					'src/outro.js.txt'
-				]
+				src: concatFiles
+			},
+			test: {
+				options: {
+					banner: grunt.file.read( 'src/banner.txt' ),
+					sourceMap: true
+				},
+				dest: 'dist/oojs.js',
+				src: concatFiles
 			},
 			jquery: {
 				options: {
@@ -128,11 +137,14 @@ module.exports = function ( grunt ) {
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
 				},
-				reporters: [ 'dots', 'coverage' ],
-				coverageReporter: { reporters: [
-					{ type: 'html', dir: 'coverage/' },
-					{ type: 'text-summary' }
-				] }
+				reporters: [ 'dots', 'coverage', 'karma-remap-istanbul' ],
+				coverageReporter: { type: 'in-memory' },
+				remapIstanbulReporter: {
+					reports: {
+						'text-summary': null,
+						html: 'coverage/'
+					}
+				}
 			},
 			jquery: {
 				browsers: [ 'Chrome' ],
@@ -172,8 +184,8 @@ module.exports = function ( grunt ) {
 		} );
 	} );
 
-	grunt.registerTask( 'build', [ 'clean', 'concat', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'build', 'eslint:dev', 'karma:main', 'karma:jquery', 'karma:other' ] );
+	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
