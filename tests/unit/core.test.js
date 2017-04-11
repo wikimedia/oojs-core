@@ -738,6 +738,63 @@
 		);
 	} );
 
+	QUnit.test( 'compare( Node, Node )', function ( assert ) {
+		var a, b, c;
+		a = {
+			id: '1',
+			nodeType: 0,
+			isEqualNode: function ( other ) {
+				return this.id === other.id;
+			}
+		};
+		b = {
+			id: '2',
+			nodeType: 0,
+			isEqualNode: function ( other ) {
+				return this.id === other.id;
+			}
+		};
+		c = {
+			id: '2',
+			nodeType: 0,
+			isEqualNode: function ( other ) {
+				return this.id === other.id;
+			}
+		};
+
+		assert.strictEqual(
+			oo.compare( a, a ),
+			true,
+			'same Node object'
+		);
+		assert.strictEqual(
+			oo.compare( a, b ),
+			false,
+			'different Node (isEqualNode returns false)'
+		);
+		assert.strictEqual(
+			oo.compare( b, c ),
+			true,
+			'equal Node (isEqualNode returns true)'
+		);
+
+		assert.strictEqual(
+			oo.compare( { obj: a }, { obj: a } ),
+			true,
+			'(nested) same Node object'
+		);
+		assert.strictEqual(
+			oo.compare( { obj: a }, { obj: b } ),
+			false,
+			'(nested) different Node (isEqualNode returns false)'
+		);
+		assert.strictEqual(
+			oo.compare( { obj: b }, { obj: c } ),
+			true,
+			'(nested) equal Node (isEqualNode returns true)'
+		);
+	} );
+
 	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', function ( assert ) {
 		var x, y, z, i, depth, compare;
 
@@ -818,7 +875,12 @@
 			withArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
 			sparseArray = [ 'a', undefined, undefined, 'b' ],
 			withSparseArray = [ [ 'a', undefined, undefined, 'b' ] ],
-			withFunction = [ function () { return true; } ];
+			withFunction = [ function () { return true; } ],
+			nodeLike = {
+				cloneNode: function () {
+					return 'cloned node';
+				}
+			};
 
 		function Cloneable( name ) {
 			this.name = name;
@@ -920,9 +982,20 @@
 			'Copying arrays with null and undefined elements'
 		);
 
+		assert.deepEqual(
+			oo.copy( nodeLike ),
+			'cloned node',
+			'Node-like object (using #cloneNode)'
+		);
 	} );
 
 	QUnit.test( 'copy( source, Function leafCallback )', function ( assert ) {
+		var nodeLike = {
+			cloneNode: function () {
+				return 'cloned node';
+			}
+		};
+
 		function Cloneable( name ) {
 			this.name = name;
 			this.clone = function () {
@@ -963,6 +1036,17 @@
 			),
 			[ new Cloneable( 'callback-clone-mod' ) ],
 			'Callback on cloneables (as array elements)'
+		);
+
+		assert.deepEqual(
+			oo.copy(
+				nodeLike,
+				function ( val ) {
+					return val += ' leaf';
+				}
+			),
+			'cloned node leaf',
+			'Node-like object'
 		);
 	} );
 
