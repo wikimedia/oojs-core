@@ -115,15 +115,24 @@
 		} );
 	} );
 
+	QUnit.test( 'moveItem', function ( assert ) {
+		var list = new TestList(),
+			item = new TestItem( 'a' );
+		assert.throws( function () {
+			list.moveItem( item, 0 );
+		}, 'Throw when trying to move an item not in the list' );
+	} );
+
 	QUnit.test( 'clearItems', function ( assert ) {
 		var list = new TestList();
 
 		list.addItems( [
 			new TestItem( 'a' ),
 			new TestItem( 'b' ),
+			{ not: 'connectable' },
 			new TestItem( 'c' )
 		] );
-		assert.equal( list.getItemCount(), 3, 'Items added' );
+		assert.equal( list.getItemCount(), 4, 'Items added' );
 		list.clearItems();
 		assert.equal( list.getItemCount(), 0, 'Items cleared' );
 		assert.ok( list.isEmpty(), 'List is empty' );
@@ -132,6 +141,7 @@
 	QUnit.test( 'removeItems', function ( assert ) {
 		var expected = [],
 			list = new TestList(),
+			plain = { not: 'connectable' },
 			items = [
 				new TestItem( 'a' ),
 				new TestItem( 'b' ),
@@ -160,6 +170,12 @@
 		// 'b'
 		items[ 1 ].emit( 'change' );
 		assert.deepEqual( expected, [ 'b' ], 'Removing an item also removes its aggregate events' );
+
+		// Item without connect() method
+		list.addItems( [ plain ] );
+		assert.equal( list.getItemCount(), 2, 'Plain added' );
+		list.removeItems( [ plain ] );
+		assert.equal( list.getItemCount(), 1, 'Plain removed' );
 	} );
 
 	QUnit.test( 'aggregate', function ( assert ) {
@@ -167,6 +183,7 @@
 			list = new TestList(),
 			expectChange = [],
 			expectEdit = [],
+			plain = { not: 'connectable' },
 			items = [
 				new TestItem( 'a' ),
 				new TestItem( 'b' ),
@@ -214,6 +231,11 @@
 		assert.throws( function () {
 			list.aggregate( { change: 'itemChangeDuplicate' } );
 		}, 'Duplicate event aggregation throws an error' );
+
+		// Items without connect() method are ignored
+		list.addItems( plain );
+		list.aggregate( { spain: 'onThePlain' } );
+		list.aggregate( { spain: null } );
 	} );
 
 	QUnit.test( 'Events', function ( assert ) {
