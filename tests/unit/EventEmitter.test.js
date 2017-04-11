@@ -51,6 +51,27 @@
 		} );
 		ee.emit( 'context-default' );
 
+		x = {
+			methodName: function () {
+				seq.push( this );
+			}
+		};
+		seq = [];
+		ee.on( 'context-custom', 'methodName', [], x );
+		ee.emit( 'context-custom' );
+		assert.deepEqual(
+			seq,
+			[ x ],
+			'Custom context'
+		);
+
+		assert.throws( function () {
+			ee.on( 'invalid-context', 'methodName', [], null );
+		}, 'invalid context' );
+		assert.throws( function () {
+			ee.on( 'invalid-context', 'methodName', [], undefined );
+		}, 'invalid context' );
+
 		assert.deepEqual( ee.emit( 'hasOwnProperty' ), false, 'Event with name "hasOwnProperty" doesn\'t exist by default' );
 
 		ee.on( 'hasOwnProperty', function () {
