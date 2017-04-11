@@ -7,18 +7,18 @@
 		QUnit.module = function ( name, localEnv ) {
 			localEnv = localEnv || {};
 			orgModule( name, {
-				setup: function () {
+				beforeEach: function () {
 					this.fixture = document.createElement( 'div' );
 					this.fixture.id = 'qunit-fixture';
 					document.body.appendChild( this.fixture );
 
-					if ( localEnv.setup ) {
-						localEnv.setup.call( this );
+					if ( localEnv.name ) {
+						localEnv.name.call( this );
 					}
 				},
-				teardown: function () {
-					if ( localEnv.teardown ) {
-						localEnv.teardown.call( this );
+				afterEach: function () {
+					if ( localEnv.afterEach ) {
+						localEnv.afterEach.call( this );
 					}
 
 					this.fixture.parentNode.removeChild( this.fixture );
@@ -33,7 +33,7 @@
 	 */
 	QUnit.tmpIframe = function () {
 		var iframe = document.createElement( 'iframe' );
-		// Will be removed automatically by module teardown
+		// Will be removed automatically by afterEach
 		document.getElementById( 'qunit-fixture' ).appendChild( iframe );
 		return iframe;
 	};
