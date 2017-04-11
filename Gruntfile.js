@@ -36,7 +36,8 @@ module.exports = function ( grunt ) {
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		clean: {
-			dist: 'dist/*'
+			dist: 'dist/*',
+			coverage: 'coverage/*'
 		},
 		concat: {
 			oojs: {
