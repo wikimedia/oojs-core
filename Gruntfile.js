@@ -139,7 +139,16 @@ module.exports = function ( grunt ) {
 					'dist/*.js': [ 'coverage' ]
 				},
 				reporters: [ 'dots', 'coverage', 'karma-remap-istanbul' ],
-				coverageReporter: { type: 'in-memory' },
+				coverageReporter: {
+					// https://github.com/karma-runner/karma-coverage/blob/v1.1.1/docs/configuration.md#check
+					type: 'in-memory',
+					check: { global: {
+						functions: 100,
+						statements: 99,
+						branches: 99,
+						lines: 99
+					} }
+				},
 				remapIstanbulReporter: {
 					reports: {
 						'text-summary': null,
