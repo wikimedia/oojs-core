@@ -87,10 +87,12 @@
 	oo.EventEmitter.prototype.on = function ( event, method, args, context ) {
 		validateMethod( method, context );
 
+		// Ensure consistent object shape (optimisation)
 		addBinding( this, event, {
 			method: method,
 			args: args,
-			context: ( arguments.length < 4 ) ? null : context
+			context: ( arguments.length < 4 ) ? null : context,
+			once: false
 		} );
 		return this;
 	};
@@ -103,12 +105,16 @@
 	 * @chainable
 	 */
 	oo.EventEmitter.prototype.once = function ( event, listener ) {
-		var eventEmitter = this,
-			wrapper = function () {
-				eventEmitter.off( event, wrapper );
-				return listener.apply( this, arguments );
-			};
-		return this.on( event, wrapper );
+		validateMethod( listener );
+
+		// Ensure consistent object shape (optimisation)
+		addBinding( this, event, {
+			method: listener,
+			args: undefined,
+			context: null,
+			once: true
+		} );
+		return this;
 	};
 
 	/**
@@ -182,6 +188,11 @@
 					method = binding.context[ binding.method ];
 				} else {
 					method = binding.method;
+				}
+				if ( binding.once ) {
+					// Must unbind before calling method to avoid
+					// any nested triggers.
+					this.off( event, method );
 				}
 				method.apply(
 					binding.context,
