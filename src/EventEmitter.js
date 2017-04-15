@@ -51,6 +51,24 @@
 		}
 	}
 
+	/**
+	 * @private
+	 * @param {OO.EventEmitter} ee
+	 * @param {Function|string} method Function or method name
+	 * @param {Object} binding
+	 */
+	function addBinding( ee, event, binding ) {
+		var bindings;
+		// Auto-initialize bindings list
+		if ( hasOwn.call( ee.bindings, event ) ) {
+			bindings = ee.bindings[ event ];
+		} else {
+			bindings = ee.bindings[ event ] = [];
+		}
+		// Add binding
+		bindings.push( binding );
+	}
+
 	/* Methods */
 
 	/**
@@ -67,18 +85,9 @@
 	 * @chainable
 	 */
 	oo.EventEmitter.prototype.on = function ( event, method, args, context ) {
-		var bindings;
-
 		validateMethod( method, context );
 
-		if ( hasOwn.call( this.bindings, event ) ) {
-			bindings = this.bindings[ event ];
-		} else {
-			// Auto-initialize bindings list
-			bindings = this.bindings[ event ] = [];
-		}
-		// Add binding
-		bindings.push( {
+		addBinding( this, event, {
 			method: method,
 			args: args,
 			context: ( arguments.length < 4 ) ? null : context
