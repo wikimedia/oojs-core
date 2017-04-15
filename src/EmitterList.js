@@ -222,8 +222,10 @@
 		// Remove the item from the current index
 		this.items.splice( existingIndex, 1 );
 
-		// Adjust new index after removal
-		newIndex--;
+		// If necessary, adjust new index after removal
+		if ( existingIndex < newIndex ) {
+			newIndex--;
+		}
 
 		// Move the item to the new index
 		this.items.splice( newIndex, 0, item );
