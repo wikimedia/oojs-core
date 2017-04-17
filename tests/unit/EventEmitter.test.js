@@ -104,6 +104,44 @@
 		assert.deepEqual( seq, [ 'call' ], 'Callback ran only once' );
 	} );
 
+	QUnit.test( 'once - nested', function ( assert ) {
+		var seq = [],
+			ee = new oo.EventEmitter();
+
+		ee.once( 'basic', function ( value ) {
+			seq.push( value );
+			if ( value === 'one' ) {
+				// Verify once is truly once, handler must be unbound
+				// before handler runs.
+				ee.emit( 'basic', 'nested' );
+			}
+		} );
+
+		ee.emit( 'basic', 'one' );
+		ee.emit( 'basic', 'two' );
+		assert.deepEqual( seq, [ 'one' ], 'Callback ran only once' );
+	} );
+
+	QUnit.test( 'once - off', function ( assert ) {
+		var seq,
+			ee = new oo.EventEmitter();
+
+		function handle() {
+			seq.push( 'call' );
+		}
+
+		seq = [];
+		ee.once( 'basic', handle );
+		ee.off( 'basic', handle );
+		ee.emit( 'basic' );
+		assert.deepEqual( seq, [], 'Handle is compatible with off()' );
+
+		seq = [];
+		ee.once( 'basic', handle );
+		ee.emit( 'basic' );
+		assert.deepEqual( seq, [ 'call' ], 'Handle can be re-bound' );
+	} );
+
 	QUnit.test( 'emit', function ( assert ) {
 		var data1, data2A, data2B, data2C,
 			ee = new oo.EventEmitter();
