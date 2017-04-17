@@ -67,7 +67,16 @@
 						index: 2
 					},
 					expected: [ 'b', 'a', 'c' ],
-					msg: 'Moving duplicates when re-inserting an item'
+					msg: 'Moving duplicates when re-inserting an item at a higher index'
+				},
+				{
+					items: initialItems,
+					add: {
+						items: [ initialItems[ 2 ] ],
+						index: 0
+					},
+					expected: [ 'c', 'a', 'b' ],
+					msg: 'Moving duplicates when re-inserting an item at a lower index'
 				},
 				{
 					items: initialItems,
