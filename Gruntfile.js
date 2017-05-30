@@ -28,6 +28,7 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
+	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-eslint' );
@@ -71,6 +72,16 @@ module.exports = function ( grunt ) {
 					'src/export.js',
 					'src/outro.js.txt'
 				]
+			}
+		},
+		copy: {
+			dist: {
+				src: [
+					'AUTHORS.txt',
+					'LICENSE-MIT',
+					'README.md'
+				],
+				dest: 'dist/'
 			}
 		},
 		eslint: {
@@ -193,7 +204,7 @@ module.exports = function ( grunt ) {
 		} );
 	} );
 
-	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
+	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'copy:dist', 'uglify' ] );
 	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery', 'karma:other' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
 
