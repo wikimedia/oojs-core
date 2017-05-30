@@ -1,5 +1,15 @@
 # OOjs Release History
 
+## v2.1.0 / 2017-05-31
+* EmitterList: Fix moving an item to a lower index (Andrew Green)
+* EventEmitter: Document disconnect() behaviour regarding array matching (Timo Tijhof)
+* EventEmitter: Support passing once() handler to off() (Timo Tijhof)
+* util: Simplify isPlainObject and fix two false positives (Timo Tijhof)
+* tests: Complete code coverage by tests (Timo Tijhof)
+* tests: Update to jQuery 3 (Timo Tijhof)
+* build: Clean the coverage directory on test (James D. Forrester)
+* build: Add README/AUTHORS/LICENCE to dist (James D. Forrester)
+
 ## v2.0.0 / 2017-04-04
 
 This release drops support for ES3 environments. Where previously OOjs was
