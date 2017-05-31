@@ -90,12 +90,6 @@
 			enumKeys.push( key );
 		}
 
-		// In compliant ES3 and ES5 engines a property is enumerable by default, and to
-		// make our restored constructor property unenumerable we'd need ES5.
-		// In IE8 this happens to work because it has a bug where certain Object.prototype
-		// keys that are unenumerable affect plain objects and thus it was never enumerable
-		// to begin with.
-		// https://developer.mozilla.org/en-US/docs/ECMAScript_DontEnum_attribute#JScript_DontEnum_Bug
 		assert.strictEqual(
 			enumKeys.indexOf( 'constructor' ),
 			-1,
@@ -439,19 +433,15 @@
 			'Function with properties'
 		);
 
-		if ( !Object.create ) {
-			assert.strictEqual( true, true, '[skipped] Only own properties' );
-		} else {
-			tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
-			tmp.b = true;
-			tmp.bar = 'quux';
+		tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
+		tmp.b = true;
+		tmp.bar = 'quux';
 
-			assert.deepEqual(
-				oo.getObjectValues( tmp ),
-				[ true, 'quux' ],
-				'Only own properties'
-			);
-		}
+		assert.deepEqual(
+			oo.getObjectValues( tmp ),
+			[ true, 'quux' ],
+			'Only own properties'
+		);
 
 		assert.throws(
 			function () {
@@ -663,26 +653,21 @@
 			'Compare object to itself'
 		);
 
-		if ( !Object.create ) {
-			assert.strictEqual( true, true, '[skipped] Ignore inherited properties and methods of a' );
-			assert.strictEqual( true, true, '[skipped] Ignore inherited properties and methods of b' );
-		} else {
-			x = Object.create( { foo: 1, map: function () { } } );
-			x.foo = 2;
-			x.bar = true;
+		x = Object.create( { foo: 1, map: function () { } } );
+		x.foo = 2;
+		x.bar = true;
 
-			assert.strictEqual(
-				oo.compare( x, { foo: 2, bar: true } ),
-				true,
-				'Ignore inherited properties and methods of a'
-			);
+		assert.strictEqual(
+			oo.compare( x, { foo: 2, bar: true } ),
+			true,
+			'Ignore inherited properties and methods of a'
+		);
 
-			assert.strictEqual(
-				oo.compare( { foo: 2, bar: true }, x ),
-				true,
-				'Ignore inherited properties and methods of b'
-			);
-		}
+		assert.strictEqual(
+			oo.compare( { foo: 2, bar: true }, x ),
+			true,
+			'Ignore inherited properties and methods of b'
+		);
 
 		assert.strictEqual(
 			oo.compare(
@@ -1208,7 +1193,7 @@
 		/*
 		 * PhantomJS hangs when calling JSON.stringify with an object containing a
 		 * circular reference (https://github.com/ariya/phantomjs/issues/11206).
-		 * We know latest Chrome/Firefox and IE8+ support this. So, for the sake of
+		 * We know latest Chrome/Firefox and IE10+ support this. So, for the sake of
 		 * having qunit/phantomjs work, lets disable this for now.
 		obj.f = obj;
 

@@ -42,10 +42,10 @@ module.exports = {
 		version: '6'
 	},
 	// Oldest IE we support
-	slIE9: {
+	slIE10: {
 		base: 'SauceLabs',
-		platform: 'Windows 7',
+		platform: 'Windows 8',
 		browserName: 'internet explorer',
-		version: '9'
+		version: '10'
 	}
 };

@@ -74,12 +74,9 @@ oo.inheritClass = function ( targetFn, originFn ) {
 
 	targetConstructor = targetFn.prototype.constructor;
 
-	// Using ['super'] instead of .super because 'super' is not supported
-	// by IE 8 and below (bug 63303).
-	// Provide .parent as alias for code supporting older browsers which
+	// [DEPRECATED] Provide .parent as alias for code supporting older browsers which
 	// allows people to comply with their style guide.
-	// eslint-disable-next-line dot-notation
-	targetFn[ 'super' ] = targetFn.parent = originFn;
+	targetFn.super = targetFn.parent = originFn;
 
 	targetFn.prototype = Object.create( originFn.prototype, {
 		// Restore constructor property of targetFn
@@ -381,9 +378,7 @@ oo.compare = function ( a, b, asymmetrical ) {
 
 	for ( k in a ) {
 		if ( !hasOwn.call( a, k ) || a[ k ] === undefined || a[ k ] === b[ k ] ) {
-			// Support es3-shim: Without the hasOwn filter, comparing [] to {} will be false in ES3
-			// because the shimmed "forEach" is enumerable and shows up in Array but not Object.
-			// Also ignore undefined values, because there is no conceptual difference between
+			// Ignore undefined values, because there is no conceptual difference between
 			// a key that is absent and a key that is present but whose value is undefined.
 			continue;
 		}
