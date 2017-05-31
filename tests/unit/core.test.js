@@ -1042,7 +1042,8 @@
 			oo.copy(
 				nodeLike,
 				function ( val ) {
-					return val += ' leaf';
+					val += ' leaf';
+					return val;
 				}
 			),
 			'cloned node leaf',

@@ -85,14 +85,6 @@ module.exports = function ( grunt ) {
 			}
 		},
 		eslint: {
-			fix: {
-				options: {
-					fix: true
-				},
-				src: [
-					'<%= eslint.dev %>'
-				]
-			},
 			dev: [
 				'*.js',
 				'{src,tests}/**/*.js'
