@@ -83,9 +83,9 @@ oo.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback )
 /**
  * Add items to the sorted list.
  *
- * @chainable
  * @param {OO.EventEmitter|OO.EventEmitter[]} items Item to add or
  *  an array of items to add
+ * @chainable
  */
 oo.SortedEmitterList.prototype.addItems = function ( items ) {
 	var index, i, insertionIndex;

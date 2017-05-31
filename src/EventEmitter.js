@@ -53,17 +53,17 @@
 
 	/**
 	 * @private
-	 * @param {OO.EventEmitter} ee
-	 * @param {Function|string} method Function or method name
+	 * @param {OO.EventEmitter} eventEmitter Event emitter
+	 * @param {string} event Event name
 	 * @param {Object} binding
 	 */
-	function addBinding( ee, event, binding ) {
+	function addBinding( eventEmitter, event, binding ) {
 		var bindings;
 		// Auto-initialize bindings list
-		if ( hasOwn.call( ee.bindings, event ) ) {
-			bindings = ee.bindings[ event ];
+		if ( hasOwn.call( eventEmitter.bindings, event ) ) {
+			bindings = eventEmitter.bindings[ event ];
 		} else {
-			bindings = ee.bindings[ event ] = [];
+			bindings = eventEmitter.bindings[ event ] = [];
 		}
 		// Add binding
 		bindings.push( binding );
@@ -81,8 +81,8 @@
 	 * @param {Function|string} method Function or method name to call when event occurs
 	 * @param {Array} [args] Arguments to pass to listener, will be prepended to emitted arguments
 	 * @param {Object} [context=null] Context object for function or method call
-	 * @throws {Error} Listener argument is not a function or a valid method name
 	 * @chainable
+	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
 	oo.EventEmitter.prototype.on = function ( event, method, args, context ) {
 		validateMethod( method, context );
