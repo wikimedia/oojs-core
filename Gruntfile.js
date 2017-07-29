@@ -136,7 +136,7 @@ module.exports = function ( grunt ) {
 			},
 			// Primary unit test run (includes code coverage)
 			main: {
-				browsers: [ 'Chrome' ],
+				browsers: [ 'ChromeHeadless' ],
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
 				},
@@ -154,12 +154,13 @@ module.exports = function ( grunt ) {
 				remapIstanbulReporter: {
 					reports: {
 						'text-summary': null,
-						html: 'coverage/'
+						html: 'coverage/',
+						lcovonly: 'coverage/lcov.info'
 					}
 				}
 			},
 			jquery: {
-				browsers: [ 'Chrome' ],
+				browsers: [ 'ChromeHeadless' ],
 				options: {
 					files: [
 						'node_modules/jquery/dist/jquery.js',
@@ -197,8 +198,8 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'copy:dist', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery', 'karma:other' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:ci' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:other', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		grunt.registerTask( 'test', 'ci' );
