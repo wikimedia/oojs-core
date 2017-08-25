@@ -8,11 +8,9 @@
 		oo.SortedEmitterList.call(
 			this,
 			function ( a, b ) {
-				return a.getContent() < b.getContent() ? -1 :
-					(
-						a.getContent() > b.getContent() ? 1 :
-						0
-					);
+				return a.getContent() < b.getContent() ? -1 : (
+					a.getContent() > b.getContent() ? 1 : 0
+				);
 			}
 		);
 	}
@@ -93,11 +91,9 @@
 					items: initialItems,
 					newSortingCallback: function ( a, b ) {
 						// Flip the sort
-						return a.getContent() > b.getContent() ? -1 :
-							(
-								a.getContent() < b.getContent() ? 1 :
-								0
-							);
+						return a.getContent() > b.getContent() ? -1 : (
+							a.getContent() < b.getContent() ? 1 : 0
+						);
 					},
 					add: {
 						items: [
@@ -125,11 +121,9 @@
 			var list = new SortedTestList();
 			// Sort by content
 			list.setSortingCallback( function ( a, b ) {
-				return a.getContent() > b.getContent() ? 1 :
-					(
-						a.getContent() < b.getContent() ? -1 :
-						0
-					);
+				return a.getContent() > b.getContent() ? 1 : (
+					a.getContent() < b.getContent() ? -1 : 0
+				);
 			} );
 
 			list.addItems( test.items );
@@ -200,11 +194,9 @@
 		] );
 		// Change the sorting callback to a flipped sort
 		list.setSortingCallback( function ( a, b ) {
-			return a.getContent() > b.getContent() ? -1 :
-				(
-					a.getContent() < b.getContent() ? 1 :
-					0
-				);
+			return a.getContent() > b.getContent() ? -1 : (
+				a.getContent() < b.getContent() ? 1 : 0
+			);
 		} );
 		list.items[ 1 ].content = 'ee';
 		list.items[ 1 ].emit( 'sortChange' );
