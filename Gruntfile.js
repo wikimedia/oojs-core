@@ -131,7 +131,7 @@ module.exports = function ( grunt ) {
 					// Latest versions of complicated browsers
 					'slSafari', 'slIE',
 					// Earliest-supported versions of complicated browsers
-					'slSafari6', 'slIE10'
+					'slSafari7', 'slIE10'
 				]
 			},
 			// Primary unit test run (includes code coverage)

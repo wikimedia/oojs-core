@@ -36,10 +36,10 @@ module.exports = {
 	},
 
 	// Oldest Safari that Sauce Labs provides
-	slSafari6: {
+	slSafari7: {
 		base: 'SauceLabs',
 		browserName: 'safari',
-		version: '6'
+		version: '7'
 	},
 	// Oldest IE we support
 	slIE10: {
