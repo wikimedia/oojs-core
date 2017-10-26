@@ -155,7 +155,8 @@ module.exports = function ( grunt ) {
 					reports: {
 						'text-summary': null,
 						html: 'coverage/',
-						lcovonly: 'coverage/lcov.info'
+						lcovonly: 'coverage/lcov.info',
+						clover: 'coverage/clover.xml'
 					}
 				}
 			},
