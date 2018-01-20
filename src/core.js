@@ -1,4 +1,5 @@
 /* exported toString */
+/** @namespace OO */
 var
 	/**
 	 * Namespace for all classes, static methods and static properties.
@@ -17,6 +18,8 @@ var
  *
  * Currently this just initializes an empty static object.
  *
+ * @memberOf OO
+ * @method initClass
  * @param {Function} fn
  */
 OO.initClass = function ( fn ) {
@@ -57,6 +60,8 @@ OO.initClass = function ( fn ) {
  *     x.walk();
  *     x instanceof Thing && x instanceof Person && x instanceof Jumper;
  *
+ * @memberOf OO
+ * @method inheritClass
  * @param {Function} targetFn
  * @param {Function} originFn
  * @throws {Error} If target already inherits from origin
@@ -120,6 +125,8 @@ OO.inheritClass = function ( targetFn, originFn ) {
  *     OO.inheritClass( FooBar, Foo );
  *     OO.mixinClass( FooBar, ContextLazyLoad );
  *
+ * @memberOf OO
+ * @method mixinClass
  * @param {Function} targetFn
  * @param {Function} originFn
  */
@@ -155,6 +162,8 @@ OO.mixinClass = function ( targetFn, originFn ) {
  *
  * Every class is considered a subclass of Object and of itself.
  *
+ * @memberOf OO
+ * @method isSubClass
  * @param {Function} testFn The class to be tested
  * @param {Function} baseFn The base class
  * @return {boolean} Whether testFn is a subclass of baseFn (or equal to it)
@@ -174,6 +183,8 @@ OO.isSubclass = function ( testFn, baseFn ) {
  * is undefined. Instead of throwing an error, this function will return undefined in
  * that case.
  *
+ * @memberOf OO
+ * @method getProp
  * @param {Object} obj
  * @param {...Mixed} [keys]
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
@@ -201,6 +212,8 @@ OO.getProp = function ( obj ) {
  * initialized to an empty object. If an intermediate property is not an object, or if obj itself
  * is not an object, this function will silently abort.
  *
+ * @memberOf OO
+ * @method setProp
  * @param {Object} obj
  * @param {...Mixed} [keys]
  * @param {Mixed} [value]
@@ -227,6 +240,8 @@ OO.setProp = function ( obj ) {
  * Delete a deeply nested property of an object using variadic arguments, protecting against
  * undefined property errors, and deleting resulting empty objects.
  *
+ * @memberOf OO
+ * @method deleteProp
  * @param {Object} obj
  * @param {...Mixed} [keys]
  */
@@ -277,6 +292,8 @@ OO.deleteProp = function ( obj ) {
  *     foo2.getAge(); // 21
  *     foo.getAge(); // 22
  *
+ * @memberOf OO
+ * @method cloneObject
  * @param {Object} origin
  * @return {Object} Clone of origin
  */
@@ -297,6 +314,8 @@ OO.cloneObject = function ( origin ) {
 /**
  * Get an array of all property values in an object.
  *
+ * @memberOf OO
+ * @method getObjectValues
  * @param {Object} obj Object to get values from
  * @return {Array} List of object values
  */
@@ -328,6 +347,8 @@ OO.getObjectValues = function ( obj ) {
  * above 0 if `a > b`, below 0 if `a < b`, and 0 if `a == b`), you can use
  * `searchFunc = cmp.bind( null, value )`.
  *
+ * @memberOf OO
+ * @method binarySearch
  * @param {Array} arr Array to search in
  * @param {Function} searchFunc Search function
  * @param {boolean} [forInsertion] If not found, return index where val could be inserted
@@ -362,6 +383,8 @@ OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
  *
  * If either a or b is null or undefined it will be treated as an empty object.
  *
+ * @memberOf OO
+ * @method compare
  * @param {Object|undefined|null} a First object to compare
  * @param {Object|undefined|null} b Second object to compare
  * @param {boolean} [asymmetrical] Whether to check only that a's values are equal to b's
@@ -411,6 +434,8 @@ OO.compare = function ( a, b, asymmetrical ) {
  *
  * Copies are deep, and will either be an object or an array depending on `source`.
  *
+ * @memberOf OO
+ * @method copy
  * @param {Object} source Object to copy
  * @param {Function} [leafCallback] Applied to leaf values after they are cloned but before they are
  *  added to the clone
@@ -471,6 +496,8 @@ OO.copy = function ( source, leafCallback, nodeCallback ) {
  * function, we call that function and use its return value rather than hashing the object
  * ourselves. This allows classes to define custom hashing.
  *
+ * @memberOf OO
+ * @method getHash
  * @param {Object} val Object to generate hash for
  * @return {string} Hash of object
  */
@@ -483,6 +510,7 @@ OO.getHash = function ( val ) {
  *
  * This is a callback passed into JSON.stringify.
  *
+ * @memberOf OO
  * @method getHash_keySortReplacer
  * @param {string} key Property name of value being replaced
  * @param {Mixed} val Property value to replace
@@ -513,8 +541,10 @@ OO.getHash.keySortReplacer = function ( key, val ) {
 };
 
 /**
- * Get the unique values of an array, removing duplicates
+ * Get the unique values of an array, removing duplicates.
  *
+ * @memberOf OO
+ * @method unique
  * @param {Array} arr Array
  * @return {Array} Unique values in array
  */
@@ -535,6 +565,8 @@ OO.unique = function ( arr ) {
  * By building an object (with the values for keys) in parallel with
  * the array, a new item's existence in the union can be computed faster.
  *
+ * @memberOf OO
+ * @method simpleArrayUnion
  * @param {...Array} arrays Arrays to union
  * @return {Array} Union of the arrays
  */
@@ -596,6 +628,8 @@ function simpleArrayCombine( a, b, includeB ) {
  *
  * Arrays values must be convertable to object keys (strings).
  *
+ * @memberOf OO
+ * @method simpleArrayIntersection
  * @param {Array} a First array
  * @param {Array} b Second array
  * @return {Array} Intersection of arrays
@@ -609,6 +643,8 @@ OO.simpleArrayIntersection = function ( a, b ) {
  *
  * Arrays values must be convertable to object keys (strings).
  *
+ * @memberOf OO
+ * @method simpleArrayDifference
  * @param {Array} a First array
  * @param {Array} b Second array
  * @return {Array} Intersection of arrays

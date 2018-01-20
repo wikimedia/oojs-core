@@ -8,8 +8,7 @@
 	 * This mixin must be used in a class that also mixes in OO.EventEmitter.
 	 *
 	 * @abstract
-	 * @class OO.EmitterList
-	 * @constructor
+	 * @class
 	 */
 	OO.EmitterList = function OoEmitterList() {
 		this.items = [];
@@ -19,32 +18,34 @@
 	/* Events */
 
 	/**
-	 * Item has been added
+	 * Item has been added.
 	 *
-	 * @event add
+	 * @event OO.EmitterList#add
 	 * @param {OO.EventEmitter} item Added item
 	 * @param {number} index Index items were added at
 	 */
 
 	/**
-	 * Item has been moved to a new index
+	 * Item has been moved to a new index.
 	 *
-	 * @event move
+	 * @event OO.EmitterList#move
 	 * @param {OO.EventEmitter} item Moved item
 	 * @param {number} index Index item was moved to
 	 * @param {number} oldIndex The original index the item was in
 	 */
 
 	/**
-	 * Item has been removed
+	 * Item has been removed.
 	 *
-	 * @event remove
+	 * @event OO.EmitterList#remove
 	 * @param {OO.EventEmitter} item Removed item
 	 * @param {number} index Index the item was removed from
 	 */
 
 	/**
-	 * @event clear The list has been cleared of items
+	 * The list has been cleared of items.
+	 *
+	 * @event OO.EmitterList#clear
 	 */
 
 	/* Methods */
@@ -165,8 +166,8 @@
 	 *  given, or if the index that is given is invalid, the item
 	 *  will be added at the end of the list.
 	 * @chainable
-	 * @fires add
-	 * @fires move
+	 * @fires OO.EmitterList#add
+	 * @fires OO.EmitterList#move
 	 */
 	OO.EmitterList.prototype.addItems = function ( items, index ) {
 		var i, oldIndex;
@@ -279,7 +280,7 @@
 	 *
 	 * @param {OO.EventEmitter[]} items Items to remove
 	 * @chainable
-	 * @fires remove
+	 * @fires OO.EmitterList#remove
 	 */
 	OO.EmitterList.prototype.removeItems = function ( items ) {
 		var i, item, index;
@@ -310,10 +311,10 @@
 	};
 
 	/**
-	 * Clear all items
+	 * Clear all items.
 	 *
 	 * @chainable
-	 * @fires clear
+	 * @fires OO.EmitterList#clear
 	 */
 	OO.EmitterList.prototype.clearItems = function () {
 		var i, item,

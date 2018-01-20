@@ -7,10 +7,8 @@
  *
  * See <https://www.mediawiki.org/wiki/OOjs/Registries_and_factories>.
  *
- * @class OO.Registry
- * @mixins OO.EventEmitter
- *
- * @constructor
+ * @class
+ * @mixes OO.EventEmitter
  */
 OO.Registry = function OoRegistry() {
 	// Mixin constructors
@@ -27,13 +25,13 @@ OO.mixinClass( OO.Registry, OO.EventEmitter );
 /* Events */
 
 /**
- * @event register
+ * @event OO.Registry#register
  * @param {string} name
  * @param {Mixed} data
  */
 
 /**
- * @event unregister
+ * @event OO.Registry#unregister
  * @param {string} name
  * @param {Mixed} data Data removed from registry
  */
@@ -47,7 +45,7 @@ OO.mixinClass( OO.Registry, OO.EventEmitter );
  *
  * @param {string|string[]} name Symbolic name or list of symbolic names
  * @param {Mixed} data Data to associate with symbolic name
- * @fires register
+ * @fires OO.Registry#register
  * @throws {Error} Name argument must be a string or array
  */
 OO.Registry.prototype.register = function ( name, data ) {
@@ -65,10 +63,10 @@ OO.Registry.prototype.register = function ( name, data ) {
 };
 
 /**
- * Remove one or more symbolic names from the registry
+ * Remove one or more symbolic names from the registry.
  *
  * @param {string|string[]} name Symbolic name or list of symbolic names
- * @fires unregister
+ * @fires OO.Registry#unregister
  * @throws {Error} Name argument must be a string or array
  */
 OO.Registry.prototype.unregister = function ( name ) {

@@ -1,8 +1,6 @@
 /**
- * @class OO.Factory
+ * @class
  * @extends OO.Registry
- *
- * @constructor
  */
 OO.Factory = function OoFactory() {
 	// Parent constructor

@@ -12,9 +12,8 @@
  * This mixin must be used in a class that also mixes in OO.EventEmitter.
  *
  * @abstract
- * @class OO.SortedEmitterList
- * @mixins OO.EmitterList
- * @constructor
+ * @class
+ * @mixes OO.EmitterList
  * @param {Function} sortingCallback Callback that compares two items.
  */
 OO.SortedEmitterList = function OoSortedEmitterList( sortingCallback ) {
@@ -43,14 +42,14 @@ OO.mixinClass( OO.SortedEmitterList, OO.EmitterList );
  * inside the list.
  *
  * @private
- * @event itemSortChange
+ * @event OO.SortedEmitterList#itemSortChange
  */
 
 /* Methods */
 
 /**
  * Handle a case where an item changed a property that relates
- * to its sorted order
+ * to its sorted order.
  *
  * @param {OO.EventEmitter} item Item in the list
  */

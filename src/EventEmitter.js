@@ -3,9 +3,7 @@
 ( function () {
 
 	/**
-	 * @class OO.EventEmitter
-	 *
-	 * @constructor
+	 * @class
 	 */
 	OO.EventEmitter = function OoEventEmitter() {
 		// Properties
@@ -13,7 +11,8 @@
 		/**
 		 * Storage of bound event handlers by event name.
 		 *
-		 * @property
+		 * @private
+		 * @property {Object} bindings
 		 */
 		this.bindings = {};
 	};

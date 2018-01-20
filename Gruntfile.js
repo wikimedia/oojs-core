@@ -26,11 +26,13 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks( 'grunt-jsdoc' );
 	grunt.loadNpmTasks( 'grunt-karma' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		clean: {
+			docs: [ 'docs/' ],
 			dist: [ 'dist', 'coverage' ]
 		},
 		concat: {
@@ -80,6 +82,13 @@ module.exports = function ( grunt ) {
 				src: 'dist/*.js',
 				ext: '.min.js',
 				extDot: 'last'
+			}
+		},
+		jsdoc: {
+			all: {
+				options: {
+					configure: '.jsdoc.json'
+				}
 			}
 		},
 		karma: {
@@ -174,7 +183,8 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery', 'karma:firefox' ] );
+	grunt.registerTask( 'doc', [ 'clean:docs', 'jsdoc' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery', 'karma:firefox', 'doc' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
