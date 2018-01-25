@@ -167,6 +167,14 @@
 	/**
 	 * Emit an event.
 	 *
+	 * All listeners for the event will be called synchronously, in an
+	 * unspecified order. If any listeners throw an exception, this won't
+	 * disrupt the calls to the remaining listeners; however, the exception
+	 * won't be raised until the next tick.
+	 *
+	 * Listeners should avoid mutating the emitting object, as this is something of an anti-pattern
+	 * which can easily result in hard-to-understand code with hidden side-effects and dependencies.
+	 *
 	 * @param {string} event Type of event
 	 * @param {...Mixed} args First in a list of variadic arguments passed to event handler (optional)
 	 * @return {boolean} Whether the event was handled by at least one listener
@@ -194,10 +202,19 @@
 					// any nested triggers.
 					this.off( event, method );
 				}
-				method.apply(
-					binding.context,
-					binding.args ? binding.args.concat( args ) : args
-				);
+				try {
+					method.apply(
+						binding.context,
+						binding.args ? binding.args.concat( args ) : args
+					);
+				} catch ( e ) {
+					// If one listener has an unhandled error, don't have it take down everything.
+					setTimeout( function () {
+						// Don't silently swallow the error, to avoid a debugging nightmare.
+						throw e;
+					} );
+				}
+
 			}
 			return true;
 		}
