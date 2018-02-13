@@ -247,7 +247,7 @@ oo.deleteProp = function ( obj ) {
 	}
 	delete prop[ arguments[ i ] ];
 	// Walk back through props removing any plain empty objects
-	while ( ( prop = props.pop() ) && oo.isPlainObject( prop ) && !Object.keys( prop ).length ) {
+	while ( props.length > 1 && ( prop = props.pop() ) && oo.isPlainObject( prop ) && !Object.keys( prop ).length ) {
 		delete props[ props.length - 1 ][ arguments[ props.length ] ];
 	}
 };

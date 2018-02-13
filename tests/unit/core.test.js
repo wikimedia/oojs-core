@@ -297,6 +297,7 @@
 
 				oo.deleteProp( obj, 'bar', 'quux', 'whee' );
 				assert.strictEqual( obj.bar.hasOwnProperty( 'quux' ), false, 'deleting an existing key with depth 3 cleans up empty object' );
+				// Reset
 				oo.setProp( obj, 'bar', 'quux', 'whee', 'yay' );
 
 				oo.deleteProp( obj, 'bar', 'baz' );
@@ -305,6 +306,15 @@
 
 				oo.deleteProp( obj, 'foo', 'bar' );
 				assert.strictEqual( obj.hasOwnProperty( 'foo' ), true, 'descending into primitive (number) preserves fails silently' );
+
+				// Remove siblings
+				oo.deleteProp( obj, 'foo' );
+				oo.deleteProp( obj, 'bar', 'baz' );
+				// Reset
+				oo.setProp( obj, 'bar', 'quux', 'whee', 'yay' );
+				oo.deleteProp( obj.bar, 'quux', 'whee' );
+				assert.strictEqual( obj.hasOwnProperty( 'bar' ), true, 'empty object not deleted if not part of the arguments list' );
+
 			} );
 		};
 
