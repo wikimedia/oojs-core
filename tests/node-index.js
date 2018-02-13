@@ -1,29 +1,12 @@
 /* eslint-env node */
-var qunit = require( 'qunit' );
+global.QUnit = require( 'qunitjs' );
 
-qunit.setup( {
-	log: {
-		summary: true,
-		errors: true
-	}
-} );
+global.OO = require( '../dist/oojs.js' );
 
-qunit.run( {
-	code: {
-		path: './dist/oojs.js',
-		namespace: 'OO'
-	},
-	tests: [
-		'./tests/unit/core.test.js',
-		'./tests/unit/util.test.js',
-		'./tests/unit/EventEmitter.test.js',
-		'./tests/unit/EmitterList.test.js',
-		'./tests/unit/SortedEmitterList.test.js',
-		'./tests/unit/Registry.test.js',
-		'./tests/unit/Factory.test.js'
-	]
-}, function ( err, report ) {
-	if ( err || report.failed ) {
-		process.exit( 1 );
-	}
-} );
+require( './unit/core.test.js' );
+require( './unit/util.test.js' );
+require( './unit/EventEmitter.test.js' );
+require( './unit/EmitterList.test.js' );
+require( './unit/SortedEmitterList.test.js' );
+require( './unit/Registry.test.js' );
+require( './unit/Factory.test.js' );

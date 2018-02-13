@@ -18,7 +18,7 @@
   "main": "./dist/oojs.js",
   "filename": "oojs.min.js",
   "scripts": {
-    "test": "grunt test && node tests/node-index.js",
+    "test": "grunt test && ./node_modules/qunitjs/bin/qunit tests/node-index.js",
     "doc": "jsduck",
     "prepublish": "grunt build"
   },
@@ -34,14 +34,13 @@
     "grunt-eslint": "20.1.0",
     "grunt-karma": "2.0.0",
     "jquery": "3.2.1",
-    "karma": "1.5.0",
+    "karma": "2.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.1",
-    "karma-firefox-launcher": "1.0.1",
+    "karma-firefox-launcher": "1.1.0",
     "karma-qunit": "1.2.1",
     "karma-remap-istanbul": "0.6.0",
     "karma-sauce-launcher": "1.2.0",
-    "qunit": "1.0.0",
-    "qunitjs": "2.3.0"
+    "qunitjs": "2.4.1"
   }
 }
