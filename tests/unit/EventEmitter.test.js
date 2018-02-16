@@ -10,7 +10,6 @@
 
 	QUnit.test( 'on', function ( assert ) {
 		var callback, x, seq,
-			origSetTimeout = global.setTimeout,
 			ee = new oo.EventEmitter();
 
 		assert.throws( function () {
@@ -40,29 +39,6 @@
 			[ 'x', 'x' ],
 			'Callbacks can be bound multiple times'
 		);
-
-		// Stub setTimeout for coverage purposes
-		global.setTimeout = function ( fn ) {
-			assert.throws( fn, 'Error in a callback is thrown' );
-		};
-
-		try {
-			x = 0;
-			ee.on( 'multiple-error', function () {
-				x++;
-			} );
-			ee.on( 'multiple-error', function () {
-				throw new Error( 'This is an unhandled error' );
-			} );
-			ee.on( 'multiple-error', function () {
-				x++;
-			} );
-			ee.emit( 'multiple-error' );
-			assert.strictEqual( x, 2, 'One callback throwing an error won\'t interfere with other callbacks' );
-		} finally {
-			// Restore it
-			global.setTimeout = origSetTimeout;
-		}
 
 		x = {};
 		ee.on( 'args', function ( a ) {
