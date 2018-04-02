@@ -12,7 +12,11 @@
 
 /* eslint-env node */
 module.exports = function ( grunt ) {
-	var sauceBrowsers = require( './tests/saucelabs.browsers.js' ),
+	var customLaunchers = require( './tests/karma.browsers.js' ),
+		// Set --no-sandbox for Chrome on Travis.
+		// https://docs.travis-ci.com/user/environment-variables/
+		// See karma.browser.js for details.
+		chromeHeadless = process.env.TRAVIS ? 'ChromeHeadlessNoSandbox' : 'ChromeHeadless',
 		concatFiles = [
 			'src/intro.js.txt',
 			'src/core.js',
@@ -115,7 +119,7 @@ module.exports = function ( grunt ) {
 				reporters: [ 'dots' ],
 				singleRun: true,
 				autoWatch: false,
-				customLaunchers: sauceBrowsers,
+				customLaunchers: customLaunchers,
 				sauceLabs: {
 					username: process.env.SAUCE_USERNAME || 'oojs',
 					accessKey: process.env.SAUCE_ACCESS_KEY || '0e464279-3f2a-4ca0-9eb4-db220410bef0',
@@ -127,16 +131,20 @@ module.exports = function ( grunt ) {
 			ci: {
 				browsers: [
 					// Latest versions of major browsers
-					'slChrome', 'slFirefox', 'slEdge',
+					'slChrome',
+					'slFirefox',
+					'slEdge',
 					// Latest versions of complicated browsers
-					'slSafari', 'slIE',
+					'slSafari',
+					'slIE',
 					// Earliest-supported versions of complicated browsers
-					'slSafari7', 'slIE10'
+					'slSafari7',
+					'slIE10'
 				]
 			},
 			// Primary unit test run (includes code coverage)
 			main: {
-				browsers: [ 'ChromeHeadless' ],
+				browsers: [ chromeHeadless ],
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
 				},
@@ -161,7 +169,7 @@ module.exports = function ( grunt ) {
 				}
 			},
 			jquery: {
-				browsers: [ 'ChromeHeadless' ],
+				browsers: [ chromeHeadless ],
 				options: {
 					files: [
 						'node_modules/jquery/dist/jquery.js',
@@ -171,7 +179,7 @@ module.exports = function ( grunt ) {
 					]
 				}
 			},
-			other: {
+			firefox: {
 				browsers: [ 'Firefox' ]
 			}
 		},
@@ -200,9 +208,11 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'copy:dist', 'uglify' ] );
 	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:other', 'karma:ci' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:firefox', 'karma:ci' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
+		// During the merge pipeline, also include the cross-platform
+		// tests via SauceLabs
 		grunt.registerTask( 'test', 'ci' );
 	} else {
 		grunt.registerTask( 'test', '_test' );

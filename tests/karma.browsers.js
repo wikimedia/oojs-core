@@ -1,11 +1,25 @@
 /* eslint-env node */
 
 /**
- * Cover a wide range of browsers with (ideally) no more than 9 browsers (3 batches of 3).
+ * Custom launchers for Karma
  *
- * More info: https://saucelabs.com/platforms
+ * See also https://karma-runner.github.io/1.0/config/browsers.html
  */
 module.exports = {
+	// Headless Chrome with sandboxing security disabled.
+	// This is for use in Travis CI, which is already sandboxed
+	// and has Docker configured in a way that breaks Chrome's
+	// ability to create a secure sandbox.
+	// - https://github.com/karma-runner/karma-chrome-launcher/issues/158
+	// - https://github.com/travis-ci/docs-travis-ci-com/blob/c1da4af0/user/chrome.md#sandboxing
+	ChromeHeadlessNoSandbox: {
+		base: 'ChromeHeadless',
+		flags: [ '--no-sandbox' ]
+	},
+
+	/**
+	 * SauceLabs (<https://saucelabs.com/platforms>)
+	 */
 	// Latest Chrome
 	slChrome: {
 		base: 'SauceLabs',
