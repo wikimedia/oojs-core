@@ -1,6 +1,12 @@
 /* global hasOwn */
 
 /**
+ * A map interface for associating arbitrary data with a symbolic name. Used in
+ * place of a plain object to provide additional {@link #method-register registration}
+ * or {@link #method-lookup lookup} functionality.
+ *
+ * See <https://www.mediawiki.org/wiki/OOjs/Registries_and_factories>.
+ *
  * @class OO.Registry
  * @mixins OO.EventEmitter
  *
