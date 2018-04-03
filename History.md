@@ -1,5 +1,21 @@
 # OOjs Release History
 
+## v2.2.0 / 2018-04-03
+* [DEPRECATING CHANGE] Drop more code supporting ES3 / IE<=9 (Ed Sanders)
+* core: Fix deprecateProp() case where root object is empty (Ed Sanders)
+* doc: Add intro for OO.Registry (Prateek Saxena)
+* doc: Fix valid-jsdoc issues in EventEmitter and SortedEmitterList (Ed Sanders)
+* build: Add Travis CI and Codecov configuration (Timo Tijhof)
+* build: Bump most devDependencies to latest (James D. Forrester)
+* build: Disable eslint sourceType=module option (Timo Tijhof)
+* build: Generate clover.xml with code coverage results (Kunal Mehta)
+* build: Set --no-sandbox in Chrome for Travis (Timo Tijhof)
+* build: Test against Safari 7, Safari 6 is no longer around (James D. Forrester)
+* build: Update eslint to 0.4.0 (Ed Sanders)
+* build: Update eslint-config-wikimedia 0.4->0.5, eslint 19->20 (Ed Sanders)
+* build: Upgrade qunitjs to 2.4.1 (James D. Forrester)
+* build: Upgrade qunitjs to 2.6.0 (Timo Tijhof)
+
 ## v2.1.0 / 2017-05-31
 * EmitterList: Fix moving an item to a lower index (Andrew Green)
 * EventEmitter: Document disconnect() behaviour regarding array matching (Timo Tijhof)
