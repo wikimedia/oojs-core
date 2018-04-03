@@ -1,6 +1,4 @@
 /* eslint-env node */
-global.QUnit = require( 'qunitjs' );
-
 global.OO = require( '../dist/oojs.js' );
 
 require( './unit/core.test.js' );
