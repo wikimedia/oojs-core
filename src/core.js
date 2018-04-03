@@ -1,3 +1,4 @@
+/* exported toString */
 var
 	/**
 	 * Namespace for all classes, static methods and static properties.
@@ -7,8 +8,6 @@ var
 	oo = {},
 	// Optimisation: Local reference to Object.prototype.hasOwnProperty
 	hasOwn = oo.hasOwnProperty,
-	// Marking this as "exported" doesn't work when parserOptions.sourceType is module
-	// eslint-disable-next-line no-unused-vars
 	toString = oo.toString;
 
 /* Class Methods */
