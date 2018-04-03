@@ -1,8 +1,7 @@
 {
     "extends": "wikimedia",
     "parserOptions": {
-        "ecmaVersion": 5,
-        "sourceType": "module"
+        "ecmaVersion": 5
     },
     "env": {
         "browser": true,
@@ -15,6 +14,7 @@
     },
     "rules": {
         "dot-notation": [ "error", { "allowKeywords": true } ],
+        "no-implicit-globals": 0,
         "valid-jsdoc": 0
     }
 }
