@@ -15,8 +15,12 @@
     "url": "https://gerrit.wikimedia.org/r/p/oojs/core"
   },
   "license": "MIT",
-  "main": "./dist/oojs.js",
+  "main": "dist/oojs.js",
   "filename": "oojs.min.js",
+  "files": [
+    "dist/",
+    "LICENSE-MIT"
+  ],
   "scripts": {
     "test": "grunt test && qunit tests/node-index.js",
     "doc": "jsduck",
