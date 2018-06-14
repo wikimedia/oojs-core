@@ -1,5 +1,9 @@
 # OOjs Release History
 
+## v2.2.2 / 2018-06-14
+* build: Add AUTHORS.txt back to package root (Timo Tijhof)
+* build: Remove text files from dist/ (Timo Tijhof)
+
 ## v2.2.1 / 2018-06-14
 * build: Re-enable 'no-unused-vars' eslint rule (Timo Tijhof)
 * build: Add 'files' whitelist to package.json (Timo Tijhof)
