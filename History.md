@@ -1,5 +1,9 @@
 # OOjs Release History
 
+## v2.2.1 / 2018-06-14
+* build: Re-enable 'no-unused-vars' eslint rule (Timo Tijhof)
+* build: Add 'files' whitelist to package.json (Timo Tijhof)
+
 ## v2.2.0 / 2018-04-03
 * [DEPRECATING CHANGE] Drop more code supporting ES3 / IE<=9 (Ed Sanders)
 * core: Fix deprecateProp() case where root object is empty (Ed Sanders)
