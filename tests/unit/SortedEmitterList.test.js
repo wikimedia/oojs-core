@@ -138,6 +138,17 @@
 
 			assert.deepEqual( getIdentityArray( list.getItems() ), test.expected, test.msg );
 		}, this );
+
+		assert.throws( function () {
+			var list = new SortedTestList();
+			list.addItems( initialItems.concat( [ null ] ) );
+		}, 'throws when adding null item to list' );
+
+		assert.throws( function () {
+			var list = new SortedTestList();
+			list.addItems( initialItems.concat( [ undefined ] ) );
+		}, 'throws when adding undefined item to list' );
+
 	} );
 
 	QUnit.test( 'Events', function ( assert ) {

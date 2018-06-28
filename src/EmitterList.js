@@ -244,7 +244,7 @@
 	 * different behavior when an item is inserted. For example,
 	 * inserted items may also be attached to the DOM or may
 	 * interact with some other nodes in certain ways. Extending
-	 * this method is allowed, but if overriden, the aggregation
+	 * this method is allowed, but if overridden, the aggregation
 	 * of events must be preserved, or behavior of emitted events
 	 * will be broken.
 	 *
@@ -252,12 +252,17 @@
 	 * parent method is called.
 	 *
 	 * @protected
-	 * @param {OO.EventEmitter} item Items to add
+	 * @param {OO.EventEmitter|Object} item Item to add
 	 * @param {number} index Index to add items at
 	 * @return {number} The index the item was added at
 	 */
 	OO.EmitterList.prototype.insertItem = function ( item, index ) {
 		var events, event;
+
+		// Throw an error if null or item is not an object.
+		if ( item === null || typeof item !== 'object' ) {
+			throw new Error( 'Expected object, but item is ' + typeof item );
+		}
 
 		// Add the item to event aggregation
 		if ( item.connect && item.disconnect ) {

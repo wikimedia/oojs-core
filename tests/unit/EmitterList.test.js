@@ -26,7 +26,10 @@
 	// Helper method to get an array of item contents for testing
 	function getContentArray( arr ) {
 		return arr.map( function ( item ) {
-			return item.getContent();
+			if ( typeof item.getContent === 'function' ) {
+				return item.getContent();
+			}
+			return JSON.stringify( item );
 		} );
 	}
 
@@ -109,6 +112,14 @@
 					},
 					expected: [ 'a', 'b', 'c', 'd' ],
 					msg: 'Inserting an item at an invalid index'
+				},
+				{
+					items: initialItems,
+					add: {
+						items: [ {} ]
+					},
+					expected: [ 'a', 'b', 'c', '{}' ],
+					msg: 'Inserting an object does not break everything.'
 				}
 			];
 
@@ -122,6 +133,21 @@
 
 			assert.deepEqual( getContentArray( list.getItems() ), test.expected, test.msg );
 		} );
+
+		assert.throws( function () {
+			var list = new TestList();
+			list.addItems( initialItems.concat( [ null ] ) );
+		}, 'throws when trying to add null item.' );
+
+		assert.throws( function () {
+			var list = new TestList();
+			list.addItems( initialItems.concat( [ undefined ] ) );
+		}, 'throws when trying to add undefined item.' );
+
+		assert.throws( function () {
+			var list = new TestList();
+			list.addItems( initialItems.concat( [ 3 ] ) );
+		}, 'throws when trying to add a number.' );
 	} );
 
 	QUnit.test( 'moveItem', function ( assert ) {
@@ -285,6 +311,11 @@
 		// Move the item; Bad index on purpose
 		list.addItems( [ items[ 0 ] ], 10 );
 		list.removeItems( items[ 1 ] );
+		// Add array with a null item, should not result in an event.
+		assert.throws( function () {
+			list.addItems( [ null ] );
+		}, 'throw when adding items array with null content' );
+
 		// Nonexistent item
 		list.removeItems( new TestItem( 'd' ) );
 		list.clearItems();
