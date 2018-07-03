@@ -2,7 +2,7 @@
 
 /* istanbul ignore next */
 if ( typeof module !== 'undefined' && module.exports ) {
-	module.exports = oo;
+	module.exports = OO;
 } else {
-	global.OO = oo;
+	global.OO = OO;
 }

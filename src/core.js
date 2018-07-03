@@ -5,10 +5,10 @@ var
 	 * @class OO
 	 * @singleton
 	 */
-	oo = {},
+	OO = {},
 	// Optimisation: Local reference to Object.prototype.hasOwnProperty
-	hasOwn = oo.hasOwnProperty,
-	toString = oo.toString;
+	hasOwn = OO.hasOwnProperty,
+	toString = OO.toString;
 
 /* Class Methods */
 
@@ -19,7 +19,7 @@ var
  *
  * @param {Function} fn
  */
-oo.initClass = function ( fn ) {
+OO.initClass = function ( fn ) {
 	fn.static = fn.static || {};
 };
 
@@ -61,7 +61,7 @@ oo.initClass = function ( fn ) {
  * @param {Function} originFn
  * @throws {Error} If target already inherits from origin
  */
-oo.inheritClass = function ( targetFn, originFn ) {
+OO.inheritClass = function ( targetFn, originFn ) {
 	var targetConstructor;
 
 	if ( !originFn ) {
@@ -88,7 +88,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
 	} );
 
 	// Extend static properties - always initialize both sides
-	oo.initClass( originFn );
+	OO.initClass( originFn );
 	targetFn.static = Object.create( originFn.static );
 };
 
@@ -123,7 +123,7 @@ oo.inheritClass = function ( targetFn, originFn ) {
  * @param {Function} targetFn
  * @param {Function} originFn
  */
-oo.mixinClass = function ( targetFn, originFn ) {
+OO.mixinClass = function ( targetFn, originFn ) {
 	var key;
 
 	if ( !originFn ) {
@@ -138,7 +138,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 	}
 
 	// Copy static properties - always initialize both sides
-	oo.initClass( targetFn );
+	OO.initClass( targetFn );
 	if ( originFn.static ) {
 		for ( key in originFn.static ) {
 			if ( hasOwn.call( originFn.static, key ) ) {
@@ -146,7 +146,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
 			}
 		}
 	} else {
-		oo.initClass( originFn );
+		OO.initClass( originFn );
 	}
 };
 
@@ -159,7 +159,7 @@ oo.mixinClass = function ( targetFn, originFn ) {
  * @param {Function} baseFn The base class
  * @return {boolean} Whether testFn is a subclass of baseFn (or equal to it)
  */
-oo.isSubclass = function ( testFn, baseFn ) {
+OO.isSubclass = function ( testFn, baseFn ) {
 	return testFn === baseFn || testFn.prototype instanceof baseFn;
 };
 
@@ -178,7 +178,7 @@ oo.isSubclass = function ( testFn, baseFn ) {
  * @param {...Mixed} [keys]
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
-oo.getProp = function ( obj ) {
+OO.getProp = function ( obj ) {
 	var i,
 		retval = obj;
 	for ( i = 1; i < arguments.length; i++ ) {
@@ -195,7 +195,7 @@ oo.getProp = function ( obj ) {
  * Set a deeply nested property of an object using variadic arguments, protecting against
  * undefined property errors.
  *
- * `oo.setProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `obj.foo.bar = baz;` except that
+ * `OO.setProp( obj, 'foo', 'bar', 'baz' );` is equivalent to `obj.foo.bar = baz;` except that
  * the former protects against JS errors if one of the intermediate properties is
  * undefined. Instead of throwing an error, undefined intermediate properties will be
  * initialized to an empty object. If an intermediate property is not an object, or if obj itself
@@ -205,7 +205,7 @@ oo.getProp = function ( obj ) {
  * @param {...Mixed} [keys]
  * @param {Mixed} [value]
  */
-oo.setProp = function ( obj ) {
+OO.setProp = function ( obj ) {
 	var i,
 		prop = obj;
 	if ( Object( obj ) !== obj || arguments.length < 2 ) {
@@ -230,7 +230,7 @@ oo.setProp = function ( obj ) {
  * @param {Object} obj
  * @param {...Mixed} [keys]
  */
-oo.deleteProp = function ( obj ) {
+OO.deleteProp = function ( obj ) {
 	var i,
 		prop = obj,
 		props = [ prop ];
@@ -246,7 +246,7 @@ oo.deleteProp = function ( obj ) {
 	}
 	delete prop[ arguments[ i ] ];
 	// Walk back through props removing any plain empty objects
-	while ( props.length > 1 && ( prop = props.pop() ) && oo.isPlainObject( prop ) && !Object.keys( prop ).length ) {
+	while ( props.length > 1 && ( prop = props.pop() ) && OO.isPlainObject( prop ) && !Object.keys( prop ).length ) {
 		delete props[ props.length - 1 ][ arguments[ props.length ] ];
 	}
 };
@@ -273,7 +273,7 @@ oo.deleteProp = function ( obj ) {
  * @param {Object} origin
  * @return {Object} Clone of origin
  */
-oo.cloneObject = function ( origin ) {
+OO.cloneObject = function ( origin ) {
 	var key, r;
 
 	r = Object.create( origin.constructor.prototype );
@@ -293,7 +293,7 @@ oo.cloneObject = function ( origin ) {
  * @param {Object} obj Object to get values from
  * @return {Array} List of object values
  */
-oo.getObjectValues = function ( obj ) {
+OO.getObjectValues = function ( obj ) {
 	var key, values;
 
 	if ( obj !== Object( obj ) ) {
@@ -326,7 +326,7 @@ oo.getObjectValues = function ( obj ) {
  * @param {boolean} [forInsertion] If not found, return index where val could be inserted
  * @return {number|null} Index where val was found, or null if not found
  */
-oo.binarySearch = function ( arr, searchFunc, forInsertion ) {
+OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
 	var mid, cmpResult,
 		left = 0,
 		right = arr.length;
@@ -361,7 +361,7 @@ oo.binarySearch = function ( arr, searchFunc, forInsertion ) {
  *  (i.e. a is a subset of b)
  * @return {boolean} If the objects contain the same values as each other
  */
-oo.compare = function ( a, b, asymmetrical ) {
+OO.compare = function ( a, b, asymmetrical ) {
 	var aValue, bValue, aType, bType, k;
 
 	if ( a === b ) {
@@ -391,12 +391,12 @@ oo.compare = function ( a, b, asymmetrical ) {
 				( aType === 'string' || aType === 'number' || aType === 'boolean' ) &&
 				aValue !== bValue
 			) ||
-			( aValue === Object( aValue ) && !oo.compare( aValue, bValue, true ) ) ) {
+			( aValue === Object( aValue ) && !OO.compare( aValue, bValue, true ) ) ) {
 			return false;
 		}
 	}
 	// If the check is not asymmetrical, recursing with the arguments swapped will verify our result
-	return asymmetrical ? true : oo.compare( b, a, true );
+	return asymmetrical ? true : OO.compare( b, a, true );
 };
 
 /**
@@ -409,7 +409,7 @@ oo.compare = function ( a, b, asymmetrical ) {
  * @param {Function} [nodeCallback] Applied to all values before they are cloned.  If the nodeCallback returns a value other than undefined, the returned value is used instead of attempting to clone.
  * @return {Object} Copy of source object
  */
-oo.copy = function ( source, leafCallback, nodeCallback ) {
+OO.copy = function ( source, leafCallback, nodeCallback ) {
 	var key, destination;
 
 	if ( nodeCallback ) {
@@ -431,7 +431,7 @@ oo.copy = function ( source, leafCallback, nodeCallback ) {
 		return leafCallback ?
 			leafCallback( source.cloneNode( true ) ) :
 			source.cloneNode( true );
-	} else if ( oo.isPlainObject( source ) ) {
+	} else if ( OO.isPlainObject( source ) ) {
 		// Plain objects (fall through)
 		destination = {};
 	} else {
@@ -441,7 +441,7 @@ oo.copy = function ( source, leafCallback, nodeCallback ) {
 
 	// source is an array or a plain object
 	for ( key in source ) {
-		destination[ key ] = oo.copy( source[ key ], leafCallback, nodeCallback );
+		destination[ key ] = OO.copy( source[ key ], leafCallback, nodeCallback );
 	}
 
 	// This is an internal node, so we don't apply the leafCallback.
@@ -464,8 +464,8 @@ oo.copy = function ( source, leafCallback, nodeCallback ) {
  * @param {Object} val Object to generate hash for
  * @return {string} Hash of object
  */
-oo.getHash = function ( val ) {
-	return JSON.stringify( val, oo.getHash.keySortReplacer );
+OO.getHash = function ( val ) {
+	return JSON.stringify( val, OO.getHash.keySortReplacer );
 };
 
 /**
@@ -478,7 +478,7 @@ oo.getHash = function ( val ) {
  * @param {Mixed} val Property value to replace
  * @return {Mixed} Replacement value
  */
-oo.getHash.keySortReplacer = function ( key, val ) {
+OO.getHash.keySortReplacer = function ( key, val ) {
 	var normalized, keys, i, len;
 	if ( val && typeof val.getHashObject === 'function' ) {
 		// This object has its own custom hash function, use it
@@ -508,7 +508,7 @@ oo.getHash.keySortReplacer = function ( key, val ) {
  * @param {Array} arr Array
  * @return {Array} Unique values in array
  */
-oo.unique = function ( arr ) {
+OO.unique = function ( arr ) {
 	return arr.reduce( function ( result, current ) {
 		if ( result.indexOf( current ) === -1 ) {
 			result.push( current );
@@ -528,7 +528,7 @@ oo.unique = function ( arr ) {
  * @param {...Array} arrays Arrays to union
  * @return {Array} Union of the arrays
  */
-oo.simpleArrayUnion = function () {
+OO.simpleArrayUnion = function () {
 	var i, ilen, arr, j, jlen,
 		obj = {},
 		result = [];
@@ -590,7 +590,7 @@ function simpleArrayCombine( a, b, includeB ) {
  * @param {Array} b Second array
  * @return {Array} Intersection of arrays
  */
-oo.simpleArrayIntersection = function ( a, b ) {
+OO.simpleArrayIntersection = function ( a, b ) {
 	return simpleArrayCombine( a, b, true );
 };
 
@@ -603,6 +603,6 @@ oo.simpleArrayIntersection = function ( a, b ) {
  * @param {Array} b Second array
  * @return {Array} Intersection of arrays
  */
-oo.simpleArrayDifference = function ( a, b ) {
+OO.simpleArrayDifference = function ( a, b ) {
 	return simpleArrayCombine( a, b, false );
 };

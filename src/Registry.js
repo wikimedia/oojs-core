@@ -12,9 +12,9 @@
  *
  * @constructor
  */
-oo.Registry = function OoRegistry() {
+OO.Registry = function OoRegistry() {
 	// Mixin constructors
-	oo.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.registry = {};
@@ -22,7 +22,7 @@ oo.Registry = function OoRegistry() {
 
 /* Inheritance */
 
-oo.mixinClass( oo.Registry, oo.EventEmitter );
+OO.mixinClass( OO.Registry, OO.EventEmitter );
 
 /* Events */
 
@@ -50,7 +50,7 @@ oo.mixinClass( oo.Registry, oo.EventEmitter );
  * @fires register
  * @throws {Error} Name argument must be a string or array
  */
-oo.Registry.prototype.register = function ( name, data ) {
+OO.Registry.prototype.register = function ( name, data ) {
 	var i, len;
 	if ( typeof name === 'string' ) {
 		this.registry[ name ] = data;
@@ -71,7 +71,7 @@ oo.Registry.prototype.register = function ( name, data ) {
  * @fires unregister
  * @throws {Error} Name argument must be a string or array
  */
-oo.Registry.prototype.unregister = function ( name ) {
+OO.Registry.prototype.unregister = function ( name ) {
 	var i, len, data;
 	if ( typeof name === 'string' ) {
 		data = this.lookup( name );
@@ -94,7 +94,7 @@ oo.Registry.prototype.unregister = function ( name ) {
  * @param {string} name Symbolic name
  * @return {Mixed|undefined} Data associated with symbolic name
  */
-oo.Registry.prototype.lookup = function ( name ) {
+OO.Registry.prototype.lookup = function ( name ) {
 	if ( hasOwn.call( this.registry, name ) ) {
 		return this.registry[ name ];
 	}

@@ -4,14 +4,14 @@
  *
  * @constructor
  */
-oo.Factory = function OoFactory() {
+OO.Factory = function OoFactory() {
 	// Parent constructor
-	oo.Factory.super.call( this );
+	OO.Factory.super.call( this );
 };
 
 /* Inheritance */
 
-oo.inheritClass( oo.Factory, oo.Registry );
+OO.inheritClass( OO.Factory, OO.Registry );
 
 /* Methods */
 
@@ -31,7 +31,7 @@ oo.inheritClass( oo.Factory, oo.Registry );
  * @throws {Error} Name must be a string and must not be empty
  * @throws {Error} Constructor must be a function
  */
-oo.Factory.prototype.register = function ( constructor ) {
+OO.Factory.prototype.register = function ( constructor ) {
 	var name;
 
 	if ( typeof constructor !== 'function' ) {
@@ -43,7 +43,7 @@ oo.Factory.prototype.register = function ( constructor ) {
 	}
 
 	// Parent method
-	oo.Factory.super.prototype.register.call( this, name, constructor );
+	OO.Factory.super.prototype.register.call( this, name, constructor );
 };
 
 /**
@@ -53,7 +53,7 @@ oo.Factory.prototype.register = function ( constructor ) {
  * @throws {Error} Name must be a string and must not be empty
  * @throws {Error} Constructor must be a function
  */
-oo.Factory.prototype.unregister = function ( constructor ) {
+OO.Factory.prototype.unregister = function ( constructor ) {
 	var name;
 
 	if ( typeof constructor !== 'function' ) {
@@ -65,7 +65,7 @@ oo.Factory.prototype.unregister = function ( constructor ) {
 	}
 
 	// Parent method
-	oo.Factory.super.prototype.unregister.call( this, name );
+	OO.Factory.super.prototype.unregister.call( this, name );
 };
 
 /**
@@ -79,7 +79,7 @@ oo.Factory.prototype.unregister = function ( constructor ) {
  * @return {Object} The new object
  * @throws {Error} Unknown object name
  */
-oo.Factory.prototype.create = function ( name ) {
+OO.Factory.prototype.create = function ( name ) {
 	var obj, i,
 		args = [],
 		constructor = this.lookup( name );

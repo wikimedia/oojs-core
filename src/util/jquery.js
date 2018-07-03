@@ -1,3 +1,3 @@
 /* global $ */
 
-oo.isPlainObject = $.isPlainObject;
+OO.isPlainObject = $.isPlainObject;

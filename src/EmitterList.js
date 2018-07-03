@@ -11,7 +11,7 @@
 	 * @class OO.EmitterList
 	 * @constructor
 	 */
-	oo.EmitterList = function OoEmitterList() {
+	OO.EmitterList = function OoEmitterList() {
 		this.items = [];
 		this.aggregateItemEvents = {};
 	};
@@ -69,7 +69,7 @@
 	 *
 	 * @return {OO.EventEmitter[]} Items in the list
 	 */
-	oo.EmitterList.prototype.getItems = function () {
+	OO.EmitterList.prototype.getItems = function () {
 		return this.items.slice( 0 );
 	};
 
@@ -79,7 +79,7 @@
 	 * @param {OO.EventEmitter} item Requested item
 	 * @return {number} Index of the item
 	 */
-	oo.EmitterList.prototype.getItemIndex = function ( item ) {
+	OO.EmitterList.prototype.getItemIndex = function ( item ) {
 		return this.items.indexOf( item );
 	};
 
@@ -88,7 +88,7 @@
 	 *
 	 * @return {number} Number of items in the list
 	 */
-	oo.EmitterList.prototype.getItemCount = function () {
+	OO.EmitterList.prototype.getItemCount = function () {
 		return this.items.length;
 	};
 
@@ -97,7 +97,7 @@
 	 *
 	 * @return {boolean} Group is empty
 	 */
-	oo.EmitterList.prototype.isEmpty = function () {
+	OO.EmitterList.prototype.isEmpty = function () {
 		return !this.items.length;
 	};
 
@@ -115,7 +115,7 @@
 
 	 * @throws {Error} If aggregation already exists
 	 */
-	oo.EmitterList.prototype.aggregate = function ( events ) {
+	OO.EmitterList.prototype.aggregate = function ( events ) {
 		var i, item, add, remove, itemEvent, groupEvent;
 
 		for ( itemEvent in events ) {
@@ -169,7 +169,7 @@
 	 * @fires add
 	 * @fires move
 	 */
-	oo.EmitterList.prototype.addItems = function ( items, index ) {
+	OO.EmitterList.prototype.addItems = function ( items, index ) {
 		var i, oldIndex;
 
 		if ( !Array.isArray( items ) ) {
@@ -210,7 +210,7 @@
 	 * @return {number} The index the item was moved to
 	 * @throws {Error} If item is not in the list
 	 */
-	oo.EmitterList.prototype.moveItem = function ( item, newIndex ) {
+	OO.EmitterList.prototype.moveItem = function ( item, newIndex ) {
 		var existingIndex = this.items.indexOf( item );
 
 		if ( existingIndex === -1 ) {
@@ -256,7 +256,7 @@
 	 * @param {number} index Index to add items at
 	 * @return {number} The index the item was added at
 	 */
-	oo.EmitterList.prototype.insertItem = function ( item, index ) {
+	OO.EmitterList.prototype.insertItem = function ( item, index ) {
 		var events, event;
 
 		// Add the item to event aggregation
@@ -282,7 +282,7 @@
 	 * @chainable
 	 * @fires remove
 	 */
-	oo.EmitterList.prototype.removeItems = function ( items ) {
+	OO.EmitterList.prototype.removeItems = function ( items ) {
 		var i, item, index;
 
 		if ( !Array.isArray( items ) ) {
@@ -316,7 +316,7 @@
 	 * @chainable
 	 * @fires clear
 	 */
-	oo.EmitterList.prototype.clearItems = function () {
+	OO.EmitterList.prototype.clearItems = function () {
 		var i, item,
 			cleared = this.items.splice( 0, this.items.length );
 

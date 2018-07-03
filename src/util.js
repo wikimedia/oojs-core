@@ -7,7 +7,7 @@
  * @param {Mixed} obj
  * @return {boolean}
  */
-oo.isPlainObject = function ( obj ) {
+OO.isPlainObject = function ( obj ) {
 	var proto;
 
 	// Optimise for common case where internal [[Class]] property is not "Object"

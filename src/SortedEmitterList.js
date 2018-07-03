@@ -17,9 +17,9 @@
  * @constructor
  * @param {Function} sortingCallback Callback that compares two items.
  */
-oo.SortedEmitterList = function OoSortedEmitterList( sortingCallback ) {
+OO.SortedEmitterList = function OoSortedEmitterList( sortingCallback ) {
 	// Mixin constructors
-	oo.EmitterList.call( this );
+	OO.EmitterList.call( this );
 
 	this.sortingCallback = sortingCallback;
 
@@ -34,7 +34,7 @@ oo.SortedEmitterList = function OoSortedEmitterList( sortingCallback ) {
 	} );
 };
 
-oo.mixinClass( oo.SortedEmitterList, oo.EmitterList );
+OO.mixinClass( OO.SortedEmitterList, OO.EmitterList );
 
 /* Events */
 
@@ -54,7 +54,7 @@ oo.mixinClass( oo.SortedEmitterList, oo.EmitterList );
  *
  * @param {OO.EventEmitter} item Item in the list
  */
-oo.SortedEmitterList.prototype.onItemSortChange = function ( item ) {
+OO.SortedEmitterList.prototype.onItemSortChange = function ( item ) {
 	// Remove the item
 	this.removeItems( item );
 	// Re-add the item so it is in the correct place
@@ -69,7 +69,7 @@ oo.SortedEmitterList.prototype.onItemSortChange = function ( item ) {
  *
  * @param {Function} sortingCallback Sorting callback
  */
-oo.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback ) {
+OO.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback ) {
 	var items = this.getItems();
 
 	this.sortingCallback = sortingCallback;
@@ -87,7 +87,7 @@ oo.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback )
  *  an array of items to add
  * @chainable
  */
-oo.SortedEmitterList.prototype.addItems = function ( items ) {
+OO.SortedEmitterList.prototype.addItems = function ( items ) {
 	var index, i, insertionIndex;
 
 	if ( !Array.isArray( items ) ) {
@@ -133,10 +133,10 @@ oo.SortedEmitterList.prototype.addItems = function ( items ) {
  * @param {OO.EventEmitter} item Items to insert
  * @return {number} The index the item should be inserted at
  */
-oo.SortedEmitterList.prototype.findInsertionIndex = function ( item ) {
+OO.SortedEmitterList.prototype.findInsertionIndex = function ( item ) {
 	var list = this;
 
-	return oo.binarySearch(
+	return OO.binarySearch(
 		this.items,
 		// Fake a this.sortingCallback.bind( null, item ) call here
 		// otherwise this doesn't pass tests in phantomJS

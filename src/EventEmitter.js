@@ -7,7 +7,7 @@
 	 *
 	 * @constructor
 	 */
-	oo.EventEmitter = function OoEventEmitter() {
+	OO.EventEmitter = function OoEventEmitter() {
 		// Properties
 
 		/**
@@ -18,7 +18,7 @@
 		this.bindings = {};
 	};
 
-	oo.initClass( oo.EventEmitter );
+	OO.initClass( OO.EventEmitter );
 
 	/* Private helper functions */
 
@@ -84,7 +84,7 @@
 	 * @chainable
 	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
-	oo.EventEmitter.prototype.on = function ( event, method, args, context ) {
+	OO.EventEmitter.prototype.on = function ( event, method, args, context ) {
 		validateMethod( method, context );
 
 		// Ensure consistent object shape (optimisation)
@@ -104,7 +104,7 @@
 	 * @param {Function} listener Listener to call when event occurs
 	 * @chainable
 	 */
-	oo.EventEmitter.prototype.once = function ( event, listener ) {
+	OO.EventEmitter.prototype.once = function ( event, listener ) {
 		validateMethod( listener );
 
 		// Ensure consistent object shape (optimisation)
@@ -127,7 +127,7 @@
 	 * @chainable
 	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
-	oo.EventEmitter.prototype.off = function ( event, method, context ) {
+	OO.EventEmitter.prototype.off = function ( event, method, context ) {
 		var i, bindings;
 
 		if ( arguments.length === 1 ) {
@@ -171,7 +171,7 @@
 	 * @param {...Mixed} args First in a list of variadic arguments passed to event handler (optional)
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
-	oo.EventEmitter.prototype.emit = function ( event ) {
+	OO.EventEmitter.prototype.emit = function ( event ) {
 		var args = [],
 			i, len, binding, bindings, method;
 
@@ -214,7 +214,7 @@
 	 *  arguments.
 	 * @chainable
 	 */
-	oo.EventEmitter.prototype.connect = function ( context, methods ) {
+	OO.EventEmitter.prototype.connect = function ( context, methods ) {
 		var method, args, event;
 
 		for ( event in methods ) {
@@ -246,7 +246,7 @@
 	 *  will disconnect other variations as well.
 	 * @chainable
 	 */
-	oo.EventEmitter.prototype.disconnect = function ( context, methods ) {
+	OO.EventEmitter.prototype.disconnect = function ( context, methods ) {
 		var i, event, method, bindings;
 
 		if ( methods ) {
