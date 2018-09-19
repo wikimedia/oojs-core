@@ -127,7 +127,7 @@ module.exports = function ( grunt ) {
 					'slSafari',
 					'slIE',
 					// Earliest-supported versions of complicated browsers
-					'slSafari7',
+					'slSafari8',
 					'slIE10'
 				]
 			},
