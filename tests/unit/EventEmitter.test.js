@@ -47,7 +47,11 @@
 		ee.emit( 'args' );
 
 		ee.on( 'context-default', function () {
-			assert.strictEqual( this, global, 'Default context for handlers in non-strict mode is global' );
+			assert.strictEqual(
+				this,
+				global,
+				'Default context for handlers in non-strict mode is global'
+			);
 		} );
 		ee.emit( 'context-default' );
 
@@ -81,8 +85,8 @@
 
 		ee.on( 'post', function () {
 			// Binding "hasOwnProperty" worked because the first time 'this.bindings.hasOwnProperty'
-			// is what it should be (inherited from Object.prototype). But it used to break any events
-			// bound after since EventEmitter#on used 'this.bindings.hasOwnProperty'.
+			// is what it should be (inherited from Object.prototype). But it used to break any
+			// events bound after since EventEmitter#on used 'this.bindings.hasOwnProperty'.
 			assert.ok( true, 'Bind event after "hasOwnProperty" event exists' );
 		} );
 		ee.emit( 'post' );

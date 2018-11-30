@@ -157,13 +157,13 @@
 		);
 
 		assert.strictEqual(
-			Mixer.prototype.hasOwnProperty( 'protoFunction2' ),
+			Object.prototype.hasOwnProperty.call( Mixer.prototype, 'protoFunction2' ),
 			true,
 			'mixin copies method'
 		);
 
 		assert.strictEqual(
-			Mixer.static.hasOwnProperty( 'stat2' ),
+			Object.prototype.hasOwnProperty.call( Mixer.static, 'stat2' ),
 			true,
 			'mixin copies static member'
 		);
@@ -283,29 +283,30 @@
 
 		runners.testDeleteProp = function ( type, obj ) {
 			QUnit.test( 'deleteProp( ' + type + ' )', function ( assert ) {
-				var clone = OO.copy( obj );
+				var clone = OO.copy( obj ),
+					hasOwn = Object.prototype.hasOwnProperty;
 
 				oo.deleteProp( clone );
 				assert.deepEqual( clone, obj, 'deleting with insufficient arguments is a no-op' );
 
 				oo.deleteProp( obj, 'foo' );
-				assert.strictEqual( obj.hasOwnProperty( 'foo' ), false, 'deleting an existing key with depth 1' );
+				assert.strictEqual( hasOwn.call( obj, 'foo' ), false, 'deleting an existing key with depth 1' );
 				oo.setProp( obj, 'foo', 3 );
 
 				oo.deleteProp( obj, 'test' );
-				assert.strictEqual( obj.hasOwnProperty( 'test' ), false, 'deleting an non-exsiting key is a silent no-op' );
+				assert.strictEqual( hasOwn.call( obj, 'test' ), false, 'deleting an non-exsiting key is a silent no-op' );
 
 				oo.deleteProp( obj, 'bar', 'quux', 'whee' );
-				assert.strictEqual( obj.bar.hasOwnProperty( 'quux' ), false, 'deleting an existing key with depth 3 cleans up empty object' );
+				assert.strictEqual( hasOwn.call( obj.bar, 'quux' ), false, 'deleting an existing key with depth 3 cleans up empty object' );
 				// Reset
 				oo.setProp( obj, 'bar', 'quux', 'whee', 'yay' );
 
 				oo.deleteProp( obj, 'bar', 'baz' );
 				oo.deleteProp( obj, 'bar', 'quux', 'whee' );
-				assert.strictEqual( obj.hasOwnProperty( 'bar' ), false, 'deleting an existing key causes two cleanups' );
+				assert.strictEqual( hasOwn.call( obj, 'bar' ), false, 'deleting an existing key causes two cleanups' );
 
 				oo.deleteProp( obj, 'foo', 'bar' );
-				assert.strictEqual( obj.hasOwnProperty( 'foo' ), true, 'descending into primitive (number) preserves fails silently' );
+				assert.strictEqual( hasOwn.call( obj, 'foo' ), true, 'descending into primitive (number) preserves fails silently' );
 
 				// Remove siblings
 				oo.deleteProp( obj, 'foo' );
@@ -313,7 +314,7 @@
 				// Reset
 				oo.setProp( obj, 'bar', 'quux', 'whee', 'yay' );
 				oo.deleteProp( obj.bar, 'quux', 'whee' );
-				assert.strictEqual( obj.hasOwnProperty( 'bar' ), true, 'empty object not deleted if not part of the arguments list' );
+				assert.strictEqual( hasOwn.call( obj, 'bar' ), true, 'empty object not deleted if not part of the arguments list' );
 
 			} );
 		};
@@ -328,7 +329,9 @@
 					}
 				}
 			};
-			funcObj = function abc( d ) { return d; };
+			funcObj = function abc( d ) {
+				return d;
+			};
 			funcObj.foo = 3;
 			funcObj.bar = {
 				baz: null,
@@ -352,7 +355,8 @@
 	}() );
 
 	QUnit.test( 'cloneObject', function ( assert ) {
-		var myfoo, myfooClone, expected;
+		var myfoo, myfooClone, expected,
+			hasOwn = Object.prototype.hasOwnProperty;
 
 		function Foo( x ) {
 			this.x = x;
@@ -387,9 +391,9 @@
 				constructor: myfoo.constructor,
 				instanceOf: myfoo instanceof Foo,
 				own: {
-					x: myfoo.hasOwnProperty( 'x' ),
-					aFn: myfoo.hasOwnProperty( 'aFn' ),
-					constructor: myfoo.hasOwnProperty( 'constructor' )
+					x: hasOwn.call( myfoo, 'x' ),
+					aFn: hasOwn.call( myfoo, 'aFn' ),
+					constructor: hasOwn.call( myfoo, 'constructor' )
 				}
 			},
 			expected,
@@ -403,9 +407,9 @@
 				constructor: myfooClone.constructor,
 				instanceOf: myfooClone instanceof Foo,
 				own: {
-					x: myfooClone.hasOwnProperty( 'x' ),
-					aFn: myfooClone.hasOwnProperty( 'aFn' ),
-					constructor: myfoo.hasOwnProperty( 'constructor' )
+					x: hasOwn.call( myfooClone, 'x' ),
+					aFn: hasOwn.call( myfooClone, 'aFn' ),
+					constructor: hasOwn.call( myfoo, 'constructor' )
 				}
 			},
 			expected,
@@ -498,20 +502,20 @@
 		assertSearch( 2000, [ 12, 70, 1001 ], null );
 
 		assert.strictEqual(
-			0,
 			oo.binarySearch( data, function ( item ) { return dir( -2000, item ); }, true ),
+			0,
 			'forInsertion at start'
 		);
 
 		assert.strictEqual(
-			2,
 			oo.binarySearch( [ 1, 2, 4, 5 ], function ( item ) { return dir( 3, item ); }, true ),
+			2,
 			'forInsertion in the middle'
 		);
 
 		assert.strictEqual(
-			12,
 			oo.binarySearch( data, function ( item ) { return dir( 2000, item ); }, true ),
+			12,
 			'forInsertion at end'
 		);
 

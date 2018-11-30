@@ -238,7 +238,10 @@ OO.deleteProp = function ( obj ) {
 		return;
 	}
 	for ( i = 1; i < arguments.length - 1; i++ ) {
-		if ( prop[ arguments[ i ] ] === undefined || Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ] ) {
+		if (
+			prop[ arguments[ i ] ] === undefined ||
+			Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ]
+		) {
 			return;
 		}
 		prop = prop[ arguments[ i ] ];
@@ -246,7 +249,11 @@ OO.deleteProp = function ( obj ) {
 	}
 	delete prop[ arguments[ i ] ];
 	// Walk back through props removing any plain empty objects
-	while ( props.length > 1 && ( prop = props.pop() ) && OO.isPlainObject( prop ) && !Object.keys( prop ).length ) {
+	while (
+		props.length > 1 &&
+		( prop = props.pop() ) &&
+		OO.isPlainObject( prop ) && !Object.keys( prop ).length
+	) {
 		delete props[ props.length - 1 ][ arguments[ props.length ] ];
 	}
 };
@@ -405,8 +412,11 @@ OO.compare = function ( a, b, asymmetrical ) {
  * Copies are deep, and will either be an object or an array depending on `source`.
  *
  * @param {Object} source Object to copy
- * @param {Function} [leafCallback] Applied to leaf values after they are cloned but before they are added to the clone
- * @param {Function} [nodeCallback] Applied to all values before they are cloned.  If the nodeCallback returns a value other than undefined, the returned value is used instead of attempting to clone.
+ * @param {Function} [leafCallback] Applied to leaf values after they are cloned but before they are
+ *  added to the clone
+ * @param {Function} [nodeCallback] Applied to all values before they are cloned. If the
+ *  nodeCallback returns a value other than undefined, the returned value is used instead of
+ *  attempting to clone.
  * @return {Object} Copy of source object
  */
 OO.copy = function ( source, leafCallback, nodeCallback ) {

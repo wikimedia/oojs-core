@@ -141,9 +141,9 @@
 			{ not: 'connectable' },
 			new TestItem( 'c' )
 		] );
-		assert.equal( list.getItemCount(), 4, 'Items added' );
+		assert.strictEqual( list.getItemCount(), 4, 'Items added' );
 		list.clearItems();
-		assert.equal( list.getItemCount(), 0, 'Items cleared' );
+		assert.strictEqual( list.getItemCount(), 0, 'Items cleared' );
 		assert.ok( list.isEmpty(), 'List is empty' );
 	} );
 
@@ -158,14 +158,14 @@
 			];
 
 		list.addItems( items );
-		assert.equal( list.getItemCount(), 3, 'Items added' );
+		assert.strictEqual( list.getItemCount(), 3, 'Items added' );
 
 		list.removeItems( [ items[ 2 ] ] );
-		assert.equal( list.getItemCount(), 2, 'Item removed' );
-		assert.equal( list.getItemIndex( items[ 2 ] ), -1, 'The correct item was removed' );
+		assert.strictEqual( list.getItemCount(), 2, 'Item removed' );
+		assert.strictEqual( list.getItemIndex( items[ 2 ] ), -1, 'The correct item was removed' );
 
 		list.removeItems( [] );
-		assert.equal( list.getItemCount(), 2, 'Removing empty array of items does nothing' );
+		assert.strictEqual( list.getItemCount(), 2, 'Removing empty array of items does nothing' );
 
 		// Remove an item with aggregate events
 		list.aggregate( { change: 'itemChange' } );
@@ -182,9 +182,9 @@
 
 		// Item without connect() method
 		list.addItems( [ plain ] );
-		assert.equal( list.getItemCount(), 2, 'Plain added' );
+		assert.strictEqual( list.getItemCount(), 2, 'Plain added' );
 		list.removeItems( [ plain ] );
-		assert.equal( list.getItemCount(), 1, 'Plain removed' );
+		assert.strictEqual( list.getItemCount(), 1, 'Plain removed' );
 	} );
 
 	QUnit.test( 'aggregate', function ( assert ) {

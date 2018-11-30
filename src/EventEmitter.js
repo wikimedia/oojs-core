@@ -168,7 +168,8 @@
 	 * Emit an event.
 	 *
 	 * @param {string} event Type of event
-	 * @param {...Mixed} args First in a list of variadic arguments passed to event handler (optional)
+	 * @param {...Mixed} args First in a list of variadic arguments
+	 *  passed to event handler (optional)
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	OO.EventEmitter.prototype.emit = function ( event ) {
@@ -176,7 +177,8 @@
 			i, len, binding, bindings, method;
 
 		if ( hasOwn.call( this.bindings, event ) ) {
-			// Slicing ensures that we don't get tripped up by event handlers that add/remove bindings
+			// Slicing ensures that we don't get tripped up by event
+			// handlers that add/remove bindings
 			bindings = this.bindings[ event ].slice();
 			for ( i = 1, len = arguments.length; i < len; i++ ) {
 				args.push( arguments[ i ] );
@@ -208,10 +210,10 @@
 	 * Connect event handlers to an object.
 	 *
 	 * @param {Object} context Object to call methods on when events occur
-	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} methods List of
-	 *  event bindings keyed by event name containing either method names, functions or arrays containing
-	 *  method name or function followed by a list of arguments to be passed to callback before emitted
-	 *  arguments.
+	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} methods
+	 *  List of event bindings keyed by event name containing either method names, functions or
+	 *  arrays containing method name or function followed by a list of arguments to be passed to
+	 *  callback before emitted arguments.
 	 * @chainable
 	 */
 	OO.EventEmitter.prototype.connect = function ( context, methods ) {
@@ -236,9 +238,9 @@
 	 * Disconnect event handlers from an object.
 	 *
 	 * @param {Object} context Object to disconnect methods from
-	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} [methods] List of
-	 *  event bindings keyed by event name. Values can be either method names, functions or arrays
-	 *  containing a method name.
+	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} [methods]
+	 *  List of event bindings keyed by event name. Values can be either method names, functions or
+	 *  arrays containing a method name.
 	 *  NOTE: To allow matching call sites with connect(), array values are allowed to contain the
 	 *  parameters as well, but only the method name is used to find bindings. Tt is discouraged to
 	 *  have multiple bindings for the same event to the same listener, but if used (and only the

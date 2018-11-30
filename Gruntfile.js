@@ -3,14 +3,16 @@
  *
  * ## Cross-browser unit testing
  *
- * To run tests in any other browser use: 'grunt watch' and then open http://localhost:9876/ in one
- * or more browsers. It automatically runs tests in all connected browsers on each grunt-watch event.
+ * To run tests in any other browser use: 'grunt watch' and then open http://localhost:9876/
+ * in one or more browsers. It automatically runs tests in all connected browsers on each
+ * grunt-watch event.
  *
  * To use the automated Sauce Labs setup (like on Jenkins), simply set SAUCE_USERNAME and
- * SAUCE_ACCESS_KEY from your bashrc and run 'grunt ci'. Sign up for free at https://saucelabs.com/signup/plan/free.
+ * SAUCE_ACCESS_KEY from your bashrc and run 'grunt ci'.
+ * Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
-/* eslint-env node */
+/* eslint-env node, es6 */
 module.exports = function ( grunt ) {
 	var customLaunchers = require( './tests/karma.browsers.js' ),
 		// Set --no-sandbox for Chrome on Travis.
