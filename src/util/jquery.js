@@ -1,3 +1,1 @@
-/* global $ */
-
 OO.isPlainObject = $.isPlainObject;
