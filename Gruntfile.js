@@ -15,10 +15,6 @@
 /* eslint-env node, es6 */
 module.exports = function ( grunt ) {
 	var customLaunchers = require( './tests/karma.browsers.js' ),
-		// Set --no-sandbox for Chrome on Travis.
-		// https://docs.travis-ci.com/user/environment-variables/
-		// See karma.browser.js for details.
-		chromeHeadless = process.env.TRAVIS ? 'ChromeHeadlessNoSandbox' : 'ChromeHeadless',
 		concatFiles = [
 			'src/intro.js.txt',
 			'src/core.js',
@@ -119,7 +115,7 @@ module.exports = function ( grunt ) {
 				concurrency: 3,
 				captureTimeout: 90000
 			},
-			ci: {
+			saucelabs: {
 				browsers: [
 					// Latest versions of major browsers
 					'slChrome',
@@ -129,13 +125,13 @@ module.exports = function ( grunt ) {
 					'slSafari',
 					'slIE',
 					// Earliest-supported versions of complicated browsers
-					'slSafari8',
+					'slSafari9',
 					'slIE10'
 				]
 			},
 			// Primary unit test run (includes code coverage)
 			main: {
-				browsers: [ chromeHeadless ],
+				browsers: [ 'ChromeCustom' ],
 				preprocessors: {
 					'dist/*.js': [ 'coverage' ]
 				},
@@ -160,7 +156,7 @@ module.exports = function ( grunt ) {
 				}
 			},
 			jquery: {
-				browsers: [ chromeHeadless ],
+				browsers: [ 'ChromeCustom' ],
 				options: {
 					files: [
 						'node_modules/jquery/dist/jquery.js',
@@ -171,7 +167,7 @@ module.exports = function ( grunt ) {
 				}
 			},
 			firefox: {
-				browsers: [ 'Firefox' ]
+				browsers: [ 'FirefoxHeadless' ]
 			}
 		},
 		watch: {
@@ -199,7 +195,7 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
 	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:firefox', 'karma:ci' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:firefox', 'karma:saucelabs' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		// During the merge pipeline, also include the cross-platform

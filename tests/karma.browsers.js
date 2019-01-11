@@ -6,15 +6,10 @@
  * See also https://karma-runner.github.io/1.0/config/browsers.html
  */
 module.exports = {
-	// Headless Chrome with sandboxing security disabled.
-	// This is for use in Travis CI, which is already sandboxed
-	// and has Docker configured in a way that breaks Chrome's
-	// ability to create a secure sandbox.
-	// - https://github.com/karma-runner/karma-chrome-launcher/issues/158
-	// - https://github.com/travis-ci/docs-travis-ci-com/blob/c1da4af0/user/chrome.md#sandboxing
-	ChromeHeadlessNoSandbox: {
+	ChromeCustom: {
 		base: 'ChromeHeadless',
-		flags: [ '--no-sandbox' ]
+		// Chrome requires --no-sandbox in Docker/CI.
+		flags: ( process.env.CHROMIUM_FLAGS || '' ).split( ' ' )
 	},
 
 	/**
@@ -40,6 +35,9 @@ module.exports = {
 	// Latest Safari
 	slSafari: {
 		base: 'SauceLabs',
+		// Hardcode version as 11, because default/'latest'/'12'
+		// all currently map to broken servers at SauceLabs. (2019-01-19)
+		version: '11',
 		browserName: 'safari'
 	},
 	// Latest IE
@@ -50,10 +48,10 @@ module.exports = {
 	},
 
 	// Oldest Safari that Sauce Labs provides
-	slSafari8: {
+	slSafari9: {
 		base: 'SauceLabs',
 		browserName: 'safari',
-		version: '8'
+		version: '9'
 	},
 	// Oldest IE we support
 	slIE10: {
