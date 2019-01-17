@@ -4,7 +4,7 @@
  * Assert whether a value is a plain object or not.
  *
  * @memberOf OO
- * @param {Mixed} obj
+ * @param {any} obj
  * @return {boolean}
  */
 OO.isPlainObject = function ( obj ) {

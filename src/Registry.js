@@ -2,8 +2,8 @@
 
 /**
  * A map interface for associating arbitrary data with a symbolic name. Used in
- * place of a plain object to provide additional {@link #method-register registration}
- * or {@link #method-lookup lookup} functionality.
+ * place of a plain object to provide additional {@link OO.Registry#register registration}
+ * or {@link OO.Registry#lookup lookup} functionality.
  *
  * See <https://www.mediawiki.org/wiki/OOjs/Registries_and_factories>.
  *
@@ -27,13 +27,13 @@ OO.mixinClass( OO.Registry, OO.EventEmitter );
 /**
  * @event OO.Registry#register
  * @param {string} name
- * @param {Mixed} data
+ * @param {any} data
  */
 
 /**
  * @event OO.Registry#unregister
  * @param {string} name
- * @param {Mixed} data Data removed from registry
+ * @param {any} data Data removed from registry
  */
 
 /* Methods */
@@ -44,7 +44,7 @@ OO.mixinClass( OO.Registry, OO.EventEmitter );
  * Any existing entry with the same name will be overridden.
  *
  * @param {string|string[]} name Symbolic name or list of symbolic names
- * @param {Mixed} data Data to associate with symbolic name
+ * @param {any} data Data to associate with symbolic name
  * @fires OO.Registry#register
  * @throws {Error} Name argument must be a string or array
  */
@@ -90,7 +90,7 @@ OO.Registry.prototype.unregister = function ( name ) {
  * Get data for a given symbolic name.
  *
  * @param {string} name Symbolic name
- * @return {Mixed|undefined} Data associated with symbolic name
+ * @return {any|undefined} Data associated with symbolic name
  */
 OO.Registry.prototype.lookup = function ( name ) {
 	if ( hasOwn.call( this.registry, name ) ) {

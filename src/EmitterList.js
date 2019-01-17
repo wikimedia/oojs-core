@@ -1,11 +1,11 @@
 ( function () {
 
 	/**
-	 * Contain and manage a list of OO.EventEmitter items.
+	 * Contain and manage a list of @{link OO.EventEmitter} items.
 	 *
 	 * Aggregates and manages their events collectively.
 	 *
-	 * This mixin must be used in a class that also mixes in OO.EventEmitter.
+	 * This mixin must be used in a class that also mixes in @{link OO.EventEmitter}.
 	 *
 	 * @abstract
 	 * @class
@@ -165,7 +165,7 @@
 	 * @param {number} [index] Index to add items at. If no index is
 	 *  given, or if the index that is given is invalid, the item
 	 *  will be added at the end of the list.
-	 * @chainable
+	 * @return {OO.EmitterList}
 	 * @fires OO.EmitterList#add
 	 * @fires OO.EmitterList#move
 	 */
@@ -279,7 +279,7 @@
 	 * Remove items.
 	 *
 	 * @param {OO.EventEmitter[]} items Items to remove
-	 * @chainable
+	 * @return {OO.EmitterList}
 	 * @fires OO.EmitterList#remove
 	 */
 	OO.EmitterList.prototype.removeItems = function ( items ) {
@@ -313,7 +313,7 @@
 	/**
 	 * Clear all items.
 	 *
-	 * @chainable
+	 * @return {OO.EmitterList}
 	 * @fires OO.EmitterList#clear
 	 */
 	OO.EmitterList.prototype.clearItems = function () {

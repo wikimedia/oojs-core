@@ -28,7 +28,7 @@
 	 *
 	 * @private
 	 * @param {Function|string} method Function or method name
-	 * @param {Mixed} context The context of the call
+	 * @param {any} context The context of the call
 	 * @throws {Error} A method name is given but there is no context
 	 * @throws {Error} In the context object, no property exists with the given name
 	 * @throws {Error} In the context object, the named property is not a function
@@ -80,7 +80,7 @@
 	 * @param {Function|string} method Function or method name to call when event occurs
 	 * @param {Array} [args] Arguments to pass to listener, will be prepended to emitted arguments
 	 * @param {Object} [context=null] Context object for function or method call
-	 * @chainable
+	 * @return {OO.EventEmitter}
 	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
 	OO.EventEmitter.prototype.on = function ( event, method, args, context ) {
@@ -101,7 +101,7 @@
 	 *
 	 * @param {string} event Type of event to listen to
 	 * @param {Function} listener Listener to call when event occurs
-	 * @chainable
+	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.once = function ( event, listener ) {
 		validateMethod( listener );
@@ -123,7 +123,7 @@
 	 * @param {Function|string} [method] Listener to remove. Must be in the same form as was passed
 	 * to "on". Omit to remove all listeners.
 	 * @param {Object} [context=null] Context object function or method call
-	 * @chainable
+	 * @return {OO.EventEmitter}
 	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
 	OO.EventEmitter.prototype.off = function ( event, method, context ) {
@@ -167,7 +167,7 @@
 	 * Emit an event.
 	 *
 	 * @param {string} event Type of event
-	 * @param {...Mixed} args First in a list of variadic arguments
+	 * @param {...any} args First in a list of variadic arguments
 	 *  passed to event handler (optional)
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
@@ -213,7 +213,7 @@
 	 *  List of event bindings keyed by event name containing either method names, functions or
 	 *  arrays containing method name or function followed by a list of arguments to be passed to
 	 *  callback before emitted arguments.
-	 * @chainable
+	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.connect = function ( context, methods ) {
 		var method, args, event;
@@ -245,7 +245,7 @@
 	 *  have multiple bindings for the same event to the same listener, but if used (and only the
 	 *  parameters vary), disconnecting one variation of (event name, event listener, parameters)
 	 *  will disconnect other variations as well.
-	 * @chainable
+	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.disconnect = function ( context, methods ) {
 		var i, event, method, bindings;

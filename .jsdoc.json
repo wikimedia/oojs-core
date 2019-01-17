@@ -16,14 +16,8 @@
         "plugins/summarize",
         "node_modules/jsdoc-class-hierarchy"
     ],
-    "recurseDepth": 10,
     "source": {
-        "include": [ "src" ],
-        "includePattern": ".+\\.js$"
-    },
-    "tags": {
-        "allowUnknownTags": [ "chainable", "singleton" ],
-        "dictionaries": [ "jsdoc" ]
+        "include": [ "src" ]
     },
     "templates": {
         "cleverLinks": true,
@@ -37,24 +31,13 @@
             "linkMap": {
                 "Array": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
                 "Boolean": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
-                "Document": "https://developer.mozilla.org/en-US/docs/Web/API/Document",
-                "Element": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
                 "Error": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
-                "EventEmitter": "https://nodejs.org/api/events.html#events_class_eventemitter",
                 "Function": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
-                "Generator": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
-                "Map": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
                 "Mixed": "javascript:void(0);",
-                "Node": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
                 "Number": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
                 "Object": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-                "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
                 "RegExp": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
-                "Request": "http://expressjs.com/en/api.html#req",
-                "Response": "http://expressjs.com/en/api.html#res",
-                "Set": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
-                "String": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
-                "TextNode": "https://developer.mozilla.org/en-US/docs/Web/API/Text"
+                "String": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String"
             }
         }
     }

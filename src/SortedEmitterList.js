@@ -7,9 +7,10 @@
  * considered equal.
  *
  * When an item changes in a way that could affect their sorting behavior, it must
- * emit the itemSortChange event. This will cause it to be re-sorted automatically.
+ * emit the {@link OO.SortedEmitterList#event:itemSortChange itemSortChange} event.
+ * This will cause it to be re-sorted automatically.
  *
- * This mixin must be used in a class that also mixes in OO.EventEmitter.
+ * This mixin must be used in a class that also mixes in {@link OO.EventEmitter}.
  *
  * @abstract
  * @class
@@ -41,7 +42,7 @@ OO.mixinClass( OO.SortedEmitterList, OO.EmitterList );
  * An item has changed properties that affect its sort positioning
  * inside the list.
  *
- * @private
+ * @ignore
  * @event OO.SortedEmitterList#itemSortChange
  */
 
@@ -84,7 +85,7 @@ OO.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback )
  *
  * @param {OO.EventEmitter|OO.EventEmitter[]} items Item to add or
  *  an array of items to add
- * @chainable
+ * @return {OO.SortedEmitterList}
  */
 OO.SortedEmitterList.prototype.addItems = function ( items ) {
 	var index, i, insertionIndex;

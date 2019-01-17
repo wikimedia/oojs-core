@@ -73,7 +73,7 @@ OO.Factory.prototype.unregister = function ( constructor ) {
  * constructor directly, so leaving one out will pass an undefined to the constructor.
  *
  * @param {string} name Object name
- * @param {...Mixed} [args] Arguments to pass to the constructor
+ * @param {...any} [args] Arguments to pass to the constructor
  * @return {Object} The new object
  * @throws {Error} Unknown object name
  */

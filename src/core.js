@@ -1,11 +1,9 @@
 /* exported toString */
-/** @namespace OO */
+/**
+ * Namespace for all classes, static methods and static properties.
+ * @namespace OO
+ */
 var
-	/**
-	 * Namespace for all classes, static methods and static properties.
-	 * @class OO
-	 * @singleton
-	 */
 	OO = {},
 	// Optimisation: Local reference to Object.prototype.hasOwnProperty
 	hasOwn = OO.hasOwnProperty,
@@ -186,7 +184,7 @@ OO.isSubclass = function ( testFn, baseFn ) {
  * @memberOf OO
  * @method getProp
  * @param {Object} obj
- * @param {...Mixed} [keys]
+ * @param {...any} [keys]
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
 OO.getProp = function ( obj ) {
@@ -215,8 +213,8 @@ OO.getProp = function ( obj ) {
  * @memberOf OO
  * @method setProp
  * @param {Object} obj
- * @param {...Mixed} [keys]
- * @param {Mixed} [value]
+ * @param {...any} [keys]
+ * @param {any} [value]
  */
 OO.setProp = function ( obj ) {
 	var i,
@@ -243,7 +241,7 @@ OO.setProp = function ( obj ) {
  * @memberOf OO
  * @method deleteProp
  * @param {Object} obj
- * @param {...Mixed} [keys]
+ * @param {...any} [keys]
  */
 OO.deleteProp = function ( obj ) {
 	var i,
@@ -513,8 +511,8 @@ OO.getHash = function ( val ) {
  * @memberOf OO
  * @method getHash_keySortReplacer
  * @param {string} key Property name of value being replaced
- * @param {Mixed} val Property value to replace
- * @return {Mixed} Replacement value
+ * @param {any} val Property value to replace
+ * @return {any} Replacement value
  */
 OO.getHash.keySortReplacer = function ( key, val ) {
 	var normalized, keys, i, len;
