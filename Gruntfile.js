@@ -1,14 +1,12 @@
 /*!
  * Grunt file
  *
- * ## Cross-browser unit testing
+ * For local development, this runs unit tests in Headless Chrome only by default.
+ * To also run in Firefox, run `grunt karma`.
  *
- * To run tests in any other browser use: 'grunt watch' and then open http://localhost:9876/
- * in one or more browsers. It automatically runs tests in all connected browsers on each
- * grunt-watch event.
- *
- * To use the automated Sauce Labs setup (like on Jenkins), simply set SAUCE_USERNAME and
- * SAUCE_ACCESS_KEY from your bashrc and run 'grunt ci'.
+ * To also test the automated Sauce Labs setup (as we do in Jenkins), set
+ * the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables (either one-time
+ * via export, or from your bashrc). Then, run 'grunt ci'.
  * Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
@@ -31,8 +29,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	grunt.loadNpmTasks( 'grunt-eslint' );
 	grunt.loadNpmTasks( 'grunt-karma' );
 
 	grunt.initConfig( {
@@ -74,12 +70,6 @@ module.exports = function ( grunt ) {
 					'src/outro.js.txt'
 				]
 			}
-		},
-		eslint: {
-			dev: [
-				'*.js',
-				'{src,tests}/**/*.js'
-			]
 		},
 		uglify: {
 			options: {
@@ -169,13 +159,6 @@ module.exports = function ( grunt ) {
 			firefox: {
 				browsers: [ 'FirefoxHeadless' ]
 			}
-		},
-		watch: {
-			files: [
-				'.eslintrc.json',
-				'<%= eslint.dev %>'
-			],
-			tasks: '_test'
 		}
 	} );
 
@@ -194,7 +177,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'eslint:dev', 'karma:main', 'karma:jquery' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:firefox', 'karma:saucelabs' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
