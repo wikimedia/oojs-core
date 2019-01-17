@@ -1,10 +1,7 @@
 /*!
  * Grunt file
  *
- * For local development, this runs unit tests in Headless Chrome only by default.
- * To also run in Firefox, run `grunt karma`.
- *
- * To also test the automated Sauce Labs setup (as we do in Jenkins), set
+ * To use the automated Sauce Labs setup (as we do in Jenkins), set
  * the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables (either one-time
  * via export, or from your bashrc). Then, run 'grunt ci'.
  * Sign up for free at https://saucelabs.com/signup/plan/free.
@@ -177,8 +174,8 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:firefox', 'karma:saucelabs' ] );
+	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery', 'karma:firefox' ] );
+	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
 		// During the merge pipeline, also include the cross-platform
