@@ -39,7 +39,7 @@
     "grunt-jsdoc": "2.2.1",
     "jquery": "3.3.1",
     "jsdoc-class-hierarchy": "^1.1.2",
-    "jsdoc-wmf-theme": "git+https://gerrit.wikimedia.org/r/jsdoc/wmf-theme#e9460eb729e8b690ace3a8dfeff913d353e77254",
+    "jsdoc-wmf-theme": "git+https://gerrit.wikimedia.org/r/jsdoc/wmf-theme#246f6dffbfc858a954d4d9c8b418469b9e9239fc",
     "karma": "3.1.4",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.2",
