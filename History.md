@@ -10,7 +10,7 @@
 
 ## v2.2.0 / 2018-04-03
 * [DEPRECATING CHANGE] Drop more code supporting ES3 / IE<=9 (Ed Sanders)
-* core: Fix deprecateProp() case where root object is empty (Ed Sanders)
+* core: Fix deleteProp() case where root object is empty (Ed Sanders)
 * doc: Add intro for OO.Registry (Prateek Saxena)
 * doc: Fix valid-jsdoc issues in EventEmitter and SortedEmitterList (Ed Sanders)
 * build: Add Travis CI and Codecov configuration (Timo Tijhof)
