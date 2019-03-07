@@ -24,13 +24,14 @@
     "LICENSE-MIT"
   ],
   "scripts": {
-    "test": "eslint . && grunt test && qunit tests/node-index.js",
+    "lint": "eslint --cache --report-unused-disable-directives .",
+    "test": "npm run lint && grunt test && qunit tests/node-index.js",
     "doc": "grunt doc",
     "prepare": "grunt build"
   },
   "dependencies": {},
   "devDependencies": {
-    "eslint-config-wikimedia": "0.10.0",
+    "eslint-config-wikimedia": "0.11.0",
     "grunt": "1.0.3",
     "grunt-contrib-clean": "2.0.0",
     "grunt-contrib-concat": "1.0.1",
