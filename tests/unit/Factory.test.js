@@ -29,7 +29,7 @@
 		);
 		assert.throws(
 			function () {
-				factory.unregister( 'not-a-function' );
+				factory.unregister( 42 );
 			},
 			Error,
 			'unregister non-function value as constructor'
@@ -45,11 +45,23 @@
 	QUnit.test( 'registeration and lookup', function ( assert ) {
 		var factory = new OO.Factory();
 
+		// Add and remove by constructor
 		factory.register( Foo );
 		assert.strictEqual( factory.lookup( 'my-foo' ), Foo );
 
 		factory.unregister( Foo );
 		assert.strictEqual( factory.lookup( 'my-foo' ), undefined );
+
+		// Add and remove by name
+		factory.register( Foo, 'a-name' );
+		assert.strictEqual( factory.lookup( 'my-foo' ), undefined );
+		assert.strictEqual( factory.lookup( 'a-name' ), Foo );
+
+		factory.unregister( 'a-name' );
+		assert.strictEqual( factory.lookup( 'a-name' ), undefined );
+
+		// Unknown name should not throw
+		factory.unregister( 'not-registered' );
 	} );
 
 	QUnit.test( 'invalid creation', function ( assert ) {

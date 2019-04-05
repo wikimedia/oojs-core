@@ -16,28 +16,27 @@ OO.inheritClass( OO.Factory, OO.Registry );
 /**
  * Register a constructor with the factory.
  *
- * Classes must have a static `name` property to be registered.
- *
  *     function MyClass() {};
  *     OO.initClass( MyClass );
- *     // Adds a static property to the class defining a symbolic name
- *     MyClass.static.name = 'mine';
- *     // Registers class with factory, available via symbolic name 'mine'
+ *     MyClass.static.name = 'hello';
+ *     // Register class with the factory, available via the symbolic name "hello"
  *     factory.register( MyClass );
  *
  * @param {Function} constructor Constructor to use when creating object
- * @throws {Error} Name must be a string and must not be empty
- * @throws {Error} Constructor must be a function
+ * @param {string} [name] Symbolic name to use for #create().
+ *  This parameter may be omitted in favour of letting the constructor decide
+ *  its own name, through `constructor.static.name`.
+ * @throws {Error} If a parameter is invalid
  */
-OO.Factory.prototype.register = function ( constructor ) {
-	var name;
-
+OO.Factory.prototype.register = function ( constructor, name ) {
 	if ( typeof constructor !== 'function' ) {
-		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
+		throw new Error( 'constructor must be a function, got ' + typeof constructor );
 	}
-	name = constructor.static && constructor.static.name;
+	if ( arguments.length <= 1 ) {
+		name = constructor.static && constructor.static.name;
+	}
 	if ( typeof name !== 'string' || name === '' ) {
-		throw new Error( 'Name must be a string and must not be empty' );
+		throw new Error( 'name must be a non-empty string' );
 	}
 
 	// Parent method
@@ -47,19 +46,15 @@ OO.Factory.prototype.register = function ( constructor ) {
 /**
  * Unregister a constructor from the factory.
  *
- * @param {Function} constructor Constructor to unregister
- * @throws {Error} Name must be a string and must not be empty
- * @throws {Error} Constructor must be a function
+ * @param {string|Function} name Constructor function or symbolic name to unregister
+ * @throws {Error} If a parameter is invalid
  */
-OO.Factory.prototype.unregister = function ( constructor ) {
-	var name;
-
-	if ( typeof constructor !== 'function' ) {
-		throw new Error( 'constructor must be a function, cannot be a ' + typeof constructor );
+OO.Factory.prototype.unregister = function ( name ) {
+	if ( typeof name === 'function' ) {
+		name = name.static && name.static.name;
 	}
-	name = constructor.static && constructor.static.name;
 	if ( typeof name !== 'string' || name === '' ) {
-		throw new Error( 'Name must be a string and must not be empty' );
+		throw new Error( 'name must be a non-empty string' );
 	}
 
 	// Parent method
