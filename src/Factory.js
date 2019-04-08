@@ -1,11 +1,15 @@
 /**
  * @class
+ * @extends OO.Registry
  */
 OO.Factory = function OoFactory() {
-	this.registry = new OO.Registry();
+	// Parent constructor
+	OO.Factory.super.call( this );
 };
 
-OO.initClass( OO.Factory );
+/* Inheritance */
+
+OO.inheritClass( OO.Factory, OO.Registry );
 
 /* Methods */
 
@@ -35,7 +39,8 @@ OO.Factory.prototype.register = function ( constructor, name ) {
 		throw new Error( 'name must be a non-empty string' );
 	}
 
-	this.registry.register( name, constructor );
+	// Parent method
+	OO.Factory.super.prototype.register.call( this, name, constructor );
 };
 
 /**
@@ -52,17 +57,8 @@ OO.Factory.prototype.unregister = function ( name ) {
 		throw new Error( 'name must be a non-empty string' );
 	}
 
-	this.registry.unregister( name );
-};
-
-/**
- * Get constructor for a given symbolic name.
- *
- * @param {string} name Symbolic name
- * @return {Function|undefined}
- */
-OO.Factory.prototype.lookup = function ( name ) {
-	return this.registry.lookup( name );
+	// Parent method
+	OO.Factory.super.prototype.unregister.call( this, name );
 };
 
 /**
