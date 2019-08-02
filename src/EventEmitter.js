@@ -166,6 +166,15 @@
 	/**
 	 * Emit an event.
 	 *
+	 * All listeners for the event will be called synchronously, in an
+	 * unspecified order. If any listeners throw an exception, this won't
+	 * disrupt the calls to the remaining listeners; however, the exception
+	 * won't be thrown until the next tick.
+	 *
+	 * Listeners should avoid mutating the emitting object, as this is
+	 * something of an anti-pattern which can easily result in
+	 * hard-to-understand code with hidden side-effects and dependencies.
+	 *
 	 * @param {string} event Type of event
 	 * @param {...any} args First in a list of variadic arguments
 	 *  passed to event handler (optional)
@@ -195,10 +204,92 @@
 					// any nested triggers.
 					this.off( event, method );
 				}
-				method.apply(
-					binding.context,
-					binding.args ? binding.args.concat( args ) : args
-				);
+				try {
+					method.apply(
+						binding.context,
+						binding.args ? binding.args.concat( args ) : args
+					);
+				} catch ( e ) {
+					// If one listener has an unhandled error, don't have it
+					// take down the emitter. But rethrow asynchronously so
+					// debuggers can break with a full async stack trace.
+					setTimeout( ( function ( error ) {
+						throw error;
+					} ).bind( null, e ) );
+				}
+
+			}
+			return true;
+		}
+		return false;
+	};
+
+	/**
+	 * Emit an event, propagating the first exception some listener throws
+	 *
+	 * All listeners for the event will be called synchronously, in an
+	 * unspecified order. If any listener throws an exception, this won't
+	 * disrupt the calls to the remaining listeners. The first exception
+	 * thrown will be propagated back to the caller; any others won't be
+	 * thrown until the next tick.
+	 *
+	 * Listeners should avoid mutating the emitting object, as this is
+	 * something of an anti-pattern which can easily result in
+	 * hard-to-understand code with hidden side-effects and dependencies.
+	 *
+	 * @param {string} event Type of event
+	 * @param {...any} args First in a list of variadic arguments
+	 *  passed to event handler (optional)
+	 * @return {boolean} Whether the event was handled by at least one listener
+	 */
+	OO.EventEmitter.prototype.emitThrow = function ( event ) {
+		// We tolerate code duplication with #emit, because the
+		// alternative is an extra level of indirection which will
+		// appear in very many stack traces.
+		var i, len, binding, bindings, method, firstError,
+			args = [];
+
+		if ( hasOwn.call( this.bindings, event ) ) {
+			// Slicing ensures that we don't get tripped up by event
+			// handlers that add/remove bindings
+			bindings = this.bindings[ event ].slice();
+			for ( i = 1, len = arguments.length; i < len; i++ ) {
+				args.push( arguments[ i ] );
+			}
+			for ( i = 0, len = bindings.length; i < len; i++ ) {
+				binding = bindings[ i ];
+				if ( typeof binding.method === 'string' ) {
+					// Lookup method by name (late binding)
+					method = binding.context[ binding.method ];
+				} else {
+					method = binding.method;
+				}
+				if ( binding.once ) {
+					// Must unbind before calling method to avoid
+					// any nested triggers.
+					this.off( event, method );
+				}
+				try {
+					method.apply(
+						binding.context,
+						binding.args ? binding.args.concat( args ) : args
+					);
+				} catch ( e ) {
+					if ( firstError === undefined ) {
+						firstError = e;
+					} else {
+						// If one listener has an unhandled error, don't have it
+						// take down the emitter. But rethrow asynchronously so
+						// debuggers can break with a full async stack trace.
+						setTimeout( ( function ( error ) {
+							throw error;
+						} ).bind( null, e ) );
+					}
+				}
+
+			}
+			if ( firstError !== undefined ) {
+				throw firstError;
 			}
 			return true;
 		}

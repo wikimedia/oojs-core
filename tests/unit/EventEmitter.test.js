@@ -9,7 +9,8 @@
 	QUnit.module( 'EventEmitter' );
 
 	QUnit.test( 'on', function ( assert ) {
-		var callback, x, seq,
+		var callback, x, seq, thrown,
+			origSetTimeout = global.setTimeout,
 			ee = new oo.EventEmitter();
 
 		assert.throws( function () {
@@ -33,18 +34,62 @@
 		ee.on( 'multiple', callback );
 		ee.on( 'multiple', callback );
 		ee.emit( 'multiple', 'x' );
+		assert.deepEqual( seq, [ 'x', 'x' ], 'Callbacks can be bound multiple times' );
+		seq = [];
+		ee.emitThrow( 'multiple', 'x' );
+		assert.deepEqual( seq, [ 'x', 'x' ], 'Callbacks can be bound multiple times' );
 
-		assert.deepEqual(
-			seq,
-			[ 'x', 'x' ],
-			'Callbacks can be bound multiple times'
-		);
+		// Stub setTimeout for coverage purposes
+		global.setTimeout = function ( fn ) {
+			try {
+				fn();
+			} catch ( e ) {
+				thrown.push( e );
+			}
+		};
+
+		try {
+			x = 0;
+			thrown = [];
+			ee.on( 'multiple-error', function () {
+				x += 1;
+			} );
+			ee.on( 'multiple-error', function () {
+				throw new Error( 'Unhandled error 1' );
+			} );
+			ee.on( 'multiple-error', function () {
+				x += 10;
+			} );
+			ee.on( 'multiple-error', function () {
+				throw new Error( 'Unhandled error 2' );
+			} );
+			ee.on( 'multiple-error', function () {
+				x += 100;
+			} );
+			ee.emit( 'multiple-error' );
+			assert.strictEqual( thrown.length, 2, 'emit throws errors in callbacks asynchronously' );
+			assert.strictEqual( x, 111, 'emit runs every callback even if errors are thrown' );
+			x = 0;
+			thrown = [];
+			assert.throws( function () {
+				ee.emitThrow( 'multiple-error' );
+			}, /Unhandled error 1/, 'emitThrow propagates the first error' );
+			assert.ok(
+				thrown.length === 1 && thrown[ 0 ].message.match( /Unhandled error 2/ ),
+				'emitThrow throws subsequent errors asynchronously'
+			);
+			assert.strictEqual( x, 111, 'emitThrow runs every callback even if errors are thrown' );
+		} finally {
+			// Restore it
+			global.setTimeout = origSetTimeout;
+		}
 
 		x = {};
 		ee.on( 'args', function ( a ) {
 			assert.strictEqual( a, x, 'Arguments registered in binding passed to callback' );
 		}, [ x ] );
 		ee.emit( 'args' );
+		ee.emitThrow( 'args' );
 
 		ee.on( 'context-default', function () {
 			assert.strictEqual(
@@ -54,6 +99,7 @@
 			);
 		} );
 		ee.emit( 'context-default' );
+		ee.emitThrow( 'context-default' );
 
 		x = {
 			methodName: function () {
@@ -63,11 +109,10 @@
 		seq = [];
 		ee.on( 'context-custom', 'methodName', [], x );
 		ee.emit( 'context-custom' );
-		assert.deepEqual(
-			seq,
-			[ x ],
-			'Custom context'
-		);
+		assert.deepEqual( seq, [ x ], 'Custom context' );
+		seq = [];
+		ee.emitThrow( 'context-custom' );
+		assert.deepEqual( seq, [ x ], 'Custom context' );
 
 		assert.throws( function () {
 			ee.on( 'invalid-context', 'methodName', [], null );
@@ -138,12 +183,16 @@
 		ee.once( 'basic', handle );
 		ee.off( 'basic', handle );
 		ee.emit( 'basic' );
+		ee.emitThrow( 'basic' );
 		assert.deepEqual( seq, [], 'Handle is compatible with off()' );
 
 		seq = [];
 		ee.once( 'basic', handle );
 		ee.emit( 'basic' );
 		assert.deepEqual( seq, [ 'call' ], 'Handle can be re-bound' );
+		seq = [];
+		ee.once( 'basic', handle );
+		ee.emitThrow( 'basic' );
 	} );
 
 	QUnit.test( 'emit', function ( assert ) {
