@@ -1,4 +1,4 @@
-/* global hasOwn */
+/* global hasOwn, slice */
 
 ( function () {
 
@@ -181,47 +181,44 @@
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	OO.EventEmitter.prototype.emit = function ( event ) {
-		var args = [],
-			i, len, binding, bindings, method;
+		var bindings, args, i, binding, method;
 
-		if ( hasOwn.call( this.bindings, event ) ) {
-			// Slicing ensures that we don't get tripped up by event
-			// handlers that add/remove bindings
-			bindings = this.bindings[ event ].slice();
-			for ( i = 1, len = arguments.length; i < len; i++ ) {
-				args.push( arguments[ i ] );
-			}
-			for ( i = 0, len = bindings.length; i < len; i++ ) {
-				binding = bindings[ i ];
-				if ( typeof binding.method === 'string' ) {
-					// Lookup method by name (late binding)
-					method = binding.context[ binding.method ];
-				} else {
-					method = binding.method;
-				}
-				if ( binding.once ) {
-					// Must unbind before calling method to avoid
-					// any nested triggers.
-					this.off( event, method );
-				}
-				try {
-					method.apply(
-						binding.context,
-						binding.args ? binding.args.concat( args ) : args
-					);
-				} catch ( e ) {
-					// If one listener has an unhandled error, don't have it
-					// take down the emitter. But rethrow asynchronously so
-					// debuggers can break with a full async stack trace.
-					setTimeout( ( function ( error ) {
-						throw error;
-					} ).bind( null, e ) );
-				}
-
-			}
-			return true;
+		if ( !hasOwn.call( this.bindings, event ) ) {
+			return false;
 		}
-		return false;
+
+		// Slicing ensures that we don't get tripped up by event
+		// handlers that add/remove bindings
+		bindings = this.bindings[ event ].slice();
+		args = slice.call( arguments, 1 );
+		for ( i = 0; i < bindings.length; i++ ) {
+			binding = bindings[ i ];
+			if ( typeof binding.method === 'string' ) {
+				// Lookup method by name (late binding)
+				method = binding.context[ binding.method ];
+			} else {
+				method = binding.method;
+			}
+			if ( binding.once ) {
+				// Unbind before calling, to avoid any nested triggers.
+				this.off( event, method );
+			}
+			try {
+				method.apply(
+					binding.context,
+					binding.args ? binding.args.concat( args ) : args
+				);
+			} catch ( e ) {
+				// If one listener has an unhandled error, don't have it
+				// take down the emitter. But rethrow asynchronously so
+				// debuggers can break with a full async stack trace.
+				setTimeout( ( function ( error ) {
+					throw error;
+				} ).bind( null, e ) );
+			}
+
+		}
+		return true;
 	};
 
 	/**
@@ -246,54 +243,51 @@
 		// We tolerate code duplication with #emit, because the
 		// alternative is an extra level of indirection which will
 		// appear in very many stack traces.
-		var i, len, binding, bindings, method, firstError,
-			args = [];
+		var bindings, args, i, binding, method, firstError;
 
-		if ( hasOwn.call( this.bindings, event ) ) {
-			// Slicing ensures that we don't get tripped up by event
-			// handlers that add/remove bindings
-			bindings = this.bindings[ event ].slice();
-			for ( i = 1, len = arguments.length; i < len; i++ ) {
-				args.push( arguments[ i ] );
-			}
-			for ( i = 0, len = bindings.length; i < len; i++ ) {
-				binding = bindings[ i ];
-				if ( typeof binding.method === 'string' ) {
-					// Lookup method by name (late binding)
-					method = binding.context[ binding.method ];
-				} else {
-					method = binding.method;
-				}
-				if ( binding.once ) {
-					// Must unbind before calling method to avoid
-					// any nested triggers.
-					this.off( event, method );
-				}
-				try {
-					method.apply(
-						binding.context,
-						binding.args ? binding.args.concat( args ) : args
-					);
-				} catch ( e ) {
-					if ( firstError === undefined ) {
-						firstError = e;
-					} else {
-						// If one listener has an unhandled error, don't have it
-						// take down the emitter. But rethrow asynchronously so
-						// debuggers can break with a full async stack trace.
-						setTimeout( ( function ( error ) {
-							throw error;
-						} ).bind( null, e ) );
-					}
-				}
-
-			}
-			if ( firstError !== undefined ) {
-				throw firstError;
-			}
-			return true;
+		if ( !hasOwn.call( this.bindings, event ) ) {
+			return false;
 		}
-		return false;
+
+		// Slicing ensures that we don't get tripped up by event
+		// handlers that add/remove bindings
+		bindings = this.bindings[ event ].slice();
+		args = slice.call( arguments, 1 );
+		for ( i = 0; i < bindings.length; i++ ) {
+			binding = bindings[ i ];
+			if ( typeof binding.method === 'string' ) {
+				// Lookup method by name (late binding)
+				method = binding.context[ binding.method ];
+			} else {
+				method = binding.method;
+			}
+			if ( binding.once ) {
+				// Unbind before calling, to avoid any nested triggers.
+				this.off( event, method );
+			}
+			try {
+				method.apply(
+					binding.context,
+					binding.args ? binding.args.concat( args ) : args
+				);
+			} catch ( e ) {
+				if ( firstError === undefined ) {
+					firstError = e;
+				} else {
+					// If one listener has an unhandled error, don't have it
+					// take down the emitter. But rethrow asynchronously so
+					// debuggers can break with a full async stack trace.
+					setTimeout( ( function ( error ) {
+						throw error;
+					} ).bind( null, e ) );
+				}
+			}
+
+		}
+		if ( firstError !== undefined ) {
+			throw firstError;
+		}
+		return true;
 	};
 
 	/**

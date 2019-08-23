@@ -1,12 +1,13 @@
-/* exported toString */
+/* exported slice, toString */
 /**
  * Namespace for all classes, static methods and static properties.
  * @namespace OO
  */
 var
 	OO = {},
-	// Optimisation: Local reference to Object.prototype.hasOwnProperty
+	// Optimisation: Local reference to methods from a global prototype
 	hasOwn = OO.hasOwnProperty,
+	slice = Array.prototype.slice,
 	toString = OO.toString;
 
 /* Class Methods */
