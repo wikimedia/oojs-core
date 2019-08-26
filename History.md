@@ -1,5 +1,27 @@
 # OOjs Release History
 
+## v3.0.0 / 2019-08-26
+* [BREAKING CHANGE] Update jQuery 3.2.1 -> 3.4.1 (Ed Sanders; James D. Forrester)
+* [BREAKING CHANGE] EventEmitter.emit: catch exceptions from listeners (David Chan)
+* EmitterList: Throw error on null/undefined item (Kosta Harlan)
+* EventEmitter: Minor code simplifications (Timo Tijhof)
+* Factory: Improve unit tests (Timo Tijhof)
+* Factory: Support registration by name (Timo Tijhof)
+* core: Use "OO" internally too, instead of "oo" (Prateek Saxena)
+* tests: Move oldest Safari Sauce Labs testing to 8 from 7 (James D. Forrester)
+* tests: Run tests in Firefox by default (including locally) (Timo Tijhof)
+* docs: Convert from using JSDuck to JSDoc 3 (Prateek Saxena)
+* docs: Fix a few bugs due to JSDoc/JSDuck differences (Timo Tijhof)
+* docs: Remove now-unused jsdoc config (Timo Tijhof)
+* build: Honour ENV CHROMIUM_FLAGS for Wikimedia CI (Timo Tijhof)
+* build: Move from `npm prepublish` to `npm prepare` (James D. Forrester)
+* build: Structure updates (Timo Tijhof)
+* build: Update karma devDependencies (Ed Sanders)
+* build: Update various devDependencies (Ed Sanders)
+* build: Upgrade eslint-config-wikimedia from 0.5.0 to 0.13.1 (Ed Sanders; James D. Forrester)
+* build: Upgrade grunt from 1.0.2 to 1.0.4 and re-up for npm audit (James D. Forrester)
+* build: Use the wikimedia/jquery eslint profile where appropriate (James D. Forrester)
+
 ## v2.2.2 / 2018-06-14
 * build: Add AUTHORS.txt back to package root (Timo Tijhof)
 * build: Remove text files from dist/ (Timo Tijhof)
