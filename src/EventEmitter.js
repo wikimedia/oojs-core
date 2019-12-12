@@ -176,8 +176,7 @@
 	 * hard-to-understand code with hidden side-effects and dependencies.
 	 *
 	 * @param {string} event Type of event
-	 * @param {...any} args First in a list of variadic arguments
-	 *  passed to event handler (optional)
+	 * @param {...any} [args] Arguments passed to the event handler
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	OO.EventEmitter.prototype.emit = function ( event ) {
@@ -235,8 +234,7 @@
 	 * hard-to-understand code with hidden side-effects and dependencies.
 	 *
 	 * @param {string} event Type of event
-	 * @param {...any} args First in a list of variadic arguments
-	 *  passed to event handler (optional)
+	 * @param {...any} [args] Arguments passed to the event handler
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	OO.EventEmitter.prototype.emitThrow = function ( event ) {
