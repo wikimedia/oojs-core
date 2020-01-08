@@ -29,7 +29,7 @@ This library is available as an [npm](https://npmjs.org/) package! Install it ri
 npm install oojs
 </pre>
 
-Or clone the repo, `git clone https://phabricator.wikimedia.org/diffusion/GOJS/oojs.git`.
+Or clone the repo, `git clone https://gerrit.wikimedia.org/r/oojs/core`.
 
 ECMAScript 5
 ----------
