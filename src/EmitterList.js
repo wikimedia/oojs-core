@@ -15,6 +15,8 @@
 		this.aggregateItemEvents = {};
 	};
 
+	OO.initClass( OO.EmitterList );
+
 	/* Events */
 
 	/**
