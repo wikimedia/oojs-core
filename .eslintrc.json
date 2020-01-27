@@ -5,6 +5,7 @@
     },
     "rules": {
         "no-implicit-globals": "off",
+        "no-redeclare": "off",
         "valid-jsdoc": "off"
     }
 }
