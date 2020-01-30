@@ -1,53 +1,53 @@
 {
-  "name": "oojs",
-  "version": "3.0.0",
-  "description": "Power for object oriented JavaScript libraries.",
-  "keywords": [
-    "oo",
-    "oop",
-    "class",
-    "inheritance",
-    "library"
-  ],
-  "homepage": "https://www.mediawiki.org/wiki/OOjs",
-  "repository": {
-    "type": "git",
-    "url": "https://gerrit.wikimedia.org/r/oojs/core"
-  },
-  "license": "MIT",
-  "main": "dist/oojs.js",
-  "filename": "oojs.min.js",
-  "files": [
-    "dist/",
-    "AUTHORS.txt",
-    "README.md",
-    "LICENSE-MIT"
-  ],
-  "scripts": {
-    "lint": "eslint --cache --report-unused-disable-directives --ext .js,.json .",
-    "test": "npm run lint && grunt test && qunit tests/node-index.js",
-    "doc": "grunt doc",
-    "prepare": "grunt build"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "eslint-config-wikimedia": "0.15.0",
-    "grunt": "1.0.4",
-    "grunt-contrib-clean": "2.0.0",
-    "grunt-contrib-concat": "1.0.1",
-    "grunt-contrib-uglify": "4.0.0",
-    "grunt-jsdoc": "2.4.0",
-    "grunt-karma": "3.0.1",
-    "jquery": "3.4.1",
-    "jsdoc-class-hierarchy": "1.1.2",
-    "jsdoc-wmf-theme": "0.0.3",
-    "karma": "3.1.4",
-    "karma-chrome-launcher": "2.2.0",
-    "karma-coverage": "1.1.2",
-    "karma-firefox-launcher": "1.1.0",
-    "karma-qunit": "2.1.0",
-    "karma-remap-istanbul": "0.6.0",
-    "karma-sauce-launcher": "1.2.0",
-    "qunit": "2.9.1"
-  }
+	"name": "oojs",
+	"version": "3.0.0",
+	"description": "Power for object oriented JavaScript libraries.",
+	"keywords": [
+		"oo",
+		"oop",
+		"class",
+		"inheritance",
+		"library"
+	],
+	"homepage": "https://www.mediawiki.org/wiki/OOjs",
+	"repository": {
+		"type": "git",
+		"url": "https://gerrit.wikimedia.org/r/oojs/core"
+	},
+	"license": "MIT",
+	"main": "dist/oojs.js",
+	"filename": "oojs.min.js",
+	"files": [
+		"dist/",
+		"AUTHORS.txt",
+		"README.md",
+		"LICENSE-MIT"
+	],
+	"scripts": {
+		"lint": "eslint --cache --report-unused-disable-directives --ext .js,.json .",
+		"test": "npm run lint && grunt test && qunit tests/node-index.js",
+		"doc": "grunt doc",
+		"prepare": "grunt build"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"eslint-config-wikimedia": "0.15.0",
+		"grunt": "1.0.4",
+		"grunt-contrib-clean": "2.0.0",
+		"grunt-contrib-concat": "1.0.1",
+		"grunt-contrib-uglify": "4.0.0",
+		"grunt-jsdoc": "2.4.0",
+		"grunt-karma": "3.0.1",
+		"jquery": "3.4.1",
+		"jsdoc-class-hierarchy": "1.1.2",
+		"jsdoc-wmf-theme": "0.0.3",
+		"karma": "3.1.4",
+		"karma-chrome-launcher": "2.2.0",
+		"karma-coverage": "1.1.2",
+		"karma-firefox-launcher": "1.1.0",
+		"karma-qunit": "2.1.0",
+		"karma-remap-istanbul": "0.6.0",
+		"karma-sauce-launcher": "1.2.0",
+		"qunit": "2.9.1"
+	}
 }

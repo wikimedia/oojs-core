@@ -1,11 +1,12 @@
 {
-    "extends": "wikimedia/client",
-    "globals": {
-        "OO": false
-    },
-    "rules": {
-        "no-implicit-globals": "off",
-        "no-redeclare": "off",
-        "valid-jsdoc": "off"
-    }
+	"root": true,
+	"extends": "wikimedia/client",
+	"globals": {
+		"OO": false
+	},
+	"rules": {
+		"no-implicit-globals": "off",
+		"no-redeclare": "off",
+		"valid-jsdoc": "off"
+	}
 }
