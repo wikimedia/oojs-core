@@ -13,38 +13,41 @@ module.exports = {
 	},
 
 	/**
-	 * SauceLabs (<https://saucelabs.com/platforms>)
+	 * SauceLabs platforms (<https://saucelabs.com/platforms>)
 	 */
 	// Latest Chrome
-	slChrome: {
+	slChromeLatest: {
 		base: 'SauceLabs',
 		browserName: 'chrome'
 	},
+
 	// Latest Firefox
-	slFirefox: {
+	slFirefoxLatest: {
 		base: 'SauceLabs',
 		browserName: 'firefox'
 	},
+
 	// Latest Edge
-	slEdge: {
+	slEdgeLatest: {
 		base: 'SauceLabs',
 		platform: 'Windows 10',
 		browserName: 'microsoftedge'
 	},
 
+	// Latest IE
+	slIE11: {
+		base: 'SauceLabs',
+		platform: 'Windows 10',
+		browserName: 'internet explorer'
+	},
+
 	// Latest Safari
-	slSafari: {
+	slSafariLatest: {
 		base: 'SauceLabs',
 		// Hardcode version as 11, because default/'latest'/'12'
 		// all currently map to broken servers at SauceLabs. (2019-01-19)
 		version: '11',
 		browserName: 'safari'
-	},
-	// Latest IE
-	slIE: {
-		base: 'SauceLabs',
-		platform: 'Windows 10',
-		browserName: 'internet explorer'
 	},
 
 	// Oldest Safari that Sauce Labs provides
@@ -52,12 +55,5 @@ module.exports = {
 		base: 'SauceLabs',
 		browserName: 'safari',
 		version: '9'
-	},
-	// Oldest IE we support
-	slIE10: {
-		base: 'SauceLabs',
-		platform: 'Windows 8',
-		browserName: 'internet explorer',
-		version: '10'
 	}
 };

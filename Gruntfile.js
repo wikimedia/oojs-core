@@ -114,15 +114,14 @@ module.exports = function ( grunt ) {
 			saucelabs: {
 				browsers: [
 					// Latest versions of major browsers
-					'slChrome',
-					'slFirefox',
-					'slEdge',
-					// Latest versions of complicated browsers
-					'slSafari',
-					'slIE',
-					// Earliest-supported versions of complicated browsers
-					'slSafari9',
-					'slIE10'
+					'slChromeLatest',
+					'slFirefoxLatest',
+					'slEdgeLatest',
+					// Only supported version of Internet Explorer
+					'slIE11',
+					'slSafariLatest',
+					// Earliest supported version of Safari
+					'slSafari9'
 				]
 			},
 			// Primary unit test run (includes code coverage)
