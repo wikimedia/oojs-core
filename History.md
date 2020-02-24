@@ -1,5 +1,16 @@
 # OOjs Release History
 
+## v3.0.1 / 2020-02-24
+* EmitterList: Call OO.initClass for consistency with other classes (Thalia Chan)
+* EventEmitter: Improve documentation for variadic args (Thalia Chan)
+* doc: Fix typo in EventEmitter documentation (Thalia Chan)
+* doc: Point to gerrit, not Phabricator Diffusion (James D. Forrester)
+* README.md: Drop DavidDM badges, we use LibraryUpgrader now (James D. Forrester)
+* build: Updating dependencies (Umherirrender)
+* build: Updating https-proxy-agent to 2.2.4 (libraryupgrader)
+* build: Update all karma-related tools to latest (James D. Forrester)
+* build: Move oldest Internet Explorer Sauce Labs testing to 11 from 10 (James D. Forrester)
+
 ## v3.0.0 / 2019-08-26
 * [BREAKING CHANGE] Update jQuery 3.2.1 -> 3.4.1 (Ed Sanders; James D. Forrester)
 * [BREAKING CHANGE] EventEmitter.emit: catch exceptions from listeners (David Chan)
