@@ -1,5 +1,11 @@
 # OOjs Release History
 
+## v4.0.0 / 2020-04-30
+* [BREAKING CHANGE] Use jQuery v3.5.0, up from v3.4.1 (James D. Forrester)
+* build: Updating acorn to 7.1.1 (libraryupgrader)
+* build: Updating eslint-config-wikimedia to 0.15.3 (libraryupgrader)
+* build: Updating grunt to 1.1.0 (libraryupgrader)
+
 ## v3.0.1 / 2020-02-24
 * EmitterList: Call OO.initClass for consistency with other classes (Thalia Chan)
 * EventEmitter: Improve documentation for variadic args (Thalia Chan)
