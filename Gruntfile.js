@@ -108,7 +108,6 @@ module.exports = function ( grunt ) {
 					accessKey: process.env.SAUCE_ACCESS_KEY || '0e464279-3f2a-4ca0-9eb4-db220410bef0',
 					recordScreenshots: false
 				},
-				concurrency: 3,
 				captureTimeout: 90000
 			},
 			saucelabs: {
