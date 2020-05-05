@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v5.0.0 / 2020-05-05
+* [BREAKING CHANGE] Use jQuery v3.5.1, up from v3.5.0 (James D. Forrester)
+* build: Remove concurrency limit from SauceLabs jobs (James D. Forrester)
+* build: Upgrade karma-related devDependencies to latest (James D. Forrester)
+
 ## v4.0.0 / 2020-04-30
 * [BREAKING CHANGE] Use jQuery v3.5.0, up from v3.4.1 (James D. Forrester)
 * build: Updating acorn to 7.1.1 (libraryupgrader)
