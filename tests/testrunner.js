@@ -29,6 +29,7 @@
 
 	/**
 	 * Utility for creating iframes.
+	 *
 	 * @return {HTMLElement}
 	 */
 	QUnit.tmpIframe = function () {

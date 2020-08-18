@@ -3,7 +3,7 @@
 /**
  * Assert whether a value is a plain object or not.
  *
- * @memberOf OO
+ * @memberof OO
  * @param {any} obj
  * @return {boolean}
  */

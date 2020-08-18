@@ -1,6 +1,5 @@
 {
     "extends": [
-      "wikimedia/jquery",
-      "../../.eslintrc.json"
+      "wikimedia/jquery"
     ]
 }
