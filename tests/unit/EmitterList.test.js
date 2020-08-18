@@ -214,7 +214,7 @@
 	} );
 
 	QUnit.test( 'aggregate', function ( assert ) {
-		var item,
+		var testItem,
 			list = new TestList(),
 			expectChange = [],
 			expectEdit = [],
@@ -246,9 +246,9 @@
 		items[ 2 ].emit( 'edit' );
 
 		// Add an item after the fact
-		item = new TestItem( 'd' );
-		list.addItems( item );
-		item.emit( 'change' );
+		testItem = new TestItem( 'd' );
+		list.addItems( testItem );
+		testItem.emit( 'change' );
 
 		// Remove aggregate event
 		list.aggregate( { edit: null } );
@@ -282,14 +282,14 @@
 				new TestItem( 'c' )
 			],
 			stringifyEvent = function ( type, item, index ) {
-				var result = type;
+				var string = type;
 				if ( item ) {
-					result += ':' + item.getContent();
+					string += ':' + item.getContent();
 				}
 				if ( index !== undefined ) {
-					result += '#' + index;
+					string += '#' + index;
 				}
-				return result;
+				return string;
 			};
 
 		// Register

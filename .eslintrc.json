@@ -6,7 +6,6 @@
 	},
 	"rules": {
 		"no-implicit-globals": "off",
-		"no-redeclare": "off",
-		"jsdoc/check-tag-names": "off"
+		"no-redeclare": "off"
 	}
 }

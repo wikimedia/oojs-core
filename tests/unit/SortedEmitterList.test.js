@@ -161,14 +161,14 @@
 				new TestItem( 'dd' )
 			],
 			stringifyEvent = function ( type, item, index ) {
-				var result = type;
+				var string = type;
 				if ( item ) {
-					result += ':' + item.getIdentity();
+					string += ':' + item.getIdentity();
 				}
 				if ( index !== undefined ) {
-					result += '#' + index;
+					string += '#' + index;
 				}
-				return result;
+				return string;
 			};
 
 		// Register
