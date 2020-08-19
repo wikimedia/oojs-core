@@ -120,7 +120,7 @@ module.exports = function ( grunt ) {
 					'slIE11',
 					'slSafariLatest',
 					// Earliest supported version of Safari
-					'slSafari9'
+					'slSafari12'
 				]
 			},
 			// Primary unit test run (includes code coverage)

@@ -44,16 +44,16 @@ module.exports = {
 	// Latest Safari
 	slSafariLatest: {
 		base: 'SauceLabs',
-		// Hardcode version as 11, because default/'latest'/'12'
-		// all currently map to broken servers at SauceLabs. (2019-01-19)
-		version: '11',
+		platform: 'macOS 10.15',
+		version: 'latest',
 		browserName: 'safari'
 	},
 
 	// Oldest Safari that Sauce Labs provides
-	slSafari9: {
+	slSafari12: {
 		base: 'SauceLabs',
+		platform: 'macOS 10.13',
 		browserName: 'safari',
-		version: '9'
+		version: '12.1'
 	}
 };
