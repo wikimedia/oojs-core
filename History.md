@@ -2,25 +2,15 @@
 
 ## v5.0.0 / 2020-05-05
 * [BREAKING CHANGE] Use jQuery v3.5.1, up from v3.5.0 (James D. Forrester)
-* build: Remove concurrency limit from SauceLabs jobs (James D. Forrester)
-* build: Upgrade karma-related devDependencies to latest (James D. Forrester)
 
 ## v4.0.0 / 2020-04-30
 * [BREAKING CHANGE] Use jQuery v3.5.0, up from v3.4.1 (James D. Forrester)
-* build: Updating acorn to 7.1.1 (libraryupgrader)
-* build: Updating eslint-config-wikimedia to 0.15.3 (libraryupgrader)
-* build: Updating grunt to 1.1.0 (libraryupgrader)
 
 ## v3.0.1 / 2020-02-24
 * EmitterList: Call OO.initClass for consistency with other classes (Thalia Chan)
 * EventEmitter: Improve documentation for variadic args (Thalia Chan)
-* doc: Fix typo in EventEmitter documentation (Thalia Chan)
-* doc: Point to gerrit, not Phabricator Diffusion (James D. Forrester)
-* README.md: Drop DavidDM badges, we use LibraryUpgrader now (James D. Forrester)
-* build: Updating dependencies (Umherirrender)
-* build: Updating https-proxy-agent to 2.2.4 (libraryupgrader)
-* build: Update all karma-related tools to latest (James D. Forrester)
-* build: Move oldest Internet Explorer Sauce Labs testing to 11 from 10 (James D. Forrester)
+* docs: Fix typo in EventEmitter documentation (Thalia Chan)
+* docs: Point to gerrit, not Phabricator Diffusion (James D. Forrester)
 
 ## v3.0.0 / 2019-08-26
 * [BREAKING CHANGE] Update jQuery 3.2.1 -> 3.4.1 (Ed Sanders; James D. Forrester)
@@ -30,53 +20,27 @@
 * Factory: Improve unit tests (Timo Tijhof)
 * Factory: Support registration by name (Timo Tijhof)
 * core: Use "OO" internally too, instead of "oo" (Prateek Saxena)
-* tests: Move oldest Safari Sauce Labs testing to 8 from 7 (James D. Forrester)
-* tests: Run tests in Firefox by default (including locally) (Timo Tijhof)
 * docs: Convert from using JSDuck to JSDoc 3 (Prateek Saxena)
-* docs: Fix a few bugs due to JSDoc/JSDuck differences (Timo Tijhof)
-* docs: Remove now-unused jsdoc config (Timo Tijhof)
-* build: Honour ENV CHROMIUM_FLAGS for Wikimedia CI (Timo Tijhof)
-* build: Move from `npm prepublish` to `npm prepare` (James D. Forrester)
-* build: Structure updates (Timo Tijhof)
-* build: Update karma devDependencies (Ed Sanders)
-* build: Update various devDependencies (Ed Sanders)
-* build: Upgrade eslint-config-wikimedia from 0.5.0 to 0.13.1 (Ed Sanders; James D. Forrester)
-* build: Upgrade grunt from 1.0.2 to 1.0.4 and re-up for npm audit (James D. Forrester)
-* build: Use the wikimedia/jquery eslint profile where appropriate (James D. Forrester)
 
 ## v2.2.2 / 2018-06-14
-* build: Add AUTHORS.txt back to package root (Timo Tijhof)
-* build: Remove text files from dist/ (Timo Tijhof)
+* release: Add AUTHORS.txt back to package root (Timo Tijhof)
+* release: Remove text files from dist/ (Timo Tijhof)
 
 ## v2.2.1 / 2018-06-14
-* build: Re-enable 'no-unused-vars' eslint rule (Timo Tijhof)
-* build: Add 'files' whitelist to package.json (Timo Tijhof)
+* release: Add 'files' whitelist to package.json (Timo Tijhof)
 
 ## v2.2.0 / 2018-04-03
 * [DEPRECATING CHANGE] Drop more code supporting ES3 / IE<=9 (Ed Sanders)
 * core: Fix deleteProp() case where root object is empty (Ed Sanders)
-* doc: Add intro for OO.Registry (Prateek Saxena)
-* doc: Fix valid-jsdoc issues in EventEmitter and SortedEmitterList (Ed Sanders)
-* build: Add Travis CI and Codecov configuration (Timo Tijhof)
-* build: Bump most devDependencies to latest (James D. Forrester)
-* build: Disable eslint sourceType=module option (Timo Tijhof)
-* build: Generate clover.xml with code coverage results (Kunal Mehta)
-* build: Set --no-sandbox in Chrome for Travis (Timo Tijhof)
-* build: Test against Safari 7, Safari 6 is no longer around (James D. Forrester)
-* build: Update eslint to 0.4.0 (Ed Sanders)
-* build: Update eslint-config-wikimedia 0.4->0.5, eslint 19->20 (Ed Sanders)
-* build: Upgrade qunitjs to 2.4.1 (James D. Forrester)
-* build: Upgrade qunitjs to 2.6.0 (Timo Tijhof)
+* docs: Add intro for OO.Registry (Prateek Saxena)
+* docs: Fix valid-jsdoc issues in EventEmitter and SortedEmitterList (Ed Sanders)
 
 ## v2.1.0 / 2017-05-31
 * EmitterList: Fix moving an item to a lower index (Andrew Green)
 * EventEmitter: Document disconnect() behaviour regarding array matching (Timo Tijhof)
 * EventEmitter: Support passing once() handler to off() (Timo Tijhof)
 * util: Simplify isPlainObject and fix two false positives (Timo Tijhof)
-* tests: Complete code coverage by tests (Timo Tijhof)
-* tests: Update to jQuery 3 (Timo Tijhof)
-* build: Clean the coverage directory on test (James D. Forrester)
-* build: Add README/AUTHORS/LICENCE to dist (James D. Forrester)
+* release: Add README/AUTHORS/LICENCE to dist (James D. Forrester)
 
 ## v2.0.0 / 2017-04-04
 
@@ -91,14 +55,10 @@ supported in IE 6-8 with an ES5 shim, it is no longer.
 * core: Switch from `.parent` hack to use `.super` directly (James D. Forrester)
 * EmitterList: Change insertItem from `@private` to `@protected` (Moriel Schottlender)
 * SortedEmitterList: Emit the actual inserted index (Ed Sanders)
-* doc: Make OO uppercase (Prateek Saxena)
-* doc: Update Phabricator URL (James D. Forrester)
-* doc: Replace git.wikimedia.org URL with Phabricator one (Paladox)
-* tests: Correct order of expected/actual in setProp tests (Ed Sanders)
-* tests: Remove IE6/IE8 compat in QUnit.tmpIframe() utility (Timo Tijhof)
-* build: Bump development dependencies to latest (James D. Forrester)
-* build: Bump file copyright notices for year change (James D. Forrester)
-* build: Replace jscs+jshint with eslint (Ed Sanders)
+* docs: Make OO uppercase (Prateek Saxena)
+* docs: Update Phabricator URL (James D. Forrester)
+* docs: Replace git.wikimedia.org URL with Phabricator one (Paladox)
+* release: Bump file copyright notices for year change (James D. Forrester)
 
 ## v1.1.10 / 2015-11-11
 * EventEmitter: Allow disconnecting event handlers given by array (Moriel Schottlender)
@@ -130,99 +90,69 @@ supported in IE 6-8 with an ES5 shim, it is no longer.
 
 ## v1.1.5 / 2015-02-25
 * EventEmitter: Remove unneeded Array.prototype.slice call (Timo Tijhof)
-* build: Bump various devDependencies (James D. Forrester)
-* build: Remove unused generateDocs.sh script (Timo Tijhof)
-* Build: Use jquery from npm instead of embedded in the repo (Timo Tijhof)
-* Use Node#isEqualNode to compare node objects (Ori Livneh)
-* Recurse more frugally in oo.compare (David Chan)
+* core: Use Node#isEqualNode to compare node objects (Ori Livneh)
+* core: Recurse more frugally in OO.compare (David Chan)
 
 ## v1.1.4 / 2015-01-23
-* build: Update devDependencies (James D. Forrester)
-* Consistently use @return annotation (Bartosz Dziewoński)
 * util: Fix typo "siuch" in comment (Timo Tijhof)
-* readme: Update badges (Timo Tijhof)
-* build: Bump copyright notice to 2015 (James D. Forrester)
-* Factory: Enable v8 optimisation for #create (Ori Livneh)
-* EventEmitter: Enable v8 optimisation for #emit (Ori Livneh)
+* Factory: Enable v8 optimisation for `#create` (Ori Livneh)
+* EventEmitter: Enable v8 optimisation for `#emit` (Ori Livneh)
 
 ## v1.1.3 / 2014-11-17
-* core: Explicitly bypass undefined values in oo.compare() (Roan Kattouw)
+* core: Explicitly bypass undefined values in OO.compare() (Roan Kattouw)
 * core: Add getProp() and setProp() methods (Roan Kattouw)
 
 ## v1.1.2 / 2014-11-05
-* build: Bump miscellaneous devDependencies to latest (James D. Forrester)
-* build: Use local Chrome and Firefox in ci task (Timo Tijhof)
-* EventEmitter: Use hasOwn check in #emit (Ed Sanders)
-* EventEmitter: Use hasOwn check in #off (Timo Tijhof)
+* EventEmitter: Use hasOwn check in `#emit` (Ed Sanders)
+* EventEmitter: Use hasOwn check in `#off` (Timo Tijhof)
 
 ## v1.1.1 / 2014-09-10
-* core: Make oo.compare cover boolean as well as number and string primitives (James D. Forrester)
+* core: Make OO.compare cover boolean as well as number and string primitives (James D. Forrester)
 
 ## v1.1.0 / 2014-08-31
 * EventEmitter: Make #validateMethod private (Roan Kattouw)
 
 ## v1.0.12 / 2014-08-20
 
-* build: Tell people which version they're using (James D. Forrester)
-* build: Update devDependencies (Timo Tijhof)
+* release: Tell people which version they're using (James D. Forrester)
 * Registry: Guard against Object prototype keys in lookup() (Ed Sanders)
-* core: Add new oo.copy callback for all nodes, not just leaves (C. Scott Ananian)
-* EventEmitter: Look up callbacks by name at call time (divec)
+* core: Add new OO.copy callback for all nodes, not just leaves (C. Scott Ananian)
 * core: Use empty object as fallback when comparing to null/undefined (Ed Sanders)
+* EventEmitter: Look up callbacks by name at call time (divec)
 
 ## v1.0.11 / 2014-07-23
 
 * EventEmitter: Remove dead code that claims to prevent double bindings (Timo Tijhof)
 * EventEmitter: Fix bug in disconnect loop for double un-bindings (Ed Sanders)
 * EventEmitter: Support events named "hasOwnProperty" (Timo Tijhof)
-* test: Added tests for a variety of previously-untested areas (Timo Tijhof)
-* build: Update jscs, now using new "wikimedia" preset (Timo Tijhof)
-* build: Use Istanbul for code coverage (Timo Tijhof)
-* build: Implement Karma module for cross-browser unit testing (Timo Tijhof)
-* readme: Cleanup and compatibility with the gitblit markdown parser (Timo Tijhof)
 
 ## v1.0.10 / 2014-06-19
 
 * test: Update qunitjs to v1.14.0 (Timo Tijhof)
-* build: Use .txt extension for intro.js and outro.js (Timo Tijhof)
-* package.json: Update devDependencies (update jshint and jscs config) (Timo Tijhof)
-* build: Add dot files to grunt watch (Ed Sanders)
-* build: Implement build target optimised for jQuery (Timo Tijhof)
-* test: Upgrade jQuery to v1.11.1 (paladox)
+* release: Implement build target optimised for jQuery (Timo Tijhof)
 * core: Use bracket notation for 'super' for ES3 compatibility (James D. Forrester)
-* test: Fix broken getHash test for iframe Object (Timo Tijhof)
 * core: Implement support for ES3 browsers (Timo Tijhof)
 
 ## v1.0.9 / 2014-04-01
 * core: Add initClass method for initializing static in base classes (Ed Sanders)
-* package.json: Bump jscs to 0.4.1 (James D. Forrester)
-* readme: Use HiDPI version of npm badge (Timo Tijhof)
-* EventEmitter: Improve test coverage for disconnect() (Timo Tijhof)
 
 ## v1.0.8 / 2014-03-11
 * Factory: Use Class.super instead of hard coding parent class (Timo Tijhof)
 * Registry: Remove redundant type validation logic in #register (Timo Tijhof)
 * core: Use Class.super instead of this.constructor.super (Timo Tijhof)
-* doc: Improve overall documentation and fix minor issues (Timo Tijhof)
 * core: Add a 'super' property to inheriting classes (Timo Tijhof)
-* build: Implement generateDocs.sh script (Timo Tijhof)
-* package.json: Update devDependencies (Timo Tijhof)
+* docs: Improve overall documentation and fix minor issues (Timo Tijhof)
 
 ## v1.0.7 / 2014-01-21
-* Update dist build header and license file for 2014 (James D. Forrester)
-* build: Set up node-jscs, pass it, and configure in Grunt (Timo Tijhof)
-* package.json: Set npm dependencies at fixed versions (Timo Tijhof)
+* release: Update dist build header and license file for 2014 (James D. Forrester)
 
 ## v1.0.6 / 2013-12-10
-* Change display name from OOJS to OOjs (Timo Tijhof)
-* Add qunitjs lib to repo (Timo Tijhof)
-* Update references from GitHub to Wikimedia (Timo Tijhof)
-* Add .gitreview (Roan Kattouw)
+* docs: Change display name from OOJS to OOjs (Timo Tijhof)
+* docs: Update references from GitHub to Wikimedia (Timo Tijhof)
 
 ## v1.0.5 / 2013-10-23
 
 * core: Add simpleArrayUnion, simpleArrayIntersection and simpleArrayDifference (Timo Tijhof)
-* build: Consistenetly use oojs as filename instead of oo (Timo Tijhof)
 * core: Remove unused code for tracking mixins (Timo Tijhof)
 
 ## v1.0.4 / 2013-10-10
@@ -231,43 +161,31 @@ supported in IE 6-8 with an ES5 shim, it is no longer.
 
 ## v1.0.3 / 2013-10-10
 
-* core: Add oo.Registry and oo.Factory (Trevor Parscal)
+* core: Add OO.Registry and OO.Factory (Trevor Parscal)
 * EventEmitter: Re-use #off in #connect and add context argument to #off (Trevor Parscal)
-* readme: Add npm install and npm test to release process (Timo Tijhof)
+* docs: Add npm install and npm test to release process (Timo Tijhof)
 
 ## v1.0.2 / 2013-07-25
 
-* core: Optimise oo.compare when a and b are equal by reference (Timo Tijhof)
-* test: Fix false positive in nodejs EventEmitter test (Timo Tijhof)
-* core: Make "constructor" non-enumerable in oo.inheritClass (Timo Tijhof)
+* core: Optimise OO.compare when a and b are equal by reference (Timo Tijhof)
+* core: Make "constructor" non-enumerable in OO.inheritClass (Timo Tijhof)
 
 ## v1.0.1 / 2013-06-06
 
-* license: Refer to OOJS Team and other contributors (Timo Tijhof)
-* test: Fix oo.EventEmitter context test failure on nodejs (Timo Tijhof)
+* docs: Refer to OOJS Team and other contributors (Timo Tijhof)
 
 ## v1.0.0 / 2013-06-06
 
-* core: Don't copy non-plain objects in oo.copy (Timo Tijhof)
-* core: Implement oo.isPlainObject (Timo Tijhof)
+* core: Don't copy non-plain objects in OO.copy (Timo Tijhof)
+* core: Implement OO.isPlainObject (Timo Tijhof)
 * core: Optimise reference to hasOwnProperty (Timo Tijhof)
-* readme: Document release process (Timo Tijhof)
-* core: Apply asymmetrical recursively in oo.compare (Timo Tijhof)
-* test: Add tests for oo.compare (Timo Tijhof)
-* core: Rename oo.compareObjects to oo.compare (Timo Tijhof)
-* core: Remove obsolete oo.createObject (Timo Tijhof)
+* core: Apply asymmetrical recursively in OO.compare (Timo Tijhof)
+* core: Rename OO.compareObjects to OO.compare (Timo Tijhof)
+* core: Remove obsolete OO.createObject (Timo Tijhof)
+* docs: Document release process (Timo Tijhof)
 * docs: Add categories and include builtin classes (Timo Tijhof)
 
 ## v0.1.0 / 2013-06-05
 
-* test: Add tests for oo.EventEmitter (Timo Tijhof)
-* build: Optimise watch configuration (Timo Tijhof)
-* build: Upgrade to grunt-contrib-jshint 0.5 and jshint 2 (Timo Tijhof)
-* build: Add support for JSDuck (Timo Tijhof)
 * core: Remove Object.create polyfill (Timo Tijhof)
-* build: Make grunt use .jshintrc (Timo Tijhof)
-* travis: Install grunt-cli before install instead of between install and test (Timo Tijhof)
-* build: Implement build process to fix breakage in nodejs (Timo Tijhof)
-* test: Minimise output from node-qunit (Timo Tijhof)
-* build: Add grunt watch (Timo Tijhof)
 * Initial import of utility functions and EventEmitter class (Trevor Parscal)

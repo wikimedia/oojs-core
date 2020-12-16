@@ -9,16 +9,14 @@ Key features include inheritance, mixins and utilities for working with objects.
 
 <pre lang="javascript">
 /* Example */
-( function ( oo ) {
-    function Animal() {}
-    function Magic() {}
-    function Unicorn() {
-        Animal.call( this );
-        Magic.call( this );
-    }
-    oo.inheritClass( Unicorn, Animal );
-    oo.mixinClass( Unicorn, Magic );
-}( OO ) );
+function Animal() {}
+function Magic() {}
+function Unicorn() {
+    Animal.call( this );
+    Magic.call( this );
+}
+OO.inheritClass( Unicorn, Animal );
+OO.mixinClass( Unicorn, Magic );
 </pre>
 
 Quick start
@@ -79,7 +77,10 @@ $ npm install-test
 
 # Update release notes
 # Copy the resulting list into a new section on History.md
-$ git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD
+# Exclude 'build' and 'test' changes unless observable to consumers
+# of the library's published docs or package.
+# (e.g. something one might cut at least a patch release for)
+$ git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD | sort
 $ edit History.md
 
 # Update the version number
