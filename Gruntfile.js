@@ -36,14 +36,14 @@ module.exports = function ( grunt ) {
 			dist: [ 'dist', 'coverage' ]
 		},
 		concat: {
-			oojs: {
+			release: {
 				options: {
 					banner: grunt.file.read( 'src/banner.txt' )
 				},
 				dest: 'dist/oojs.js',
 				src: concatFiles
 			},
-			test: {
+			dev: {
 				options: {
 					banner: grunt.file.read( 'src/banner.txt' ),
 					sourceMap: true
@@ -51,7 +51,7 @@ module.exports = function ( grunt ) {
 				dest: 'dist/oojs.js',
 				src: concatFiles
 			},
-			jquery: {
+			releasejquery: {
 				options: {
 					banner: grunt.file.read( 'src/banner.jquery.txt' )
 				},
@@ -166,7 +166,7 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'git-build', function () {
+	grunt.registerTask( 'set-pre-version', function () {
 		var done = this.async();
 		require( 'child_process' ).exec( 'git rev-parse HEAD', function ( err, stout, stderr ) {
 			if ( !stout || err || stderr ) {
@@ -180,18 +180,16 @@ module.exports = function ( grunt ) {
 		} );
 	} );
 
-	grunt.registerTask( 'build', [ 'clean', 'concat:oojs', 'concat:jquery', 'uglify' ] );
+	grunt.registerTask( 'build-release', [ 'clean', 'concat:release', 'concat:releasejquery', 'uglify' ] );
+	grunt.registerTask( 'build-dev', [ 'set-pre-version', 'clean', 'concat:dev', 'concat:releasejquery' ] );
+	grunt.registerTask( '_test', [ 'build-dev', 'karma:main', 'karma:jquery', 'karma:firefox', 'doc' ] );
 	grunt.registerTask( 'doc', [ 'clean:docs', 'jsdoc' ] );
-	grunt.registerTask( '_test', [ 'git-build', 'clean', 'concat:test', 'concat:jquery', 'karma:main', 'karma:jquery', 'karma:firefox', 'doc' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
 
 	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
-		// During the merge pipeline, also include the cross-platform
-		// tests via SauceLabs
+		// During the merge pipeline, also include the cross-platform tests via SauceLabs
 		grunt.registerTask( 'test', 'ci' );
 	} else {
 		grunt.registerTask( 'test', '_test' );
 	}
-
-	grunt.registerTask( 'default', 'test' );
 };

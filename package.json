@@ -27,7 +27,7 @@
 		"lint": "eslint --cache --report-unused-disable-directives --ext .js,.json .",
 		"test": "npm run lint && grunt test && qunit tests/node-index.js",
 		"doc": "grunt doc",
-		"prepare": "grunt build"
+		"build-release": "grunt build-release"
 	},
 	"dependencies": {},
 	"devDependencies": {
