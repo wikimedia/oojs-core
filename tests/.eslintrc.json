@@ -1,5 +1,5 @@
 {
-    "extends": [
-        "wikimedia/qunit"
-    ]
+	"extends": [
+		"wikimedia/qunit"
+	]
 }
