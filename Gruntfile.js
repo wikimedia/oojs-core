@@ -10,6 +10,7 @@
 /* eslint-env node, es6 */
 module.exports = function ( grunt ) {
 	var customLaunchers = require( './tests/karma.browsers.js' ),
+		cp = require( 'child_process' ),
 		concatFiles = [
 			'src/intro.js.txt',
 			'src/core.js',
@@ -166,22 +167,32 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'set-pre-version', function () {
-		var done = this.async();
-		require( 'child_process' ).exec( 'git rev-parse HEAD', function ( err, stout, stderr ) {
-			if ( !stout || err || stderr ) {
-				grunt.log.err( err || stderr );
-				done( false );
-				return;
-			}
-			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stout.slice( 0, 10 ) + ')' );
-			grunt.verbose.writeln( 'Added git HEAD to pgk.version' );
-			done();
-		} );
+	grunt.registerTask( 'set-year', function () {
+		// Support reproducible builds
+		// https://reproducible-builds.org/docs/source-date-epoch/
+		var releaseEpoch;
+		try {
+			releaseEpoch = process.env.SOURCE_DATE_EPOCH || cp.execSync( 'git log -s --format=%at -1' );
+		} catch ( e ) {
+			grunt.log.err( e );
+			return false;
+		}
+		grunt.config.set( 'build.year', new Date( releaseEpoch * 1000 ).getUTCFullYear() );
 	} );
 
-	grunt.registerTask( 'build-release', [ 'clean', 'concat:release', 'concat:releasejquery', 'uglify' ] );
-	grunt.registerTask( 'build-dev', [ 'set-pre-version', 'clean', 'concat:dev', 'concat:releasejquery' ] );
+	grunt.registerTask( 'set-dev', function () {
+		var stdout;
+		try {
+			stdout = cp.execSync( 'git rev-parse HEAD' );
+			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stdout.slice( 0, 10 ) + ')' );
+		} catch ( e ) {
+			grunt.log.err( e );
+			return false;
+		}
+	} );
+
+	grunt.registerTask( 'build-release', [ 'set-year', 'clean', 'concat:release', 'concat:releasejquery', 'uglify' ] );
+	grunt.registerTask( 'build-dev', [ 'set-year', 'set-dev', 'clean', 'concat:dev', 'concat:releasejquery' ] );
 	grunt.registerTask( '_test', [ 'build-dev', 'karma:main', 'karma:jquery', 'karma:firefox', 'doc' ] );
 	grunt.registerTask( 'doc', [ 'clean:docs', 'jsdoc' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
