@@ -34,15 +34,6 @@ ECMAScript 5
 
 OOjs requires a modern ECMAScript 5 environment. It is not necessarily compatible with ES3 engines (such as for IE 6-8). For ES3 environments, the old 1.x releases are available but not recommended.
 
-jQuery
-----------
-
-If your project uses jQuery, use the optimised `oojs.jquery.js` build instead.
-
-This build assumes jQuery is present and omits various chunks of code in favour of references to jQuery.
-
-jQuery 3.0.0 or higher is required.
-
 Versioning
 ----------
 
