@@ -51,24 +51,6 @@ module.exports = function ( grunt ) {
 				},
 				dest: 'dist/oojs.js',
 				src: concatFiles
-			},
-			releasejquery: {
-				options: {
-					banner: grunt.file.read( 'src/banner.jquery.txt' )
-				},
-				dest: 'dist/oojs.jquery.js',
-				src: [
-					'src/intro.js.txt',
-					'src/core.js',
-					'src/util/jquery.js',
-					'src/EventEmitter.js',
-					'src/EmitterList.js',
-					'src/SortedEmitterList.js',
-					'src/Registry.js',
-					'src/Factory.js',
-					'src/export.js',
-					'src/outro.js.txt'
-				]
 			}
 		},
 		uglify: {
@@ -150,17 +132,6 @@ module.exports = function ( grunt ) {
 					}
 				}
 			},
-			jquery: {
-				browsers: [ 'ChromeCustom' ],
-				options: {
-					files: [
-						'node_modules/jquery/dist/jquery.js',
-						'dist/oojs.jquery.js',
-						'tests/testrunner.js',
-						'tests/unit/*.js'
-					]
-				}
-			},
 			firefox: {
 				browsers: [ 'FirefoxHeadless' ]
 			}
@@ -191,9 +162,9 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'build-release', [ 'set-year', 'clean', 'concat:release', 'concat:releasejquery', 'uglify' ] );
-	grunt.registerTask( 'build-dev', [ 'set-year', 'set-dev', 'clean', 'concat:dev', 'concat:releasejquery' ] );
-	grunt.registerTask( '_test', [ 'build-dev', 'karma:main', 'karma:jquery', 'karma:firefox', 'doc' ] );
+	grunt.registerTask( 'build-release', [ 'set-year', 'clean', 'concat:release', 'uglify' ] );
+	grunt.registerTask( 'build-dev', [ 'set-year', 'set-dev', 'clean', 'concat:dev' ] );
+	grunt.registerTask( '_test', [ 'build-dev', 'karma:main', 'karma:firefox', 'doc' ] );
 	grunt.registerTask( 'doc', [ 'clean:docs', 'jsdoc' ] );
 	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
 

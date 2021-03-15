@@ -38,7 +38,6 @@
 		"grunt-contrib-uglify": "4.0.1",
 		"grunt-jsdoc": "2.4.1",
 		"grunt-karma": "4.0.0",
-		"jquery": "3.5.1",
 		"jsdoc-class-hierarchy": "1.1.2",
 		"jsdoc-wmf-theme": "0.0.3",
 		"karma": "5.0.9",
