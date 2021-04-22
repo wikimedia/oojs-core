@@ -10,7 +10,6 @@
 'use strict';
 
 module.exports = function ( grunt ) {
-	const cp = require( 'child_process' );
 	const concatFiles = [
 		'src/intro.js.txt',
 		'src/core.js',
@@ -29,7 +28,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
 		clean: {
 			dist: [ 'dist', 'coverage' ]
 		},
@@ -52,7 +50,7 @@ module.exports = function ( grunt ) {
 		},
 		uglify: {
 			options: {
-				banner: '/*! OOjs v<%= pkg.version %> | https://oojs.mit-license.org */',
+				banner: '/*! OOjs v<%= build.version %> | https://oojs.mit-license.org */',
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				report: 'gzip'
@@ -66,7 +64,9 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'set-year', function () {
+	grunt.registerTask( 'set-meta', function () {
+		const cp = require( 'child_process' );
+
 		// Support reproducible builds
 		// https://reproducible-builds.org/docs/source-date-epoch/
 		let releaseEpoch;
@@ -77,19 +77,13 @@ module.exports = function ( grunt ) {
 			return false;
 		}
 		grunt.config.set( 'build.year', new Date( releaseEpoch * 1000 ).getUTCFullYear() );
+		grunt.config.set( 'build.version', require( './package.json' ).version );
 	} );
 
 	grunt.registerTask( 'set-dev', function () {
-		let stdout;
-		try {
-			stdout = cp.execSync( 'git rev-parse HEAD' );
-			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stdout.slice( 0, 10 ) + ')' );
-		} catch ( e ) {
-			grunt.log.err( e );
-			return false;
-		}
+		grunt.config.set( 'build.version', grunt.config( 'build.version' ) + '-dev' );
 	} );
 
-	grunt.registerTask( 'build-release', [ 'set-year', 'clean', 'concat:release', 'uglify' ] );
-	grunt.registerTask( 'build-dev', [ 'set-year', 'set-dev', 'clean', 'concat:dev' ] );
+	grunt.registerTask( 'build-release', [ 'set-meta', 'clean', 'concat:release', 'uglify' ] );
+	grunt.registerTask( 'build-dev', [ 'set-meta', 'set-dev', 'clean', 'concat:dev' ] );
 };

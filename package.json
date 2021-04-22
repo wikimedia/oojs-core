@@ -16,7 +16,6 @@
 	},
 	"license": "MIT",
 	"main": "dist/oojs.js",
-	"filename": "oojs.min.js",
 	"files": [
 		"dist/",
 		"AUTHORS.txt",

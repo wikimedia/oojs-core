@@ -38,69 +38,57 @@ See also [Commit message guidelines](https://www.mediawiki.org/wiki/Gerrit/Commi
 
 1. Create or reset your `release` branch to the latest head of the repository
    ```
-   git remote update && git checkout -B release -t origin/master
+   git remote update && git checkout -B release -t origin/HEAD
    ```
 
-2. Ensure tests pass locally.
-   NOTE: This does not require privileges and may should be in isolation.
+2. Ensure build and tests pass locally.
+   NOTE: This does not require privileges and should be run in isolation.
    ```
    npm ci && npm test
    ```
 
 3. Prepare the release commit
-   - Add release notes. Run the following and copy the resulting list
-     to a new section on top of [History.md](./History.md).
-     Remove any `build` and `test` changes unless they are observable to
-     consumers of the library's published docs or package.
-     If something might be worth cutting at least a patch relase for,
-     it is probably worth mentioning in the release notes.
+   - Add release notes to a new section on top of [History.md](./History.md).
      ```
-     git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD | sort
+     git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD | sort | grep -vE '^\* (build|docs?|tests?):'
      ```
-   - Set the package version in [package.json](./package.json).
-   - Review the changes and stage your commit:
+   - Set the next release version in [package.json](./package.json).
+   - Review and stage your commit:
      ```
      git add -p
      ```
-   - Make your commit and push for review.
+   - Save your commit and push for review.
      ```
      git commit -m "Release vX.Y.Z"
      git review
      ```
 
-After the release commit has been reviewed, passed by CI,
-and merged, perform the actual release, like so:
+After the release commit has been merged by CI, perform the actual release:
 
-1. Create or reset your `release` branch to the latest head of the repository,
-   and confirm that the current HEAD is indeed your release prep commit.
+1. Update and reset your `release` branch, confirm it is at your merged commit.
    ```
-   git remote update && git checkout -B release -t origin/master
-
+   git remote update && git checkout -B release -t origin/HEAD
+   # …
    git show
-   …
-   Release vX.Y.Z
-   …
+   # Release vX.Y.Z
+   # …
    ```
 
-3. Create signed tag and push to the Git server:
+3. Create a signed tag and push it to the Git server:
    ```
    git tag -s "vX.Y.Z"
    git push --tags
    ```
 
-4. Generate the release artefact for npm, and confirm that the release
-   file looks as expected (e.g. no "pre" release version header).
+4. Run the build and review the release file (e.g. proper release version header
+   in the header, and not a development build).
    NOTE: This does not require privileges and should be run in isolation.
    ```
    npm run build-release
-   …
-
-   head dist/oojs.js dist/oojs.jquery.js
-   …
-   OOjs v5.0.0
-   …
-   OOjs v5.0.0 optimised for jQuery
-   …
+   # …
+   head dist/oojs.js
+   # OOjs v5.0.0
+   # …
    ```
 
 5. Publish to npm:

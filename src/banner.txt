@@ -1,5 +1,5 @@
 /*!
- * OOjs v<%= pkg.version %>
+ * OOjs v<%= build.version %>
  * https://www.mediawiki.org/wiki/OOjs
  *
  * Copyright 2011-<%= build.year %> OOjs Team and other contributors.
