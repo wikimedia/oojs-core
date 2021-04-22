@@ -7,33 +7,30 @@
  * Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
-/* eslint-env node, es6 */
+'use strict';
+
 module.exports = function ( grunt ) {
-	var customLaunchers = require( './tests/karma.browsers.js' ),
-		cp = require( 'child_process' ),
-		concatFiles = [
-			'src/intro.js.txt',
-			'src/core.js',
-			'src/util.js',
-			'src/EventEmitter.js',
-			'src/EmitterList.js',
-			'src/SortedEmitterList.js',
-			'src/Registry.js',
-			'src/Factory.js',
-			'src/export.js',
-			'src/outro.js.txt'
-		];
+	const cp = require( 'child_process' );
+	const concatFiles = [
+		'src/intro.js.txt',
+		'src/core.js',
+		'src/util.js',
+		'src/EventEmitter.js',
+		'src/EmitterList.js',
+		'src/SortedEmitterList.js',
+		'src/Registry.js',
+		'src/Factory.js',
+		'src/export.js',
+		'src/outro.js.txt'
+	];
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-	grunt.loadNpmTasks( 'grunt-jsdoc' );
-	grunt.loadNpmTasks( 'grunt-karma' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		clean: {
-			docs: [ 'docs/' ],
 			dist: [ 'dist', 'coverage' ]
 		},
 		concat: {
@@ -66,82 +63,13 @@ module.exports = function ( grunt ) {
 				ext: '.min.js',
 				extDot: 'last'
 			}
-		},
-		jsdoc: {
-			all: {
-				options: {
-					configure: '.jsdoc.json'
-				}
-			}
-		},
-		karma: {
-			options: {
-				frameworks: [ 'qunit' ],
-				files: [
-					'dist/oojs.js',
-					'tests/testrunner.js',
-					'tests/unit/*.js'
-				],
-				reporters: [ 'dots' ],
-				singleRun: true,
-				autoWatch: false,
-				customLaunchers: customLaunchers,
-				sauceLabs: {
-					username: process.env.SAUCE_USERNAME || 'oojs',
-					accessKey: process.env.SAUCE_ACCESS_KEY || '0e464279-3f2a-4ca0-9eb4-db220410bef0',
-					recordScreenshots: false
-				},
-				captureTimeout: 90000
-			},
-			saucelabs: {
-				browsers: [
-					// Latest versions of major browsers
-					'slChromeLatest',
-					'slFirefoxLatest',
-					'slEdgeLatest',
-					// Only supported version of Internet Explorer
-					'slIE11',
-					'slSafariLatest',
-					// Earliest supported version of Safari
-					'slSafari12'
-				]
-			},
-			// Primary unit test run (includes code coverage)
-			main: {
-				browsers: [ 'ChromeCustom' ],
-				preprocessors: {
-					'dist/*.js': [ 'coverage' ]
-				},
-				reporters: [ 'dots', 'coverage', 'karma-remap-istanbul' ],
-				coverageReporter: {
-					// https://github.com/karma-runner/karma-coverage/blob/v1.1.1/docs/configuration.md#check
-					type: 'in-memory',
-					check: { global: {
-						functions: 100,
-						statements: 99,
-						branches: 99,
-						lines: 99
-					} }
-				},
-				remapIstanbulReporter: {
-					reports: {
-						'text-summary': null,
-						html: 'coverage/',
-						lcovonly: 'coverage/lcov.info',
-						clover: 'coverage/clover.xml'
-					}
-				}
-			},
-			firefox: {
-				browsers: [ 'FirefoxHeadless' ]
-			}
 		}
 	} );
 
 	grunt.registerTask( 'set-year', function () {
 		// Support reproducible builds
 		// https://reproducible-builds.org/docs/source-date-epoch/
-		var releaseEpoch;
+		let releaseEpoch;
 		try {
 			releaseEpoch = process.env.SOURCE_DATE_EPOCH || cp.execSync( 'git log -s --format=%at -1' );
 		} catch ( e ) {
@@ -152,7 +80,7 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'set-dev', function () {
-		var stdout;
+		let stdout;
 		try {
 			stdout = cp.execSync( 'git rev-parse HEAD' );
 			grunt.config.set( 'pkg.version', grunt.config( 'pkg.version' ) + '-pre (' + stdout.slice( 0, 10 ) + ')' );
@@ -164,14 +92,4 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'build-release', [ 'set-year', 'clean', 'concat:release', 'uglify' ] );
 	grunt.registerTask( 'build-dev', [ 'set-year', 'set-dev', 'clean', 'concat:dev' ] );
-	grunt.registerTask( '_test', [ 'build-dev', 'karma:main', 'karma:firefox', 'doc' ] );
-	grunt.registerTask( 'doc', [ 'clean:docs', 'jsdoc' ] );
-	grunt.registerTask( 'ci', [ '_test', 'karma:saucelabs' ] );
-
-	if ( process.env.ZUUL_PIPELINE === 'gate-and-submit' ) {
-		// During the merge pipeline, also include the cross-platform tests via SauceLabs
-		grunt.registerTask( 'test', 'ci' );
-	} else {
-		grunt.registerTask( 'test', '_test' );
-	}
 };

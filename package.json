@@ -25,28 +25,29 @@
 	],
 	"scripts": {
 		"lint": "eslint --cache --report-unused-disable-directives --ext .js,.json .",
-		"test": "npm run lint && grunt test && qunit tests/node-index.js",
-		"doc": "grunt doc",
-		"build-release": "grunt build-release"
+		"build-dev": "grunt build-dev",
+		"build-release": "grunt build-release",
+		"doc": "jsdoc -c .jsdoc.json ",
+		"test": "npm run lint && npm run build-dev && karma start && qunit tests/node-index.js",
+		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.20.0",
-		"grunt": "1.3.0",
+		"grunt": "1.4.0",
 		"grunt-contrib-clean": "2.0.0",
 		"grunt-contrib-concat": "1.0.1",
-		"grunt-contrib-uglify": "4.0.1",
-		"grunt-jsdoc": "2.4.1",
-		"grunt-karma": "4.0.0",
+		"grunt-contrib-uglify": "5.0.1",
+		"jsdoc": "3.6.6",
 		"jsdoc-class-hierarchy": "1.1.2",
 		"jsdoc-wmf-theme": "0.0.3",
-		"karma": "5.0.9",
+		"karma": "6.3.2",
 		"karma-chrome-launcher": "3.1.0",
-		"karma-coverage": "2.0.2",
-		"karma-firefox-launcher": "1.3.0",
-		"karma-qunit": "4.1.1",
+		"karma-coverage": "2.0.3",
+		"karma-firefox-launcher": "2.1.0",
+		"karma-qunit": "4.1.2",
 		"karma-remap-istanbul": "0.6.0",
-		"karma-sauce-launcher": "4.1.5",
-		"qunit": "2.10.0"
+		"karma-sauce-launcher": "4.3.6",
+		"qunit": "2.15.0"
 	}
 }

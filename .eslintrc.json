@@ -1,11 +1,33 @@
 {
 	"root": true,
-	"extends": "wikimedia/client",
+	"extends": "wikimedia/common",
 	"globals": {
 		"OO": false
 	},
-	"rules": {
-		"no-implicit-globals": "off",
-		"no-redeclare": "off"
-	}
+	"overrides": [
+		{
+			"files": [
+				"src/**/*.js",
+				"tests/testrunner.js"
+			],
+			"extends": "wikimedia/client",
+			"rules": {
+				"no-implicit-globals": "off",
+				"no-redeclare": "off"
+			}
+		},
+		{
+			"files": [
+				"tests/**/*.js"
+			],
+			"extends": "wikimedia/qunit"
+		},
+		{
+			"files": [
+				"Gruntfile.js",
+				"karma*.js"
+			],
+			"extends": "wikimedia/server"
+		}
+	]
 }
