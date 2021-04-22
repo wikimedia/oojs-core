@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v6.0.0 / 2021-04-22
+This release removes an (optional) dependency on jQuery.
+
+* [BREAKING CHANGE] release: Remove special "jquery" build (Timo Tijhof)
+
 ## v5.0.0 / 2020-05-05
 * [BREAKING CHANGE] Use jQuery v3.5.1, up from v3.5.0 (James D. Forrester)
 
