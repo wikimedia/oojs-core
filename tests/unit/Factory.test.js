@@ -83,7 +83,7 @@
 		factory.register( Foo );
 		obj = factory.create( 'my-foo', 16, 'foo', { baz: 'quux' }, 5 );
 
-		assert.ok( obj instanceof Foo, 'object inherits constructor prototype' );
+		assert.true( obj instanceof Foo, 'object inherits constructor prototype' );
 
 		assert.deepEqual(
 			obj,

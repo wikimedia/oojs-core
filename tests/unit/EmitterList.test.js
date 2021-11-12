@@ -170,7 +170,7 @@
 		assert.strictEqual( list.getItemCount(), 4, 'Items added' );
 		list.clearItems();
 		assert.strictEqual( list.getItemCount(), 0, 'Items cleared' );
-		assert.ok( list.isEmpty(), 'List is empty' );
+		assert.true( list.isEmpty(), 'List is empty' );
 	} );
 
 	QUnit.test( 'removeItems', function ( assert ) {

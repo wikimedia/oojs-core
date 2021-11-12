@@ -47,12 +47,12 @@
 		};
 		child = new Child();
 
-		assert.ok( base instanceof Object, 'base instance of Object' );
-		assert.ok( base instanceof Base, 'base instance of Base' );
-		assert.notOk( base instanceof Child, 'base not instance of Child' );
-		assert.ok( child instanceof Object, 'base instance of Object' );
-		assert.ok( child instanceof Base, 'base instance of Base' );
-		assert.ok( child instanceof Child, 'base instance of Child' );
+		assert.true( base instanceof Object, 'base instance of Object' );
+		assert.true( base instanceof Base, 'base instance of Base' );
+		assert.false( base instanceof Child, 'base not instance of Child' );
+		assert.true( child instanceof Object, 'base instance of Object' );
+		assert.true( child instanceof Base, 'base instance of Base' );
+		assert.true( child instanceof Child, 'base instance of Child' );
 
 		assert.strictEqual( Child.static.stat, 'Base', 'inherit static' );
 

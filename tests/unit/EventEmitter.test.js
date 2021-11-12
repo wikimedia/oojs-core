@@ -22,7 +22,7 @@
 		}, 'Throw when callback is invalid' );
 
 		ee.on( 'callback', function () {
-			assert.ok( true, 'Callback ran' );
+			assert.true( true, 'Callback ran' );
 		} );
 		ee.emit( 'callback' );
 
@@ -74,8 +74,8 @@
 			assert.throws( function () {
 				ee.emitThrow( 'multiple-error' );
 			}, /Unhandled error 1/, 'emitThrow propagates the first error' );
-			assert.ok(
-				thrown.length === 1 && thrown[ 0 ].message.match( /Unhandled error 2/ ),
+			assert.true(
+				thrown.length === 1 && /Unhandled error 2/.test( thrown[ 0 ].message ),
 				'emitThrow throws subsequent errors asynchronously'
 			);
 			assert.strictEqual( x, 111, 'emitThrow runs every callback even if errors are thrown' );
@@ -124,7 +124,7 @@
 		assert.deepEqual( ee.emit( 'hasOwnProperty' ), false, 'Event with name "hasOwnProperty" doesn\'t exist by default' );
 
 		ee.on( 'hasOwnProperty', function () {
-			assert.ok( true, 'Bind event with name "hasOwnProperty"' );
+			assert.true( true, 'Bind event with name "hasOwnProperty"' );
 		} );
 		ee.emit( 'hasOwnProperty' );
 
@@ -132,7 +132,7 @@
 			// Binding "hasOwnProperty" worked because the first time 'this.bindings.hasOwnProperty'
 			// is what it should be (inherited from Object.prototype). But it used to break any
 			// events bound after since EventEmitter#on used 'this.bindings.hasOwnProperty'.
-			assert.ok( true, 'Bind event after "hasOwnProperty" event exists' );
+			assert.true( true, 'Bind event after "hasOwnProperty" event exists' );
 		} );
 		ee.emit( 'post' );
 	} );
@@ -257,13 +257,13 @@
 		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with function reference' );
 
 		ee.off( 'unknown' );
-		assert.ok( true, 'Unbinding an unknown event' );
+		assert.true( true, 'Unbinding an unknown event' );
 
 		ee.off( 'unknown', callback );
-		assert.ok( true, 'Unbinding an unknown callback' );
+		assert.true( true, 'Unbinding an unknown callback' );
 
 		ee.off( 'hasOwnProperty', callback );
-		assert.ok( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
+		assert.true( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
 	} );
 
 	QUnit.test( 'connect', function ( assert ) {
@@ -286,7 +286,7 @@
 			foo: 'onFoo',
 			bar: [ 'barbara', data1 ],
 			quux: function () {
-				assert.ok( true, 'Callback ran' );
+				assert.true( true, 'Callback ran' );
 			}
 		} );
 
