@@ -24,7 +24,7 @@ module.exports = {
 		},
 		slEdgeLatest: {
 			base: 'SauceLabs',
-			platform: 'Windows 10',
+			platform: 'Windows 11',
 			browserName: 'microsoftedge'
 		},
 		slIE11: {
