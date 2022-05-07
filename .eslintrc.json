@@ -8,7 +8,7 @@
 		{
 			"files": [
 				"src/**/*.js",
-				"tests/testrunner.js"
+				"tests/setup-browser.js"
 			],
 			"extends": "wikimedia/client",
 			"rules": {

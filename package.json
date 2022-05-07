@@ -27,7 +27,7 @@
 		"build-dev": "grunt build-dev",
 		"build-release": "grunt build-release",
 		"doc": "jsdoc -c .jsdoc.json ",
-		"test": "npm run build-dev && karma start && qunit tests/node-index.js && npm run lint",
+		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint",
 		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc"
 	},
 	"dependencies": {},

@@ -2,13 +2,7 @@
 
 module.exports = function ( config ) {
 	config.set( Object.assign( require( './tests/karma.conf.base.js' ), {
-		// Workaround for T280935, and T240955.
-		// Firefox 68esr is incompatible with Docker (OK, covered by Sauce).
-		// TODO: Try this again when Firefox 84esr reaches our CI images.
-		browsers: ( process.env.ZUUL_PIPELINE ?
-			[ 'ChromeCustom' ] :
-			[ 'FirefoxHeadless', 'ChromeCustom' ]
-		),
+		browsers: [ 'FirefoxHeadless', 'ChromeCustom' ],
 		preprocessors: {
 			'dist/*.js': [ 'coverage' ]
 		},

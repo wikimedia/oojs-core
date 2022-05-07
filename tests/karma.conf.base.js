@@ -8,9 +8,7 @@ module.exports = {
 	// https://saucelabs.com/platforms
 	customLaunchers: {
 		ChromeCustom: {
-			// Consider Chromium and Google Chrome to be similar enough.
-			// Pick whichever is most likely to be locally installed and kept up-to-date
-			base: process.platform === 'linux' ? 'ChromiumHeadless' : 'ChromeHeadless',
+			base: 'ChromeHeadless',
 			// Allow Docker/CI to set --no-sandbox if needed.
 			flags: ( process.env.CHROMIUM_FLAGS || '' ).split( ' ' )
 		},
@@ -49,7 +47,7 @@ module.exports = {
 	frameworks: [ 'qunit' ],
 	files: [
 		'dist/oojs.js',
-		'tests/testrunner.js',
+		'tests/setup-browser.js',
 		'tests/unit/*.js'
 	],
 	singleRun: true,
