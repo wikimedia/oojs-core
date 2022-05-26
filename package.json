@@ -23,7 +23,7 @@
 		"LICENSE-MIT"
 	],
 	"scripts": {
-		"lint": "eslint --cache --report-unused-disable-directives --ext .js,.json .",
+		"lint": "eslint --cache .",
 		"build-dev": "grunt build-dev",
 		"build-release": "grunt build-release",
 		"doc": "jsdoc -c .jsdoc.json ",
