@@ -5,10 +5,12 @@
  * @namespace OO
  */
 var
+	// eslint-disable-next-line no-redeclare
 	OO = {},
 	// Optimisation: Local reference to methods from a global prototype
 	hasOwn = OO.hasOwnProperty,
 	slice = Array.prototype.slice,
+	// eslint-disable-next-line no-redeclare
 	toString = OO.toString;
 
 /* Class Methods */

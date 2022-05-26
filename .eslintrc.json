@@ -12,8 +12,7 @@
 			],
 			"extends": "wikimedia/client",
 			"rules": {
-				"no-implicit-globals": "off",
-				"no-redeclare": "off"
+				"no-implicit-globals": "off"
 			}
 		},
 		{
