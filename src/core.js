@@ -217,10 +217,10 @@ OO.getProp = function ( obj ) {
  * @param {any} [value]
  */
 OO.setProp = function ( obj ) {
-	var prop = obj;
 	if ( Object( obj ) !== obj || arguments.length < 2 ) {
 		return;
 	}
+	var prop = obj;
 	for ( var i = 1; i < arguments.length - 2; i++ ) {
 		if ( prop[ arguments[ i ] ] === undefined ) {
 			prop[ arguments[ i ] ] = {};
@@ -243,13 +243,13 @@ OO.setProp = function ( obj ) {
  * @param {...any} [keys]
  */
 OO.deleteProp = function ( obj ) {
-	var prop = obj,
-		props = [ prop ];
 	if ( Object( obj ) !== obj || arguments.length < 2 ) {
 		return;
 	}
-	var i;
-	for ( i = 1; i < arguments.length - 1; i++ ) {
+	var prop = obj;
+	var props = [ prop ];
+	var i = 1;
+	for ( ; i < arguments.length - 1; i++ ) {
 		if (
 			prop[ arguments[ i ] ] === undefined ||
 			Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ]
@@ -348,8 +348,8 @@ OO.getObjectValues = function ( obj ) {
  * @return {number|null} Index where val was found, or null if not found
  */
 OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
-	var left = 0,
-		right = arr.length;
+	var left = 0;
+	var right = arr.length;
 	while ( left < right ) {
 		// Equivalent to Math.floor( ( left + right ) / 2 ) but much faster
 		// eslint-disable-next-line no-bitwise
@@ -558,8 +558,8 @@ OO.unique = function ( arr ) {
  * @return {Array} Union of the arrays
  */
 OO.simpleArrayUnion = function () {
-	var obj = {},
-		result = [];
+	var obj = {};
+	var result = [];
 
 	for ( var i = 0, ilen = arguments.length; i < ilen; i++ ) {
 		var arr = arguments[ i ];
@@ -591,18 +591,17 @@ OO.simpleArrayUnion = function () {
  * @return {Array} Combination (intersection or difference) of arrays
  */
 function simpleArrayCombine( a, b, includeB ) {
-	var bObj = {},
-		result = [];
+	var bObj = {};
+	var result = [];
 
-	var i, ilen;
-	for ( i = 0, ilen = b.length; i < ilen; i++ ) {
+	for ( var i = 0; i < b.length; i++ ) {
 		bObj[ b[ i ] ] = true;
 	}
 
-	for ( i = 0, ilen = a.length; i < ilen; i++ ) {
-		var isInB = !!bObj[ a[ i ] ];
+	for ( var j = 0; j < a.length; j++ ) {
+		var isInB = !!bObj[ a[ j ] ];
 		if ( isInB === includeB ) {
-			result.push( a[ i ] );
+			result.push( a[ j ] );
 		}
 	}
 

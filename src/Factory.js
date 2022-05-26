@@ -73,14 +73,13 @@ OO.Factory.prototype.unregister = function ( name ) {
  * @throws {Error} Unknown object name
  */
 OO.Factory.prototype.create = function ( name ) {
-	var args = [],
-		constructor = this.lookup( name );
-
+	var constructor = this.lookup( name );
 	if ( !constructor ) {
 		throw new Error( 'No class registered by that name: ' + name );
 	}
 
 	// Convert arguments to array and shift the first argument (name) off
+	var args = [];
 	for ( var i = 1; i < arguments.length; i++ ) {
 		args.push( arguments[ i ] );
 	}
