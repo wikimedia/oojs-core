@@ -127,8 +127,6 @@
 	 * @throws {Error} Listener argument is not a function or a valid method name
 	 */
 	OO.EventEmitter.prototype.off = function ( event, method, context ) {
-		var i, bindings;
-
 		if ( arguments.length === 1 ) {
 			// Remove all bindings for event
 			delete this.bindings[ event ];
@@ -148,8 +146,8 @@
 		}
 
 		// Remove matching handlers
-		bindings = this.bindings[ event ];
-		i = bindings.length;
+		var bindings = this.bindings[ event ];
+		var i = bindings.length;
 		while ( i-- ) {
 			if ( bindings[ i ].method === method && bindings[ i ].context === context ) {
 				bindings.splice( i, 1 );
@@ -180,18 +178,17 @@
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
 	OO.EventEmitter.prototype.emit = function ( event ) {
-		var bindings, args, i, binding, method;
-
 		if ( !hasOwn.call( this.bindings, event ) ) {
 			return false;
 		}
 
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
-		bindings = this.bindings[ event ].slice();
-		args = slice.call( arguments, 1 );
-		for ( i = 0; i < bindings.length; i++ ) {
-			binding = bindings[ i ];
+		var bindings = this.bindings[ event ].slice();
+		var args = slice.call( arguments, 1 );
+		for ( var i = 0; i < bindings.length; i++ ) {
+			var binding = bindings[ i ];
+			var method;
 			if ( typeof binding.method === 'string' ) {
 				// Lookup method by name (late binding)
 				method = binding.context[ binding.method ];
@@ -241,18 +238,18 @@
 		// We tolerate code duplication with #emit, because the
 		// alternative is an extra level of indirection which will
 		// appear in very many stack traces.
-		var bindings, args, i, binding, method, firstError;
-
 		if ( !hasOwn.call( this.bindings, event ) ) {
 			return false;
 		}
 
+		var firstError;
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
-		bindings = this.bindings[ event ].slice();
-		args = slice.call( arguments, 1 );
-		for ( i = 0; i < bindings.length; i++ ) {
-			binding = bindings[ i ];
+		var bindings = this.bindings[ event ].slice();
+		var args = slice.call( arguments, 1 );
+		for ( var i = 0; i < bindings.length; i++ ) {
+			var binding = bindings[ i ];
+			var method;
 			if ( typeof binding.method === 'string' ) {
 				// Lookup method by name (late binding)
 				method = binding.context[ binding.method ];
@@ -299,10 +296,9 @@
 	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.connect = function ( context, methods ) {
-		var method, args, event;
-
-		for ( event in methods ) {
-			method = methods[ event ];
+		for ( var event in methods ) {
+			var method = methods[ event ];
+			var args;
 			// Allow providing additional args
 			if ( Array.isArray( method ) ) {
 				args = method.slice( 1 );
@@ -331,12 +327,11 @@
 	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.disconnect = function ( context, methods ) {
-		var i, event, method, bindings;
-
+		var event;
 		if ( methods ) {
 			// Remove specific connections to the context
 			for ( event in methods ) {
-				method = methods[ event ];
+				var method = methods[ event ];
 				if ( Array.isArray( method ) ) {
 					method = method[ 0 ];
 				}
@@ -345,8 +340,8 @@
 		} else {
 			// Remove all connections to the context
 			for ( event in this.bindings ) {
-				bindings = this.bindings[ event ];
-				i = bindings.length;
+				var bindings = this.bindings[ event ];
+				var i = bindings.length;
 				while ( i-- ) {
 					// bindings[i] may have been removed by the previous step's
 					// this.off so check it still exists

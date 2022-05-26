@@ -69,8 +69,6 @@ OO.initClass = function ( fn ) {
  * @throws {Error} If target already inherits from origin
  */
 OO.inheritClass = function ( targetFn, originFn ) {
-	var targetConstructor;
-
 	if ( !originFn ) {
 		throw new Error( 'inheritClass: Origin is not a function (actually ' + originFn + ')' );
 	}
@@ -78,7 +76,7 @@ OO.inheritClass = function ( targetFn, originFn ) {
 		throw new Error( 'inheritClass: Target already inherits from origin' );
 	}
 
-	targetConstructor = targetFn.prototype.constructor;
+	var targetConstructor = targetFn.prototype.constructor;
 
 	// [DEPRECATED] Provide .parent as alias for code supporting older browsers which
 	// allows people to comply with their style guide.
@@ -133,12 +131,11 @@ OO.inheritClass = function ( targetFn, originFn ) {
  * @param {Function} originFn
  */
 OO.mixinClass = function ( targetFn, originFn ) {
-	var key;
-
 	if ( !originFn ) {
 		throw new Error( 'mixinClass: Origin is not a function (actually ' + originFn + ')' );
 	}
 
+	var key;
 	// Copy prototype properties
 	for ( key in originFn.prototype ) {
 		if ( key !== 'constructor' && hasOwn.call( originFn.prototype, key ) ) {
@@ -192,9 +189,8 @@ OO.isSubclass = function ( testFn, baseFn ) {
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
 OO.getProp = function ( obj ) {
-	var i,
-		retval = obj;
-	for ( i = 1; i < arguments.length; i++ ) {
+	var retval = obj;
+	for ( var i = 1; i < arguments.length; i++ ) {
 		if ( retval === undefined || retval === null ) {
 			// Trying to access a property of undefined or null causes an error
 			return undefined;
@@ -221,12 +217,11 @@ OO.getProp = function ( obj ) {
  * @param {any} [value]
  */
 OO.setProp = function ( obj ) {
-	var i,
-		prop = obj;
+	var prop = obj;
 	if ( Object( obj ) !== obj || arguments.length < 2 ) {
 		return;
 	}
-	for ( i = 1; i < arguments.length - 2; i++ ) {
+	for ( var i = 1; i < arguments.length - 2; i++ ) {
 		if ( prop[ arguments[ i ] ] === undefined ) {
 			prop[ arguments[ i ] ] = {};
 		}
@@ -248,12 +243,12 @@ OO.setProp = function ( obj ) {
  * @param {...any} [keys]
  */
 OO.deleteProp = function ( obj ) {
-	var i,
-		prop = obj,
+	var prop = obj,
 		props = [ prop ];
 	if ( Object( obj ) !== obj || arguments.length < 2 ) {
 		return;
 	}
+	var i;
 	for ( i = 1; i < arguments.length - 1; i++ ) {
 		if (
 			prop[ arguments[ i ] ] === undefined ||
@@ -300,11 +295,9 @@ OO.deleteProp = function ( obj ) {
  * @return {Object} Clone of origin
  */
 OO.cloneObject = function ( origin ) {
-	var key, r;
+	var r = Object.create( origin.constructor.prototype );
 
-	r = Object.create( origin.constructor.prototype );
-
-	for ( key in origin ) {
+	for ( var key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
 			r[ key ] = origin[ key ];
 		}
@@ -322,14 +315,12 @@ OO.cloneObject = function ( origin ) {
  * @return {Array} List of object values
  */
 OO.getObjectValues = function ( obj ) {
-	var key, values;
-
 	if ( obj !== Object( obj ) ) {
 		throw new TypeError( 'Called on non-object' );
 	}
 
-	values = [];
-	for ( key in obj ) {
+	var values = [];
+	for ( var key in obj ) {
 		if ( hasOwn.call( obj, key ) ) {
 			values[ values.length ] = obj[ key ];
 		}
@@ -357,14 +348,13 @@ OO.getObjectValues = function ( obj ) {
  * @return {number|null} Index where val was found, or null if not found
  */
 OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
-	var mid, cmpResult,
-		left = 0,
+	var left = 0,
 		right = arr.length;
 	while ( left < right ) {
 		// Equivalent to Math.floor( ( left + right ) / 2 ) but much faster
 		// eslint-disable-next-line no-bitwise
-		mid = ( left + right ) >> 1;
-		cmpResult = searchFunc( arr[ mid ] );
+		var mid = ( left + right ) >> 1;
+		var cmpResult = searchFunc( arr[ mid ] );
 		if ( cmpResult < 0 ) {
 			right = mid;
 		} else if ( cmpResult > 0 ) {
@@ -394,8 +384,6 @@ OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
  * @return {boolean} If the objects contain the same values as each other
  */
 OO.compare = function ( a, b, asymmetrical ) {
-	var aValue, bValue, aType, bType, k;
-
 	if ( a === b ) {
 		return true;
 	}
@@ -407,17 +395,17 @@ OO.compare = function ( a, b, asymmetrical ) {
 		return a.isEqualNode( b );
 	}
 
-	for ( k in a ) {
+	for ( var k in a ) {
 		if ( !hasOwn.call( a, k ) || a[ k ] === undefined || a[ k ] === b[ k ] ) {
 			// Ignore undefined values, because there is no conceptual difference between
 			// a key that is absent and a key that is present but whose value is undefined.
 			continue;
 		}
 
-		aValue = a[ k ];
-		bValue = b[ k ];
-		aType = typeof aValue;
-		bType = typeof bValue;
+		var aValue = a[ k ];
+		var bValue = b[ k ];
+		var aType = typeof aValue;
+		var bType = typeof bValue;
 		if ( aType !== bType ||
 			(
 				( aType === 'string' || aType === 'number' || aType === 'boolean' ) &&
@@ -447,7 +435,7 @@ OO.compare = function ( a, b, asymmetrical ) {
  * @return {Object} Copy of source object
  */
 OO.copy = function ( source, leafCallback, nodeCallback ) {
-	var key, destination;
+	var destination;
 
 	if ( nodeCallback ) {
 		// Extensibility: check before attempting to clone source.
@@ -477,7 +465,7 @@ OO.copy = function ( source, leafCallback, nodeCallback ) {
 	}
 
 	// source is an array or a plain object
-	for ( key in source ) {
+	for ( var key in source ) {
 		destination[ key ] = OO.copy( source[ key ], leafCallback, nodeCallback );
 	}
 
@@ -519,7 +507,6 @@ OO.getHash = function ( val ) {
  * @return {any} Replacement value
  */
 OO.getHash.keySortReplacer = function ( key, val ) {
-	var normalized, keys, i, len;
 	if ( val && typeof val.getHashObject === 'function' ) {
 		// This object has its own custom hash function, use it
 		val = val.getHashObject();
@@ -527,11 +514,9 @@ OO.getHash.keySortReplacer = function ( key, val ) {
 	if ( !Array.isArray( val ) && Object( val ) === val ) {
 		// Only normalize objects when the key-order is ambiguous
 		// (e.g. any object not an array).
-		normalized = {};
-		keys = Object.keys( val ).sort();
-		i = 0;
-		len = keys.length;
-		for ( ; i < len; i += 1 ) {
+		var normalized = {};
+		var keys = Object.keys( val ).sort();
+		for ( var i = 0, len = keys.length; i < len; i++ ) {
 			normalized[ keys[ i ] ] = val[ keys[ i ] ];
 		}
 		return normalized;
@@ -573,13 +558,12 @@ OO.unique = function ( arr ) {
  * @return {Array} Union of the arrays
  */
 OO.simpleArrayUnion = function () {
-	var i, ilen, arr, j, jlen,
-		obj = {},
+	var obj = {},
 		result = [];
 
-	for ( i = 0, ilen = arguments.length; i < ilen; i++ ) {
-		arr = arguments[ i ];
-		for ( j = 0, jlen = arr.length; j < jlen; j++ ) {
+	for ( var i = 0, ilen = arguments.length; i < ilen; i++ ) {
+		var arr = arguments[ i ];
+		for ( var j = 0, jlen = arr.length; j < jlen; j++ ) {
 			if ( !obj[ arr[ j ] ] ) {
 				obj[ arr[ j ] ] = true;
 				result.push( arr[ j ] );
@@ -607,16 +591,16 @@ OO.simpleArrayUnion = function () {
  * @return {Array} Combination (intersection or difference) of arrays
  */
 function simpleArrayCombine( a, b, includeB ) {
-	var i, ilen, isInB,
-		bObj = {},
+	var bObj = {},
 		result = [];
 
+	var i, ilen;
 	for ( i = 0, ilen = b.length; i < ilen; i++ ) {
 		bObj[ b[ i ] ] = true;
 	}
 
 	for ( i = 0, ilen = a.length; i < ilen; i++ ) {
-		isInB = !!bObj[ a[ i ] ];
+		var isInB = !!bObj[ a[ i ] ];
 		if ( isInB === includeB ) {
 			result.push( a[ i ] );
 		}

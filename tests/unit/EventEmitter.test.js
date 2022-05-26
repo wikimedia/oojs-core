@@ -9,8 +9,7 @@
 	QUnit.module( 'EventEmitter' );
 
 	QUnit.test( 'on', function ( assert ) {
-		var callback, x, seq, thrown,
-			origSetTimeout = global.setTimeout,
+		var origSetTimeout = global.setTimeout,
 			ee = new oo.EventEmitter();
 
 		assert.throws( function () {
@@ -26,8 +25,8 @@
 		} );
 		ee.emit( 'callback' );
 
-		seq = [];
-		callback = function ( data ) {
+		var seq = [];
+		var callback = function ( data ) {
 			seq.push( data );
 		};
 
@@ -39,6 +38,7 @@
 		ee.emitThrow( 'multiple', 'x' );
 		assert.deepEqual( seq, [ 'x', 'x' ], 'Callbacks can be bound multiple times' );
 
+		var x, thrown;
 		// Stub setTimeout for coverage purposes
 		global.setTimeout = function ( fn ) {
 			try {
@@ -138,10 +138,9 @@
 	} );
 
 	QUnit.test( 'once', function ( assert ) {
-		var seq,
-			ee = new oo.EventEmitter();
+		var ee = new oo.EventEmitter();
 
-		seq = [];
+		var seq = [];
 		ee.once( 'basic', function () {
 			seq.push( 'call' );
 		} );
@@ -172,14 +171,13 @@
 	} );
 
 	QUnit.test( 'once - off', function ( assert ) {
-		var seq,
+		var seq = [],
 			ee = new oo.EventEmitter();
 
 		function handle() {
 			seq.push( 'call' );
 		}
 
-		seq = [];
 		ee.once( 'basic', handle );
 		ee.off( 'basic', handle );
 		ee.emit( 'basic' );
@@ -196,8 +194,7 @@
 	} );
 
 	QUnit.test( 'emit', function ( assert ) {
-		var data1, data2A, data2B, data2C,
-			ee = new oo.EventEmitter();
+		var ee = new oo.EventEmitter();
 
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when no handlers are registered' );
 		ee.on( 'return', function () {} );
@@ -205,16 +202,15 @@
 		ee.off( 'return' );
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when handlers were removed' );
 
+		var data1 = {};
 		ee.on( 'dataParam', function ( data ) {
 			assert.strictEqual( data, data1, 'Data is passed on to event handler' );
 		} );
-
-		data1 = {};
 		ee.emit( 'dataParam', data1 );
 
-		data2A = {};
-		data2B = {};
-		data2C = {};
+		var data2A = {};
+		var data2B = {};
+		var data2C = {};
 
 		ee.on( 'dataParams', function ( a, b, c ) {
 			assert.strictEqual( a, data2A, 'Multiple data parameters (1) are passed on to event handler' );
@@ -226,10 +222,9 @@
 	} );
 
 	QUnit.test( 'off', function ( assert ) {
-		var hits, callback,
-			ee = new oo.EventEmitter();
+		var ee = new oo.EventEmitter();
 
-		hits = 0;
+		var hits = 0;
 		ee.on( 'basic', function () {
 			hits++;
 		} );
@@ -243,7 +238,7 @@
 		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with event name' );
 
 		hits = 0;
-		callback = function () {
+		var callback = function () {
 			hits++;
 		};
 
@@ -267,12 +262,11 @@
 	} );
 
 	QUnit.test( 'connect', function ( assert ) {
-		var data1, host,
-			ee = new oo.EventEmitter();
+		var ee = new oo.EventEmitter();
 
-		data1 = {};
+		var data1 = {};
 
-		host = {
+		var host = {
 			onFoo: function () {
 				assert.strictEqual( this, host, 'Callback context is connect host' );
 			},
@@ -308,11 +302,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host )', function ( assert ) {
-		var host,
-			hits = { foo: 0, bar: 0 },
+		var hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
-		host = {
+		var host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -336,11 +329,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host, methods )', function ( assert ) {
-		var host,
-			hits = { foo: 0, bar: 0 },
+		var hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
-		host = {
+		var host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -364,11 +356,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host, array methods )', function ( assert ) {
-		var host,
-			hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
+		var hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
 			ee = new oo.EventEmitter();
 
-		host = {
+		var host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -414,10 +405,9 @@
 	} );
 
 	QUnit.test( 'disconnect( host, unbound methods )', function ( assert ) {
-		var host,
-			ee = new oo.EventEmitter();
+		var ee = new oo.EventEmitter();
 
-		host = {
+		var host = {
 			onFoo: function () {
 			},
 			onBar: function () {

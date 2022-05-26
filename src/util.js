@@ -9,14 +9,12 @@
  * @return {boolean}
  */
 OO.isPlainObject = function ( obj ) {
-	var proto;
-
 	// Optimise for common case where internal [[Class]] property is not "Object"
 	if ( !obj || toString.call( obj ) !== '[object Object]' ) {
 		return false;
 	}
 
-	proto = Object.getPrototypeOf( obj );
+	var proto = Object.getPrototypeOf( obj );
 
 	// Objects without prototype (e.g., `Object.create( null )`) are considered plain
 	if ( !proto ) {

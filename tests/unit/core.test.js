@@ -11,8 +11,6 @@
 	} );
 
 	QUnit.test( 'inheritClass', function ( assert ) {
-		var base, child, key, enumKeys;
-
 		function InitA() {}
 		function InitB() {}
 		oo.inheritClass( InitB, InitA );
@@ -34,7 +32,7 @@
 		Base.prototype.protoC = function () {
 			return 'Base';
 		};
-		base = new Base();
+		var base = new Base();
 
 		function Child() {
 			Child.parent.call( this );
@@ -45,7 +43,7 @@
 		Child.prototype.protoC = function () {
 			return 'Child';
 		};
-		child = new Child();
+		var child = new Child();
 
 		assert.true( base instanceof Object, 'base instance of Object' );
 		assert.true( base instanceof Base, 'base instance of Base' );
@@ -85,8 +83,8 @@
 			oo.inheritClass( Child, undefined );
 		}, /Origin is not a function/, 'Throw if source is undefined (e.g. due to missing dependency)' );
 
-		enumKeys = [];
-		for ( key in child ) {
+		var enumKeys = [];
+		for ( var key in child ) {
 			enumKeys.push( key );
 		}
 
@@ -108,8 +106,6 @@
 	} );
 
 	QUnit.test( 'mixinClass', function ( assert ) {
-		var obj;
-
 		function Init() {}
 		function Init2() {}
 		OO.mixinClass( Init2, Init );
@@ -168,7 +164,7 @@
 			'mixin copies static member'
 		);
 
-		obj = new Mixer();
+		var obj = new Mixer();
 
 		assert.strictEqual( obj.protoFunction2(), 'Child', 'method works as expected' );
 
@@ -198,8 +194,7 @@
 	} );
 
 	( function () {
-		var method, plainObj, funcObj, arrObj,
-			runners = {};
+		var runners = {};
 
 		runners.testGetProp = function ( type, obj ) {
 			QUnit.test( 'getProp( ' + type + ' )', function ( assert ) {
@@ -319,8 +314,8 @@
 			} );
 		};
 
-		for ( method in runners ) {
-			plainObj = {
+		for ( var method in runners ) {
+			var plainObj = {
 				foo: 3,
 				bar: {
 					baz: null,
@@ -329,7 +324,7 @@
 					}
 				}
 			};
-			funcObj = function abc( d ) {
+			var funcObj = function abc( d ) {
 				return d;
 			};
 			funcObj.foo = 3;
@@ -339,7 +334,7 @@
 					whee: 'yay'
 				}
 			};
-			arrObj = [ 'a', 'b', 'c' ];
+			var arrObj = [ 'a', 'b', 'c' ];
 			arrObj.foo = 3;
 			arrObj.bar = {
 				baz: null,
@@ -355,8 +350,7 @@
 	}() );
 
 	QUnit.test( 'cloneObject', function ( assert ) {
-		var myfoo, myfooClone, expected,
-			hasOwn = Object.prototype.hasOwnProperty;
+		var hasOwn = Object.prototype.hasOwnProperty;
 
 		function Foo( x ) {
 			this.x = x;
@@ -366,13 +360,13 @@
 			return 'proto of Foo';
 		};
 
-		myfoo = new Foo( 10 );
-		myfooClone = oo.cloneObject( myfoo );
+		var myfoo = new Foo( 10 );
+		var myfooClone = oo.cloneObject( myfoo );
 
 		assert.notStrictEqual( myfoo, myfooClone, 'clone is not equal when compared by reference' );
 		assert.deepEqual( myfoo, myfooClone, 'clone is equal when recursively compared by value' );
 
-		expected = {
+		var expected = {
 			x: 10,
 			aFn: 'proto of Foo',
 			constructor: Foo,
@@ -419,8 +413,6 @@
 	} );
 
 	QUnit.test( 'getObjectValues', function ( assert ) {
-		var tmp;
-
 		assert.deepEqual(
 			oo.getObjectValues( { a: 1, b: false, foo: 'bar' } ),
 			[ 1, false, 'bar' ],
@@ -432,27 +424,27 @@
 			'Array with primitive values'
 		);
 
-		tmp = function () {
+		var tmpFunc = function () {
 			this.isTest = true;
 
 			return this;
 		};
-		tmp.a = 1;
-		tmp.b = false;
-		tmp.foo = 'bar';
+		tmpFunc.a = 1;
+		tmpFunc.b = false;
+		tmpFunc.foo = 'bar';
 
 		assert.deepEqual(
-			oo.getObjectValues( tmp ),
+			oo.getObjectValues( tmpFunc ),
 			[ 1, false, 'bar' ],
 			'Function with properties'
 		);
 
-		tmp = Object.create( { a: 1, b: false, foo: 'bar' } );
-		tmp.b = true;
-		tmp.bar = 'quux';
+		var tmpObj = Object.create( { a: 1, b: false, foo: 'bar' } );
+		tmpObj.b = true;
+		tmpObj.bar = 'quux';
 
 		assert.deepEqual(
-			oo.getObjectValues( tmp ),
+			oo.getObjectValues( tmpObj ),
 			[ true, 'quux' ],
 			'Only own properties'
 		);
@@ -482,9 +474,9 @@
 		}
 
 		function assertSearch( target, expectedPath, expectedRet ) {
-			var ret, path = [];
+			var path = [];
 
-			ret = oo.binarySearch( data, function ( item ) {
+			var ret = oo.binarySearch( data, function ( item ) {
 				path.push( item );
 				return dir( target, item );
 			} );
@@ -522,8 +514,6 @@
 	} );
 
 	QUnit.test( 'compare', function ( assert ) {
-		var x, y, z;
-
 		assert.strictEqual(
 			oo.compare( [], [] ),
 			true,
@@ -659,7 +649,7 @@
 			'Nested structure with no difference'
 		);
 
-		x = { a: 1 };
+		var x = { a: 1 };
 
 		assert.strictEqual(
 			oo.compare( x, x ),
@@ -712,12 +702,12 @@
 		};
 		x.foo = [ true ];
 
-		y = function Y( a, b ) {
+		var y = function Y( a, b ) {
 			this.name = b || 'Y';
 		};
 		y.foo = [ true ];
 
-		z = function Z( a, b, c ) {
+		var z = function Z( a, b, c ) {
 			this.name = c || 'Z';
 		};
 		z.foo = [ 1 ];
@@ -738,22 +728,21 @@
 	} );
 
 	QUnit.test( 'compare( Node, Node )', function ( assert ) {
-		var a, b, c;
-		a = {
+		var a = {
 			id: '1',
 			nodeType: 0,
 			isEqualNode: function ( other ) {
 				return this.id === other.id;
 			}
 		};
-		b = {
+		var b = {
 			id: '2',
 			nodeType: 0,
 			isEqualNode: function ( other ) {
 				return this.id === other.id;
 			}
 		};
-		c = {
+		var c = {
 			id: '2',
 			nodeType: 0,
 			isEqualNode: function ( other ) {
@@ -795,13 +784,11 @@
 	} );
 
 	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', function ( assert ) {
-		var x, y, z, i, depth, compare;
-
-		x = {
+		var x = {
 			foo: [ true, 42 ],
 			baz: undefined
 		};
-		y = {
+		var y = {
 			foo: [ true, 42, 10 ],
 			bar: [ {
 				x: {},
@@ -809,7 +796,7 @@
 			} ],
 			baz: 1701
 		};
-		z = {
+		var z = {
 			foo: [ 1, 42 ],
 			bar: [ {
 				x: {},
@@ -844,12 +831,12 @@
 
 		x = null;
 		y = null;
-		depth = 15;
-		for ( i = 0; i < depth; i++ ) {
+		var depth = 15;
+		for ( var i = 0; i < depth; i++ ) {
 			x = [ x, x ];
 			y = [ y, y ];
 		}
-		compare = oo.compare;
+		var compare = oo.compare;
 		try {
 			oo.compare = function () {
 				oo.compare.callCount += 1;
@@ -1099,8 +1086,7 @@
 	} );
 
 	QUnit.test( 'getHash: Basic usage', function ( assert ) {
-		var tmp, key,
-			cases = {},
+		var cases = {},
 			hash = '{"a":1,"b":1,"c":1}',
 			customHash = '{"first":1,"last":1}';
 
@@ -1122,23 +1108,23 @@
 			hash: hash
 		};
 
-		tmp = {};
+		var tmp1 = {};
 		cases[ 'a-z augmented' ] = {
-			object: tmp,
+			object: tmp1,
 			hash: hash
 		};
-		tmp.a = 1;
-		tmp.b = 1;
-		tmp.c = 1;
+		tmp1.a = 1;
+		tmp1.b = 1;
+		tmp1.c = 1;
 
-		tmp = {};
+		var tmp2 = {};
 		cases[ 'z-a augmented' ] = {
-			object: tmp,
+			object: tmp2,
 			hash: hash
 		};
-		tmp.c = 1;
-		tmp.b = 1;
-		tmp.a = 1;
+		tmp2.c = 1;
+		tmp2.b = 1;
+		tmp2.a = 1;
 
 		cases[ 'custom hash' ] = {
 			object: {
@@ -1164,7 +1150,7 @@
 			hash: customHash
 		};
 
-		for ( key in cases ) {
+		for ( var key in cases ) {
 			assert.strictEqual(
 				oo.getHash( cases[ key ].object ),
 				cases[ key ].hash,
@@ -1182,9 +1168,7 @@
 	} );
 
 	QUnit.test( 'getHash: Complex usage', function ( assert ) {
-		var obj, hash;
-
-		obj = {
+		var obj = {
 			a: 1,
 			b: 1,
 			c: 1,
@@ -1207,7 +1191,7 @@
 		/*
 		 * PhantomJS hangs when calling JSON.stringify with an object containing a
 		 * circular reference (https://github.com/ariya/phantomjs/issues/11206).
-		 * We know latest Chrome/Firefox and IE10+ support this. So, for the sake of
+		 * We know latest Chrome/Firefox and IE 11 support this. So, for the sake of
 		 * having qunit/phantomjs work, lets disable this for now.
 		obj.f = obj;
 
@@ -1222,7 +1206,7 @@
 			this.b = 2;
 		}
 
-		hash = '{"a":1,"b":2,"c":3}';
+		var hash = '{"a":1,"b":2,"c":3}';
 
 		assert.strictEqual(
 			oo.getHash( new Foo() ),
@@ -1237,15 +1221,13 @@
 
 	if ( global.document ) {
 		QUnit.test( 'getHash( iframe Object )', function ( assert ) {
-			var IframeObject, obj, hash;
-
-			IframeObject = QUnit.tmpIframe().contentWindow.Object;
-			obj = new IframeObject();
+			var IframeObject = QUnit.tmpIframe().contentWindow.Object;
+			var obj = new IframeObject();
 			obj.c = 3;
 			obj.b = 2;
 			obj.a = 1;
 
-			hash = '{"a":1,"b":2,"c":3}';
+			var hash = '{"a":1,"b":2,"c":3}';
 
 			assert.strictEqual(
 				oo.getHash( obj ),

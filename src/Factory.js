@@ -73,8 +73,7 @@ OO.Factory.prototype.unregister = function ( name ) {
  * @throws {Error} Unknown object name
  */
 OO.Factory.prototype.create = function ( name ) {
-	var obj, i,
-		args = [],
+	var args = [],
 		constructor = this.lookup( name );
 
 	if ( !constructor ) {
@@ -82,7 +81,7 @@ OO.Factory.prototype.create = function ( name ) {
 	}
 
 	// Convert arguments to array and shift the first argument (name) off
-	for ( i = 1; i < arguments.length; i++ ) {
+	for ( var i = 1; i < arguments.length; i++ ) {
 		args.push( arguments[ i ] );
 	}
 
@@ -91,7 +90,7 @@ OO.Factory.prototype.create = function ( name ) {
 	// the constructor's prototype (which also makes it an "instanceof" the constructor),
 	// then invoke the constructor with the object as context, and return it (ignoring
 	// the constructor's return value).
-	obj = Object.create( constructor.prototype );
+	var obj = Object.create( constructor.prototype );
 	constructor.apply( obj, args );
 	return obj;
 };

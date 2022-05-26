@@ -88,8 +88,6 @@ OO.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback )
  * @return {OO.SortedEmitterList}
  */
 OO.SortedEmitterList.prototype.addItems = function ( items ) {
-	var index, i, insertionIndex;
-
 	if ( !Array.isArray( items ) ) {
 		items = [ items ];
 	}
@@ -98,9 +96,9 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
 		return this;
 	}
 
-	for ( i = 0; i < items.length; i++ ) {
+	for ( var i = 0; i < items.length; i++ ) {
 		// Find insertion index
-		insertionIndex = this.findInsertionIndex( items[ i ] );
+		var insertionIndex = this.findInsertionIndex( items[ i ] );
 
 		// Check if the item exists using the sorting callback
 		// and remove it first if it exists
@@ -119,7 +117,7 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
 		}
 
 		// Insert item at the insertion index
-		index = this.insertItem( items[ i ], insertionIndex );
+		var index = this.insertItem( items[ i ], insertionIndex );
 		this.emit( 'add', items[ i ], index );
 	}
 

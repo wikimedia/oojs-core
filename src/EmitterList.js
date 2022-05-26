@@ -118,10 +118,9 @@
 	 * @throws {Error} If aggregation already exists
 	 */
 	OO.EmitterList.prototype.aggregate = function ( events ) {
-		var i, item, add, remove, itemEvent, groupEvent;
-
-		for ( itemEvent in events ) {
-			groupEvent = events[ itemEvent ];
+		var i, item;
+		for ( var itemEvent in events ) {
+			var groupEvent = events[ itemEvent ];
 
 			// Remove existing aggregated event
 			if ( Object.prototype.hasOwnProperty.call( this.aggregateItemEvents, itemEvent ) ) {
@@ -133,7 +132,7 @@
 				for ( i = 0; i < this.items.length; i++ ) {
 					item = this.items[ i ];
 					if ( item.connect && item.disconnect ) {
-						remove = {};
+						var remove = {};
 						remove[ itemEvent ] = [ 'emit', this.aggregateItemEvents[ itemEvent ], item ];
 						item.disconnect( this, remove );
 					}
@@ -150,7 +149,7 @@
 				for ( i = 0; i < this.items.length; i++ ) {
 					item = this.items[ i ];
 					if ( item.connect && item.disconnect ) {
-						add = {};
+						var add = {};
 						add[ itemEvent ] = [ 'emit', groupEvent, item ];
 						item.connect( this, add );
 					}
@@ -172,8 +171,6 @@
 	 * @fires OO.EmitterList#move
 	 */
 	OO.EmitterList.prototype.addItems = function ( items, index ) {
-		var i, oldIndex;
-
 		if ( !Array.isArray( items ) ) {
 			items = [ items ];
 		}
@@ -183,8 +180,8 @@
 		}
 
 		index = normalizeArrayIndex( this.items, index );
-		for ( i = 0; i < items.length; i++ ) {
-			oldIndex = this.items.indexOf( items[ i ] );
+		for ( var i = 0; i < items.length; i++ ) {
+			var oldIndex = this.items.indexOf( items[ i ] );
 			if ( oldIndex !== -1 ) {
 				// Move item to new index
 				index = this.moveItem( items[ i ], index );
@@ -259,8 +256,6 @@
 	 * @return {number} The index the item was added at
 	 */
 	OO.EmitterList.prototype.insertItem = function ( item, index ) {
-		var events, event;
-
 		// Throw an error if null or item is not an object.
 		if ( item === null || typeof item !== 'object' ) {
 			throw new Error( 'Expected object, but item is ' + typeof item );
@@ -268,8 +263,8 @@
 
 		// Add the item to event aggregation
 		if ( item.connect && item.disconnect ) {
-			events = {};
-			for ( event in this.aggregateItemEvents ) {
+			var events = {};
+			for ( var event in this.aggregateItemEvents ) {
 				events[ event ] = [ 'emit', this.aggregateItemEvents[ event ], item ];
 			}
 			item.connect( this, events );
@@ -290,8 +285,6 @@
 	 * @fires OO.EmitterList#remove
 	 */
 	OO.EmitterList.prototype.removeItems = function ( items ) {
-		var i, item, index;
-
 		if ( !Array.isArray( items ) ) {
 			items = [ items ];
 		}
@@ -301,9 +294,9 @@
 		}
 
 		// Remove specific items
-		for ( i = 0; i < items.length; i++ ) {
-			item = items[ i ];
-			index = this.items.indexOf( item );
+		for ( var i = 0; i < items.length; i++ ) {
+			var item = items[ i ];
+			var index = this.items.indexOf( item );
 			if ( index !== -1 ) {
 				if ( item.connect && item.disconnect ) {
 					// Disconnect all listeners from the item
@@ -324,12 +317,11 @@
 	 * @fires OO.EmitterList#clear
 	 */
 	OO.EmitterList.prototype.clearItems = function () {
-		var i, item,
-			cleared = this.items.splice( 0, this.items.length );
+		var cleared = this.items.splice( 0, this.items.length );
 
 		// Disconnect all items
-		for ( i = 0; i < cleared.length; i++ ) {
-			item = cleared[ i ];
+		for ( var i = 0; i < cleared.length; i++ ) {
+			var item = cleared[ i ];
 			if ( item.connect && item.disconnect ) {
 				item.disconnect( this );
 			}

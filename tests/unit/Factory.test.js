@@ -77,11 +77,10 @@
 	} );
 
 	QUnit.test( 'valid creation', function ( assert ) {
-		var obj,
-			factory = new OO.Factory();
+		var factory = new OO.Factory();
 
 		factory.register( Foo );
-		obj = factory.create( 'my-foo', 16, 'foo', { baz: 'quux' }, 5 );
+		var obj = factory.create( 'my-foo', 16, 'foo', { baz: 'quux' }, 5 );
 
 		assert.true( obj instanceof Foo, 'object inherits constructor prototype' );
 

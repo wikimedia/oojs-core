@@ -49,12 +49,11 @@ OO.mixinClass( OO.Registry, OO.EventEmitter );
  * @throws {Error} Name argument must be a string or array
  */
 OO.Registry.prototype.register = function ( name, data ) {
-	var i, len;
 	if ( typeof name === 'string' ) {
 		this.registry[ name ] = data;
 		this.emit( 'register', name, data );
 	} else if ( Array.isArray( name ) ) {
-		for ( i = 0, len = name.length; i < len; i++ ) {
+		for ( var i = 0, len = name.length; i < len; i++ ) {
 			this.register( name[ i ], data );
 		}
 	} else {
@@ -70,15 +69,14 @@ OO.Registry.prototype.register = function ( name, data ) {
  * @throws {Error} Name argument must be a string or array
  */
 OO.Registry.prototype.unregister = function ( name ) {
-	var i, len, data;
 	if ( typeof name === 'string' ) {
-		data = this.lookup( name );
+		var data = this.lookup( name );
 		if ( data !== undefined ) {
 			delete this.registry[ name ];
 			this.emit( 'unregister', name, data );
 		}
 	} else if ( Array.isArray( name ) ) {
-		for ( i = 0, len = name.length; i < len; i++ ) {
+		for ( var i = 0, len = name.length; i < len; i++ ) {
 			this.unregister( name[ i ] );
 		}
 	} else {
