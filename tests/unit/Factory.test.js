@@ -2,12 +2,24 @@
 
 	QUnit.module( 'Factory' );
 
-	function Foo( a, b, c, d ) {
-		this.a = a;
-		this.b = b;
-		this.c = c;
-		this.d = d;
-	}
+	// Support: IE 11
+	var Foo = ( typeof Reflect !== 'undefined' ) ?
+		// eslint-disable-next-line
+		eval( '( class Foo {\
+			constructor( a, b, c, d ) {\
+				this.a = a;\
+				this.b = b;\
+				this.c = c;\
+				this.d = d;\
+			}\
+		} )' ) :
+		function Foo( a, b, c, d ) {
+			this.a = a;
+			this.b = b;
+			this.c = c;
+			this.d = d;
+		};
+
 	Foo.key = 'my-foo';
 
 	function Bar( a, b, c, d ) {
