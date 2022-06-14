@@ -14,71 +14,77 @@ OO.inheritClass( OO.Factory, OO.Registry );
 /* Methods */
 
 /**
- * Register a constructor with the factory.
+ * Register a class with the factory.
  *
  *     function MyClass() {};
  *     OO.initClass( MyClass );
- *     MyClass.static.name = 'hello';
- *     // Register class with the factory, available via the symbolic name "hello"
+ *     MyClass.key = 'hello';
+ *
+ *     // Register class with the factory
  *     factory.register( MyClass );
  *
- * @param {Function} constructor Constructor to use when creating object
- * @param {string} [name] Symbolic name to use for #create().
- *  This parameter may be omitted in favour of letting the constructor decide
- *  its own name, through `constructor.static.name`.
+ *     // Instantiate a class based on its registered key (also known as a "symbolic name")
+ *     factory.create( 'hello' );
+ *
+ * @param {Function} constructor Class to use when creating an object
+ * @param {string} [key] The key for #create().
+ *  This parameter is usually omitted in favour of letting the class declare
+ *  its own key, through `MyClass.key`.
+ *  For backwards-compatiblity with OOjs 6.0 (2021) and older, it can also be declared
+ *  via `MyClass.static.name`.
  * @throws {Error} If a parameter is invalid
  */
-OO.Factory.prototype.register = function ( constructor, name ) {
+OO.Factory.prototype.register = function ( constructor, key ) {
 	if ( typeof constructor !== 'function' ) {
 		throw new Error( 'constructor must be a function, got ' + typeof constructor );
 	}
 	if ( arguments.length <= 1 ) {
-		name = constructor.static && constructor.static.name;
+		key = constructor.key || ( constructor.static && constructor.static.name );
 	}
-	if ( typeof name !== 'string' || name === '' ) {
-		throw new Error( 'name must be a non-empty string' );
+	if ( typeof key !== 'string' || key === '' ) {
+		throw new Error( 'key must be a non-empty string' );
 	}
 
 	// Parent method
-	OO.Factory.super.prototype.register.call( this, name, constructor );
+	OO.Factory.super.prototype.register.call( this, key, constructor );
 };
 
 /**
- * Unregister a constructor from the factory.
+ * Unregister a class from the factory.
  *
- * @param {string|Function} name Constructor function or symbolic name to unregister
+ * @param {string|Function} key Constructor function or key to unregister
  * @throws {Error} If a parameter is invalid
  */
-OO.Factory.prototype.unregister = function ( name ) {
-	if ( typeof name === 'function' ) {
-		name = name.static && name.static.name;
+OO.Factory.prototype.unregister = function ( key ) {
+	if ( typeof key === 'function' ) {
+		key = key.key || ( key.static && key.static.name );
 	}
-	if ( typeof name !== 'string' || name === '' ) {
-		throw new Error( 'name must be a non-empty string' );
+	if ( typeof key !== 'string' || key === '' ) {
+		throw new Error( 'key must be a non-empty string' );
 	}
 
 	// Parent method
-	OO.Factory.super.prototype.unregister.call( this, name );
+	OO.Factory.super.prototype.unregister.call( this, key );
 };
 
 /**
- * Create an object based on a name.
+ * Create an object based on a key.
  *
- * Name is used to look up the constructor to use, while all additional arguments are passed to the
- * constructor directly, so leaving one out will pass an undefined to the constructor.
+ * The key is used to look up the class to use, with any subsequent arguments passed to the
+ * constructor function.
  *
- * @param {string} name Object name
+ * @param {string} key Class key
  * @param {...any} [args] Arguments to pass to the constructor
  * @return {Object} The new object
- * @throws {Error} Unknown object name
+ * @throws {Error} Unknown key
  */
-OO.Factory.prototype.create = function ( name ) {
-	var constructor = this.lookup( name );
+OO.Factory.prototype.create = function ( key ) {
+	var constructor = this.lookup( key );
 	if ( !constructor ) {
-		throw new Error( 'No class registered by that name: ' + name );
+		throw new Error( 'No class registered by that key: ' + key );
 	}
 
-	// Convert arguments to array and shift the first argument (name) off
+	// Convert arguments to array and shift the first argument (key) off
 	var args = [];
 	for ( var i = 1; i < arguments.length; i++ ) {
 		args.push( arguments[ i ] );

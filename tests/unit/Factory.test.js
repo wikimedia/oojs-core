@@ -8,8 +8,26 @@
 		this.c = c;
 		this.d = d;
 	}
-	OO.initClass( Foo );
-	Foo.static.name = 'my-foo';
+	Foo.key = 'my-foo';
+
+	function Bar( a, b, c, d ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+	}
+	OO.initClass( Bar );
+	Bar.static.name = 'my-bar';
+
+	function Quux( a, b, c, d ) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+	}
+	OO.initClass( Quux );
+	Quux.key = 'my-quux';
+	Quux.static.name = 'not-quite-right';
 
 	QUnit.test( 'invalid registration', function ( assert ) {
 		var factory = new OO.Factory();
@@ -19,48 +37,58 @@
 				factory.register( 'not-a-function' );
 			},
 			Error,
-			'register non-function as constructor'
+			'register non-function value'
 		);
 		assert.throws(
 			function () {
 				factory.register( function UnnamedExample() {} );
 			},
-			'register constructor without static.name'
+			'register class without a key'
 		);
 		assert.throws(
 			function () {
 				factory.unregister( 42 );
 			},
 			Error,
-			'unregister non-function value as constructor'
+			'unregister non-function value'
 		);
 		assert.throws(
 			function () {
 				factory.unregister( function UnnamedExample() {} );
 			},
-			'register constructor without static.name'
+			'unregister class without a key'
 		);
 	} );
 
-	QUnit.test( 'registeration and lookup', function ( assert ) {
+	QUnit.test.each( 'registeration and lookup', {
+		'Class.key': [ Foo, 'my-foo' ],
+		'Class.static.name': [ Bar, 'my-bar' ],
+		'key and name': [ Quux, 'my-quux' ]
+	}, function ( assert, data ) {
+		var Class = data[ 0 ];
+		var key = data[ 1 ];
+
 		var factory = new OO.Factory();
 
 		// Add and remove by constructor
-		factory.register( Foo );
-		assert.strictEqual( factory.lookup( 'my-foo' ), Foo );
+		factory.register( Class );
+		assert.strictEqual( factory.lookup( key ), Class );
+		factory.unregister( Class );
+		assert.strictEqual( factory.lookup( key ), undefined );
 
-		factory.unregister( Foo );
-		assert.strictEqual( factory.lookup( 'my-foo' ), undefined );
+		// Add and remove by key
+		factory.register( Class, 'different-key' );
+		assert.strictEqual( factory.lookup( key ), undefined );
+		assert.strictEqual( factory.lookup( 'different-key' ), Class );
+		factory.unregister( 'different-key' );
+		assert.strictEqual( factory.lookup( 'different-key' ), undefined );
+	} );
 
-		// Add and remove by name
-		factory.register( Foo, 'a-name' );
-		assert.strictEqual( factory.lookup( 'my-foo' ), undefined );
-		assert.strictEqual( factory.lookup( 'a-name' ), Foo );
+	QUnit.test( 'registeration and lookup [unknown]', function ( assert ) {
+		assert.expect( 0 );
 
-		factory.unregister( 'a-name' );
-		assert.strictEqual( factory.lookup( 'a-name' ), undefined );
-
-		// Unknown name should not throw
+		// Unknown key should not throw
+		var factory = new OO.Factory();
 		factory.unregister( 'not-registered' );
 	} );
 
@@ -72,7 +100,7 @@
 				factory.create( 'my-foo', 23, 'foo', { bar: 'baz' } );
 			},
 			Error,
-			'Throws an exception when trying to create a object of an unregistered type'
+			'try to create a object from an unregistered key'
 		);
 	} );
 
