@@ -280,7 +280,7 @@
 	/**
 	 * Remove items.
 	 *
-	 * @param {OO.EventEmitter[]} items Items to remove
+	 * @param {OO.EventEmitter|OO.EventEmitter[]} items Items to remove
 	 * @return {OO.EmitterList}
 	 * @fires OO.EmitterList#remove
 	 */
