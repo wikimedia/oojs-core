@@ -14,25 +14,29 @@ module.exports = {
 		},
 		slChromeLatest: {
 			base: 'SauceLabs',
-			browserName: 'chrome'
+			browserName: 'chrome',
+			browserVersion: 'latest'
 		},
 		slFirefoxLatest: {
 			base: 'SauceLabs',
-			browserName: 'firefox'
+			browserName: 'Firefox',
+			browserVersion: 'latest'
 		},
 		slEdgeLatest: {
 			base: 'SauceLabs',
 			platform: 'Windows 11',
-			browserName: 'microsoftedge'
+			browserName: 'MicrosoftEdge',
+			browserVersion: 'latest'
 		},
 		slIE11: {
 			base: 'SauceLabs',
 			platform: 'Windows 10',
-			browserName: 'internet explorer'
+			browserName: 'internet explorer',
+			browserVersion: '11'
 		},
 		slSafariLatest: {
 			base: 'SauceLabs',
-			platform: 'macOS 10.15',
+			platform: 'macOS 12',
 			version: 'latest',
 			browserName: 'safari'
 		},
