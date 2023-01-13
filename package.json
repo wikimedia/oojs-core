@@ -30,13 +30,12 @@
 		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint",
 		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc"
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.22.1",
 		"grunt": "1.5.3",
-		"grunt-contrib-clean": "2.0.0",
-		"grunt-contrib-concat": "2.0.0",
-		"grunt-contrib-uglify": "5.0.1",
+		"grunt-contrib-clean": "2.0.1",
+		"grunt-contrib-concat": "2.1.0",
+		"grunt-contrib-uglify": "5.2.2",
 		"jsdoc": "3.6.10",
 		"jsdoc-class-hierarchy": "1.1.2",
 		"jsdoc-wmf-theme": "0.0.3",
@@ -47,6 +46,6 @@
 		"karma-qunit": "4.1.2",
 		"karma-remap-istanbul": "0.6.0",
 		"karma-sauce-launcher": "4.3.6",
-		"qunit": "2.18.2"
+		"qunit": "2.19.3"
 	}
 }
