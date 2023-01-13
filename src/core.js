@@ -264,6 +264,7 @@ OO.deleteProp = function ( obj ) {
 	while (
 		props.length > 1 &&
 		( prop = props.pop() ) &&
+		// eslint-disable-next-line es-x/no-array-prototype-keys
 		OO.isPlainObject( prop ) && !Object.keys( prop ).length
 	) {
 		delete props[ props.length - 1 ][ arguments[ props.length ] ];
@@ -515,6 +516,7 @@ OO.getHash.keySortReplacer = function ( key, val ) {
 		// Only normalize objects when the key-order is ambiguous
 		// (e.g. any object not an array).
 		var normalized = {};
+		// eslint-disable-next-line es-x/no-array-prototype-keys
 		var keys = Object.keys( val ).sort();
 		for ( var i = 0, len = keys.length; i < len; i++ ) {
 			normalized[ keys[ i ] ] = val[ keys[ i ] ];
