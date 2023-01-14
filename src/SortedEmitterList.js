@@ -42,7 +42,7 @@ OO.mixinClass( OO.SortedEmitterList, OO.EmitterList );
  * An item has changed properties that affect its sort positioning
  * inside the list.
  *
- * @ignore
+ * @private
  * @event OO.SortedEmitterList#itemSortChange
  */
 
