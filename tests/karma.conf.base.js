@@ -5,7 +5,7 @@ module.exports = {
 	// https://karma-runner.github.io/1.0/config/browsers.html
 	//
 	// SauceLabs platforms
-	// https://saucelabs.com/platforms
+	// https://saucelabs.com/products/supported-browsers-devices
 	customLaunchers: {
 		ChromeCustom: {
 			base: 'ChromeHeadless',
@@ -17,22 +17,16 @@ module.exports = {
 			browserName: 'chrome',
 			browserVersion: 'latest'
 		},
-		slFirefoxLatest: {
+		slFirefoxESR: {
 			base: 'SauceLabs',
 			browserName: 'Firefox',
-			browserVersion: 'latest'
+			browserVersion: '78'
 		},
 		slEdgeLatest: {
 			base: 'SauceLabs',
 			platform: 'Windows 11',
 			browserName: 'MicrosoftEdge',
 			browserVersion: 'latest'
-		},
-		slIE11: {
-			base: 'SauceLabs',
-			platform: 'Windows 10',
-			browserName: 'internet explorer',
-			browserVersion: '11'
 		},
 		slSafariLatest: {
 			base: 'SauceLabs',

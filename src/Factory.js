@@ -76,7 +76,6 @@ OO.Factory.prototype.unregister = function ( key ) {
 // from being available to older browsers, or one has to use the ES6 Reflect API.
 // We choose the latter.
 //
-// eslint-disable-next-line no-undef
 var construct = ( typeof Reflect !== 'undefined' && Reflect.construct ) ? Reflect.construct :
 	// This is used and covered via Karma in IE11, but we don't collect coverage there.
 	/* istanbul ignore next */

@@ -10,14 +10,10 @@ module.exports = function ( config ) {
 		concurrency: 4,
 		captureTimeout: 90000,
 		browsers: [
-			// Latest versions of major browsers
 			'slChromeLatest',
-			'slFirefoxLatest',
+			'slFirefoxESR',
 			'slEdgeLatest',
-			// Only supported version of Internet Explorer
-			'slIE11',
 			'slSafariLatest',
-			// Earliest supported version of Safari
 			'slSafari12'
 		]
 	} ) );

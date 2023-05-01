@@ -10,8 +10,9 @@
 				"src/**/*.js",
 				"tests/setup-browser.js"
 			],
-			"extends": "wikimedia/client",
+			"extends": "wikimedia/client-es6",
 			"rules": {
+				"no-var": "off",
 				"no-implicit-globals": "off"
 			}
 		},
