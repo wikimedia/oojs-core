@@ -20,7 +20,13 @@
 			"files": [
 				"tests/**/*.js"
 			],
-			"extends": "wikimedia/qunit"
+			"extends": [
+				"wikimedia/client",
+				"wikimedia/qunit"
+			],
+			"rules": {
+				"no-var": "off"
+			}
 		},
 		{
 			"files": [

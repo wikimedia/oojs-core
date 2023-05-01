@@ -1272,6 +1272,13 @@
 			'Strict equality de-duplication only'
 		);
 
+		var obj = {};
+		assert.deepEqual(
+			oo.unique( [ obj, obj ] ),
+			[ obj ],
+			'Object identity de-duplication'
+		);
+
 		assert.deepEqual(
 			oo.unique( [ 1, 2, 3 ] ),
 			[ 1, 2, 3 ],
@@ -1306,15 +1313,13 @@
 			'Multiple arrays with mixed dupes'
 		);
 
-		// Implementation detail, tested to ensure it is not
-		// changed unintentinally.
 		assert.deepEqual(
 			oo.simpleArrayUnion(
 				[ 1, 2, 1, 2, true, { a: 1 } ],
 				[ 3, 3, 2, 1, false, { b: 2 } ]
 			),
-			[ 1, 2, true, { a: 1 }, 3, false ],
-			'Values should be strings. Original value is preserved but compared as string'
+			[ 1, 2, true, { a: 1 }, 3, false, { b: 2 } ],
+			'Objects are supported'
 		);
 
 	} );

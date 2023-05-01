@@ -538,53 +538,35 @@ OO.getHash.keySortReplacer = function ( key, val ) {
  * @return {Array} Unique values in array
  */
 OO.unique = function ( arr ) {
-	return arr.reduce( function ( result, current ) {
-		if ( result.indexOf( current ) === -1 ) {
-			result.push( current );
-		}
-		return result;
-	}, [] );
+	return Array.from( new Set( arr ) );
 };
 
 /**
  * Compute the union (duplicate-free merge) of a set of arrays.
  *
- * Arrays values must be convertable to object keys (strings).
- *
- * By building an object (with the values for keys) in parallel with
- * the array, a new item's existence in the union can be computed faster.
- *
  * @memberof OO
  * @method simpleArrayUnion
- * @param {...Array} arrays Arrays to union
+ * @param {Array} a First array
+ * @param {...Array} rest Arrays to union
  * @return {Array} Union of the arrays
  */
-OO.simpleArrayUnion = function () {
-	var obj = {};
-	var result = [];
+OO.simpleArrayUnion = function ( a, ...rest ) {
+	var set = new Set( a );
 
-	for ( var i = 0, ilen = arguments.length; i < ilen; i++ ) {
-		var arr = arguments[ i ];
-		for ( var j = 0, jlen = arr.length; j < jlen; j++ ) {
-			if ( !obj[ arr[ j ] ] ) {
-				obj[ arr[ j ] ] = true;
-				result.push( arr[ j ] );
-			}
+	for ( var i = 0; i < rest.length; i++ ) {
+		var arr = rest[ i ];
+		for ( var j = 0; j < arr.length; j++ ) {
+			set.add( arr[ j ] );
 		}
 	}
 
-	return result;
+	return Array.from( set );
 };
 
 /**
  * Combine arrays (intersection or difference).
  *
  * An intersection checks the item exists in 'b' while difference checks it doesn't.
- *
- * Arrays values must be convertable to object keys (strings).
- *
- * By building an object (with the values for keys) of 'b' we can
- * compute the result faster.
  *
  * @private
  * @param {Array} a First array
@@ -593,15 +575,11 @@ OO.simpleArrayUnion = function () {
  * @return {Array} Combination (intersection or difference) of arrays
  */
 function simpleArrayCombine( a, b, includeB ) {
-	var bObj = {};
+	var set = new Set( b );
 	var result = [];
 
-	for ( var i = 0; i < b.length; i++ ) {
-		bObj[ b[ i ] ] = true;
-	}
-
 	for ( var j = 0; j < a.length; j++ ) {
-		var isInB = !!bObj[ a[ j ] ];
+		var isInB = set.has( a[ j ] );
 		if ( isInB === includeB ) {
 			result.push( a[ j ] );
 		}
@@ -612,8 +590,6 @@ function simpleArrayCombine( a, b, includeB ) {
 
 /**
  * Compute the intersection of two arrays (items in both arrays).
- *
- * Arrays values must be convertable to object keys (strings).
  *
  * @memberof OO
  * @method simpleArrayIntersection
@@ -627,8 +603,6 @@ OO.simpleArrayIntersection = function ( a, b ) {
 
 /**
  * Compute the difference of two arrays (items in 'a' but not 'b').
- *
- * Arrays values must be convertable to object keys (strings).
  *
  * @memberof OO
  * @method simpleArrayDifference

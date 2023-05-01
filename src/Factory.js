@@ -67,29 +67,6 @@ OO.Factory.prototype.unregister = function ( key ) {
 	OO.Factory.super.prototype.unregister.call( this, key );
 };
 
-// The constructor of native ES6 classes enforces use of the `new` operator through
-// a check that we cannot approximate or bypass from generic ES5-compatible code,
-// and thus would throw an error if we used Object.create() + Function.apply().
-//
-// Instead, in order to construct an ES6 class with variable arguments, one has to use
-// either native E6-only syntax (new + spread operator) which prevents the entire library
-// from being available to older browsers, or one has to use the ES6 Reflect API.
-// We choose the latter.
-//
-var construct = ( typeof Reflect !== 'undefined' && Reflect.construct ) ? Reflect.construct :
-	// This is used and covered via Karma in IE11, but we don't collect coverage there.
-	/* istanbul ignore next */
-	function ( target, args ) {
-		// We can't use the "new" operator with .apply directly because apply needs a
-		// context. So instead just do what "new" does: create an object that inherits from
-		// the constructor's prototype (which also makes it an "instanceof" the constructor),
-		// then invoke the constructor with the object as context, and return it (ignoring
-		// any constructor's return value).
-		var obj = Object.create( target.prototype );
-		target.apply( obj, args );
-		return obj;
-	};
-
 /**
  * Create an object based on a key.
  *
@@ -101,17 +78,11 @@ var construct = ( typeof Reflect !== 'undefined' && Reflect.construct ) ? Reflec
  * @return {Object} The new object
  * @throws {Error} Unknown key
  */
-OO.Factory.prototype.create = function ( key ) {
+OO.Factory.prototype.create = function ( key, ...args ) {
 	var constructor = this.lookup( key );
 	if ( !constructor ) {
 		throw new Error( 'No class registered by that key: ' + key );
 	}
 
-	// Convert arguments to array and shift the first argument (key) off
-	var args = [];
-	for ( var i = 1; i < arguments.length; i++ ) {
-		args.push( arguments[ i ] );
-	}
-
-	return construct( constructor, args );
+	return new constructor( ...args );
 };
