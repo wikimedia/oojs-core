@@ -1,5 +1,12 @@
 # OOjs Release History
 
+## v7.0.0 / 2023-06-08
+
+* [BREAKING CHANGE] Remove support for ES5 browsers such as IE11 (Timo Tijhof)
+* Factory: Add support to register and create objects from ES6 classes (Timo Tijhof) [T284935](https://phabricator.wikimedia.org/T284935)
+* Factory: Add support to register by `Class.key` (Timo Tijhof) [T96640](https://phabricator.wikimedia.org/T96640)
+* core: Make `OO.unique()` faster by using ES6 Set methods (Bartosz Dziewoński)
+
 ## v6.0.0 / 2021-04-22
 This release removes an (optional) dependency on jQuery.
 
