@@ -1,5 +1,10 @@
 # OOjs Release History
 
+## v7.0.1 / 2023-06-08
+* release: Update `/dist/` in the npm package.
+  The oojs@7.0.0 package on npm includes a distribution for an earlier commit
+  between 6.0.0 and 7.0.0.
+
 ## v7.0.0 / 2023-06-08
 
 * [BREAKING CHANGE] Remove support for ES5 browsers such as IE11 (Timo Tijhof)
