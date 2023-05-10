@@ -50,7 +50,7 @@ module.exports = function ( grunt ) {
 		},
 		uglify: {
 			options: {
-				banner: '/*! OOjs v<%= build.version %> | https://oojs.mit-license.org */',
+				banner: '/*! OOjs v<%= build.version %> | License: MIT */',
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				report: 'gzip'
@@ -65,18 +65,6 @@ module.exports = function ( grunt ) {
 	} );
 
 	grunt.registerTask( 'set-meta', function () {
-		const cp = require( 'child_process' );
-
-		// Support reproducible builds
-		// https://reproducible-builds.org/docs/source-date-epoch/
-		let releaseEpoch;
-		try {
-			releaseEpoch = process.env.SOURCE_DATE_EPOCH || cp.execSync( 'git log -s --format=%at -1' );
-		} catch ( e ) {
-			grunt.log.err( e );
-			return false;
-		}
-		grunt.config.set( 'build.year', new Date( releaseEpoch * 1000 ).getUTCFullYear() );
 		grunt.config.set( 'build.version', require( './package.json' ).version );
 	} );
 

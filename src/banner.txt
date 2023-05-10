@@ -2,7 +2,6 @@
  * OOjs v<%= build.version %>
  * https://www.mediawiki.org/wiki/OOjs
  *
- * Copyright 2011-<%= build.year %> OOjs Team and other contributors.
+ * Copyright Wikimedia Foundation and other contributors.
  * Released under the MIT license
- * https://oojs.mit-license.org
  */

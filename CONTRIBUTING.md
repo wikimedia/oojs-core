@@ -52,6 +52,11 @@ See also [Commit message guidelines](https://www.mediawiki.org/wiki/Gerrit/Commi
      ```
      git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD | sort | grep -vE '^\* (build|docs?|tests?):'
      ```
+   - Update AUTHORS.txt and preview the diff.
+     If duplicates emerge, add entries to `.mailmap` as needed and re-run the command.
+     ```
+     npm run authors
+     ```
    - Set the next release version in [package.json](./package.json).
    - Review and stage your commit:
      ```
