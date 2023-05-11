@@ -58,6 +58,10 @@ See also [Commit message guidelines](https://www.mediawiki.org/wiki/Gerrit/Commi
      npm run authors
      ```
    - Set the next release version in [package.json](./package.json).
+     ```
+     # 'patch' increments to vA.B.C+1; substitute 'minor' for vA.B+1.0 and 'major' for vA+1.0.0
+     npm version patch --git-tag-version=false
+     ```
    - Review and stage your commit:
      ```
      git add -p
