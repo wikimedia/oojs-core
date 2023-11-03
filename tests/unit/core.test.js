@@ -35,7 +35,7 @@
 		var base = new Base();
 
 		function Child() {
-			Child.parent.call( this );
+			Child.super.call( this );
 			this.instanceB = 'Child';
 			this.instanceC = 'Child';
 		}
@@ -63,7 +63,8 @@
 		assert.strictEqual( base.instanceC, undefined, 'child constructor did not run' );
 
 		assert.strictEqual( child.constructor, Child, 'preserve Child constructor property' );
-		assert.strictEqual( Child.parent, Base, 'parent property refers to parent class' );
+		assert.strictEqual( Child.super, Base, 'super property refers to parent class' );
+		assert.strictEqual( Child.parent, Base, 'parent property refers to parent class (deprecated)' );
 		assert.strictEqual( child.instanceA, 'Base', 'parent constructor ran' );
 		assert.strictEqual( child.instanceB, 'Child', 'original constructor ran after parent' );
 		assert.strictEqual( child.instanceC, 'Child', 'original constructor ran' );
