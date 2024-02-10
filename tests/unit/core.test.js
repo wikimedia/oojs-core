@@ -495,19 +495,25 @@
 		assertSearch( 2000, [ 12, 70, 1001 ], null );
 
 		assert.strictEqual(
-			oo.binarySearch( data, function ( item ) { return dir( -2000, item ); }, true ),
+			oo.binarySearch( data, function ( item ) {
+				return dir( -2000, item );
+			}, true ),
 			0,
 			'forInsertion at start'
 		);
 
 		assert.strictEqual(
-			oo.binarySearch( [ 1, 2, 4, 5 ], function ( item ) { return dir( 3, item ); }, true ),
+			oo.binarySearch( [ 1, 2, 4, 5 ], function ( item ) {
+				return dir( 3, item );
+			}, true ),
 			2,
 			'forInsertion in the middle'
 		);
 
 		assert.strictEqual(
-			oo.binarySearch( data, function ( item ) { return dir( 2000, item ); }, true ),
+			oo.binarySearch( data, function ( item ) {
+				return dir( 2000, item );
+			}, true ),
 			12,
 			'forInsertion at end'
 		);
@@ -862,7 +868,9 @@
 			withArray = [ [ 'a', 'b' ], [ 1, 3, 4 ] ],
 			sparseArray = [ 'a', undefined, undefined, 'b' ],
 			withSparseArray = [ [ 'a', undefined, undefined, 'b' ] ],
-			withFunction = [ function () { return true; } ],
+			withFunction = [ function () {
+				return true;
+			} ],
 			nodeLike = {
 				cloneNode: function () {
 					return 'cloned node';
