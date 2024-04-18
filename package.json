@@ -32,7 +32,7 @@
 		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc"
 	},
 	"devDependencies": {
-		"eslint-config-wikimedia": "0.26.0",
+		"eslint-config-wikimedia": "0.27.0",
 		"grunt": "1.6.1",
 		"grunt-contrib-clean": "2.0.1",
 		"grunt-contrib-concat": "2.1.0",
