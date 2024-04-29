@@ -112,7 +112,7 @@
 	 * parameter containing the item that emitted the original event. Other arguments emitted from
 	 * the original event are passed through.
 	 *
-	 * @param {Object.<string,string|null>} events An object keyed by the name of the event that
+	 * @param {Object} events An object keyed by the name of the event that
 	 *  should be aggregated  (e.g., ‘click’) and the value of the new name to use
 	 *  (e.g., ‘groupClick’). A `null` value will remove aggregated events.
 	 * @throws {Error} If aggregation already exists

@@ -13,7 +13,9 @@
 	},
 	"plugins": [
 		"plugins/markdown",
-		"plugins/summarize",
+		"node_modules/jsdoc-wmf-theme/plugins/allow-dots-in-modules",
+		"node_modules/jsdoc-wmf-theme/plugins/betterlinks",
+		"node_modules/jsdoc-wmf-theme/plugins/summarize",
 		"node_modules/jsdoc-class-hierarchy"
 	],
 	"source": {
@@ -31,7 +33,8 @@
 			"linkMap": {
 				"Array": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
 				"Object": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-				"Error": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error"
+				"Error": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+				"function()": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function"
 			}
 		}
 	}

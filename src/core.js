@@ -569,6 +569,7 @@ OO.simpleArrayUnion = function ( a, ...rest ) {
  * An intersection checks the item exists in 'b' while difference checks it doesn't.
  *
  * @private
+ * @memberof OO
  * @param {Array} a First array
  * @param {Array} b Second array
  * @param {boolean} includeB Whether to items in 'b'
