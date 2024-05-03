@@ -9,7 +9,7 @@
 		assert.strictEqual( oo.isPlainObject( {} ), true, 'empty plain object' );
 		assert.strictEqual( oo.isPlainObject( { a: 1 } ), true, 'non-empty plain object' );
 		assert.strictEqual( oo.isPlainObject( Object.create( null ) ), true, 'empty object with no prototype, via Object.create( null )' );
-		var obj = Object.create( null );
+		let obj = Object.create( null );
 		obj.foo = true;
 		assert.strictEqual( oo.isPlainObject( obj ), true, 'non-empty object with no prototype' );
 
@@ -64,7 +64,7 @@
 				'instance of Window'
 			);
 
-			var IframeObject = QUnit.tmpIframe().contentWindow.Object;
+			const IframeObject = QUnit.tmpIframe().contentWindow.Object;
 
 			assert.strictEqual(
 				typeof IframeObject,
@@ -85,7 +85,7 @@
 			);
 
 			// https://bugzilla.mozilla.org/814622
-			var threw = false;
+			let threw = false;
 			try {
 				oo.isPlainObject( global.location );
 			} catch ( e ) {

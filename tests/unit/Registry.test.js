@@ -3,7 +3,7 @@
 	QUnit.module( 'Registry' );
 
 	QUnit.test( 'register/unregister', function ( assert ) {
-		var registry = new oo.Registry();
+		const registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
 		registry.register( [ 'registry-item-2', 'registry-item-3' ], 23 );
@@ -38,7 +38,7 @@
 	} );
 
 	QUnit.test( 'lookup', function ( assert ) {
-		var registry = new oo.Registry();
+		const registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
 

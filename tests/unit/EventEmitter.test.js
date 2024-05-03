@@ -9,7 +9,7 @@
 	QUnit.module( 'EventEmitter' );
 
 	QUnit.test( 'on', function ( assert ) {
-		var origSetTimeout = global.setTimeout,
+		const origSetTimeout = global.setTimeout,
 			ee = new oo.EventEmitter();
 
 		assert.throws( function () {
@@ -25,8 +25,8 @@
 		} );
 		ee.emit( 'callback' );
 
-		var seq = [];
-		var callback = function ( data ) {
+		let seq = [];
+		const callback = function ( data ) {
 			seq.push( data );
 		};
 
@@ -38,7 +38,7 @@
 		ee.emitThrow( 'multiple', 'x' );
 		assert.deepEqual( seq, [ 'x', 'x' ], 'Callbacks can be bound multiple times' );
 
-		var x, thrown;
+		let x, thrown;
 		// Stub setTimeout for coverage purposes
 		global.setTimeout = function ( fn ) {
 			try {
@@ -138,9 +138,9 @@
 	} );
 
 	QUnit.test( 'once', function ( assert ) {
-		var ee = new oo.EventEmitter();
+		const ee = new oo.EventEmitter();
 
-		var seq = [];
+		const seq = [];
 		ee.once( 'basic', function () {
 			seq.push( 'call' );
 		} );
@@ -153,7 +153,7 @@
 	} );
 
 	QUnit.test( 'once - nested', function ( assert ) {
-		var seq = [],
+		const seq = [],
 			ee = new oo.EventEmitter();
 
 		ee.once( 'basic', function ( value ) {
@@ -171,8 +171,8 @@
 	} );
 
 	QUnit.test( 'once - off', function ( assert ) {
-		var seq = [],
-			ee = new oo.EventEmitter();
+		let seq = [];
+		const ee = new oo.EventEmitter();
 
 		function handle() {
 			seq.push( 'call' );
@@ -194,7 +194,7 @@
 	} );
 
 	QUnit.test( 'emit', function ( assert ) {
-		var ee = new oo.EventEmitter();
+		const ee = new oo.EventEmitter();
 
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when no handlers are registered' );
 		ee.on( 'return', function () {} );
@@ -202,15 +202,15 @@
 		ee.off( 'return' );
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when handlers were removed' );
 
-		var data1 = {};
+		const data1 = {};
 		ee.on( 'dataParam', function ( data ) {
 			assert.strictEqual( data, data1, 'Data is passed on to event handler' );
 		} );
 		ee.emit( 'dataParam', data1 );
 
-		var data2A = {};
-		var data2B = {};
-		var data2C = {};
+		const data2A = {};
+		const data2B = {};
+		const data2C = {};
 
 		ee.on( 'dataParams', function ( a, b, c ) {
 			assert.strictEqual( a, data2A, 'Multiple data parameters (1) are passed on to event handler' );
@@ -222,9 +222,9 @@
 	} );
 
 	QUnit.test( 'off', function ( assert ) {
-		var ee = new oo.EventEmitter();
+		const ee = new oo.EventEmitter();
 
-		var hits = 0;
+		let hits = 0;
 		ee.on( 'basic', function () {
 			hits++;
 		} );
@@ -238,7 +238,7 @@
 		assert.strictEqual( hits, 2, 'Callback unbound after unbinding with event name' );
 
 		hits = 0;
-		var callback = function () {
+		const callback = function () {
 			hits++;
 		};
 
@@ -262,11 +262,11 @@
 	} );
 
 	QUnit.test( 'connect', function ( assert ) {
-		var ee = new oo.EventEmitter();
+		const ee = new oo.EventEmitter();
 
-		var data1 = {};
+		const data1 = {};
 
-		var host = {
+		const host = {
 			onFoo: function () {
 				assert.strictEqual( this, host, 'Callback context is connect host' );
 			},
@@ -302,10 +302,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host )', function ( assert ) {
-		var hits = { foo: 0, bar: 0 },
+		const hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
-		var host = {
+		const host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -329,10 +329,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host, methods )', function ( assert ) {
-		var hits = { foo: 0, bar: 0 },
+		const hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
-		var host = {
+		const host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -356,10 +356,10 @@
 	} );
 
 	QUnit.test( 'disconnect( host, array methods )', function ( assert ) {
-		var hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
+		const hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
 			ee = new oo.EventEmitter();
 
-		var host = {
+		const host = {
 			onFoo: function () {
 				hits.foo++;
 			},
@@ -405,9 +405,9 @@
 	} );
 
 	QUnit.test( 'disconnect( host, unbound methods )', function ( assert ) {
-		var ee = new oo.EventEmitter();
+		let ee = new oo.EventEmitter();
 
-		var host = {
+		const host = {
 			onFoo: function () {
 			},
 			onBar: function () {
@@ -426,7 +426,7 @@
 	} );
 
 	QUnit.test( 'chainable', function ( assert ) {
-		var fn = function () {},
+		const fn = function () {},
 			ee = new oo.EventEmitter();
 
 		assert.strictEqual( ee.on( 'basic', fn ), ee, 'on() is chainable' );

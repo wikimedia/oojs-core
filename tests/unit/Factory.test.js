@@ -32,7 +32,7 @@
 	Quux.static.name = 'not-quite-right';
 
 	QUnit.test( 'invalid registration', function ( assert ) {
-		var factory = new OO.Factory();
+		const factory = new OO.Factory();
 
 		assert.throws(
 			function () {
@@ -67,10 +67,10 @@
 		'Class.static.name': [ Bar, 'my-bar' ],
 		'key and name': [ Quux, 'my-quux' ]
 	}, function ( assert, data ) {
-		var Class = data[ 0 ];
-		var key = data[ 1 ];
+		const Class = data[ 0 ];
+		const key = data[ 1 ];
 
-		var factory = new OO.Factory();
+		const factory = new OO.Factory();
 
 		// Add and remove by constructor
 		factory.register( Class );
@@ -90,12 +90,12 @@
 		assert.expect( 0 );
 
 		// Unknown key should not throw
-		var factory = new OO.Factory();
+		const factory = new OO.Factory();
 		factory.unregister( 'not-registered' );
 	} );
 
 	QUnit.test( 'invalid creation', function ( assert ) {
-		var factory = new OO.Factory();
+		const factory = new OO.Factory();
 
 		assert.throws(
 			function () {
@@ -107,10 +107,10 @@
 	} );
 
 	QUnit.test( 'valid creation', function ( assert ) {
-		var factory = new OO.Factory();
+		const factory = new OO.Factory();
 
 		factory.register( Foo );
-		var obj = factory.create( 'my-foo', 16, 'foo', { baz: 'quux' }, 5 );
+		const obj = factory.create( 'my-foo', 16, 'foo', { baz: 'quux' }, 5 );
 
 		assert.true( obj instanceof Foo, 'object inherits constructor prototype' );
 

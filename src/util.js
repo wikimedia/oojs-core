@@ -14,7 +14,7 @@ OO.isPlainObject = function ( obj ) {
 		return false;
 	}
 
-	var proto = Object.getPrototypeOf( obj );
+	const proto = Object.getPrototypeOf( obj );
 
 	// Objects without prototype (e.g., `Object.create( null )`) are considered plain
 	if ( !proto ) {

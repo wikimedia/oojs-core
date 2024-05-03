@@ -53,7 +53,7 @@ OO.Registry.prototype.register = function ( name, data ) {
 		this.registry[ name ] = data;
 		this.emit( 'register', name, data );
 	} else if ( Array.isArray( name ) ) {
-		for ( var i = 0, len = name.length; i < len; i++ ) {
+		for ( let i = 0, len = name.length; i < len; i++ ) {
 			this.register( name[ i ], data );
 		}
 	} else {
@@ -70,13 +70,13 @@ OO.Registry.prototype.register = function ( name, data ) {
  */
 OO.Registry.prototype.unregister = function ( name ) {
 	if ( typeof name === 'string' ) {
-		var data = this.lookup( name );
+		const data = this.lookup( name );
 		if ( data !== undefined ) {
 			delete this.registry[ name ];
 			this.emit( 'unregister', name, data );
 		}
 	} else if ( Array.isArray( name ) ) {
-		for ( var i = 0, len = name.length; i < len; i++ ) {
+		for ( let i = 0, len = name.length; i < len; i++ ) {
 			this.unregister( name[ i ] );
 		}
 	} else {

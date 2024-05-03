@@ -4,7 +4,7 @@
  *
  * @namespace OO
  */
-var
+const
 	// eslint-disable-next-line no-redeclare
 	OO = {},
 	// Optimisation: Local reference to methods from a global prototype
@@ -75,7 +75,7 @@ OO.inheritClass = function ( targetFn, originFn ) {
 		throw new Error( 'inheritClass: Target already inherits from origin' );
 	}
 
-	var targetConstructor = targetFn.prototype.constructor;
+	const targetConstructor = targetFn.prototype.constructor;
 
 	// [DEPRECATED] Provide .parent as alias for code supporting older browsers which
 	// allows people to comply with their style guide.
@@ -134,7 +134,7 @@ OO.mixinClass = function ( targetFn, originFn ) {
 		throw new Error( 'mixinClass: Origin is not a function (actually ' + originFn + ')' );
 	}
 
-	var key;
+	let key;
 	// Copy prototype properties
 	for ( key in originFn.prototype ) {
 		if ( key !== 'constructor' && hasOwn.call( originFn.prototype, key ) ) {
@@ -188,8 +188,8 @@ OO.isSubclass = function ( testFn, baseFn ) {
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
 OO.getProp = function ( obj, ...keys ) {
-	var retval = obj;
-	for ( var i = 0; i < keys.length; i++ ) {
+	let retval = obj;
+	for ( let i = 0; i < keys.length; i++ ) {
 		if ( retval === undefined || retval === null ) {
 			// Trying to access a property of undefined or null causes an error
 			return undefined;
@@ -216,12 +216,12 @@ OO.getProp = function ( obj, ...keys ) {
  * @param {any} [value]
  */
 OO.setProp = function ( obj, ...keys ) {
-	var value = keys.pop();
+	const value = keys.pop();
 	if ( Object( obj ) !== obj || !keys.length ) {
 		return;
 	}
-	var prop = obj;
-	for ( var i = 0; i < keys.length - 1; i++ ) {
+	let prop = obj;
+	for ( let i = 0; i < keys.length - 1; i++ ) {
 		if ( prop[ keys[ i ] ] === undefined ) {
 			prop[ keys[ i ] ] = {};
 		}
@@ -246,9 +246,9 @@ OO.deleteProp = function ( obj, ...keys ) {
 	if ( Object( obj ) !== obj || !keys.length ) {
 		return;
 	}
-	var prop = obj;
-	var props = [ prop ];
-	var i = 0;
+	let prop = obj;
+	const props = [ prop ];
+	let i = 0;
 	for ( ; i < keys.length - 1; i++ ) {
 		if (
 			prop[ keys[ i ] ] === undefined ||
@@ -296,9 +296,9 @@ OO.deleteProp = function ( obj, ...keys ) {
  * @return {Object} Clone of origin
  */
 OO.cloneObject = function ( origin ) {
-	var r = Object.create( origin.constructor.prototype );
+	const r = Object.create( origin.constructor.prototype );
 
-	for ( var key in origin ) {
+	for ( const key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
 			r[ key ] = origin[ key ];
 		}
@@ -320,8 +320,8 @@ OO.getObjectValues = function ( obj ) {
 		throw new TypeError( 'Called on non-object' );
 	}
 
-	var values = [];
-	for ( var key in obj ) {
+	const values = [];
+	for ( const key in obj ) {
 		if ( hasOwn.call( obj, key ) ) {
 			values[ values.length ] = obj[ key ];
 		}
@@ -349,13 +349,13 @@ OO.getObjectValues = function ( obj ) {
  * @return {number|null} Index where val was found, or null if not found
  */
 OO.binarySearch = function ( arr, searchFunc, forInsertion ) {
-	var left = 0;
-	var right = arr.length;
+	let left = 0;
+	let right = arr.length;
 	while ( left < right ) {
 		// Equivalent to Math.floor( ( left + right ) / 2 ) but much faster
 		// eslint-disable-next-line no-bitwise
-		var mid = ( left + right ) >> 1;
-		var cmpResult = searchFunc( arr[ mid ] );
+		const mid = ( left + right ) >> 1;
+		const cmpResult = searchFunc( arr[ mid ] );
 		if ( cmpResult < 0 ) {
 			right = mid;
 		} else if ( cmpResult > 0 ) {
@@ -396,17 +396,17 @@ OO.compare = function ( a, b, asymmetrical ) {
 		return a.isEqualNode( b );
 	}
 
-	for ( var k in a ) {
+	for ( const k in a ) {
 		if ( !hasOwn.call( a, k ) || a[ k ] === undefined || a[ k ] === b[ k ] ) {
 			// Ignore undefined values, because there is no conceptual difference between
 			// a key that is absent and a key that is present but whose value is undefined.
 			continue;
 		}
 
-		var aValue = a[ k ];
-		var bValue = b[ k ];
-		var aType = typeof aValue;
-		var bType = typeof bValue;
+		const aValue = a[ k ];
+		const bValue = b[ k ];
+		const aType = typeof aValue;
+		const bType = typeof bValue;
 		if ( aType !== bType ||
 			(
 				( aType === 'string' || aType === 'number' || aType === 'boolean' ) &&
@@ -436,7 +436,7 @@ OO.compare = function ( a, b, asymmetrical ) {
  * @return {Object} Copy of source object
  */
 OO.copy = function ( source, leafCallback, nodeCallback ) {
-	var destination;
+	let destination;
 
 	if ( nodeCallback ) {
 		// Extensibility: check before attempting to clone source.
@@ -466,7 +466,7 @@ OO.copy = function ( source, leafCallback, nodeCallback ) {
 	}
 
 	// source is an array or a plain object
-	for ( var key in source ) {
+	for ( const key in source ) {
 		destination[ key ] = OO.copy( source[ key ], leafCallback, nodeCallback );
 	}
 
@@ -515,10 +515,10 @@ OO.getHash.keySortReplacer = function ( key, val ) {
 	if ( !Array.isArray( val ) && Object( val ) === val ) {
 		// Only normalize objects when the key-order is ambiguous
 		// (e.g. any object not an array).
-		var normalized = {};
+		const normalized = {};
 
-		var keys = Object.keys( val ).sort();
-		for ( var i = 0, len = keys.length; i < len; i++ ) {
+		const keys = Object.keys( val ).sort();
+		for ( let i = 0, len = keys.length; i < len; i++ ) {
 			normalized[ keys[ i ] ] = val[ keys[ i ] ];
 		}
 		return normalized;
@@ -551,11 +551,11 @@ OO.unique = function ( arr ) {
  * @return {Array} Union of the arrays
  */
 OO.simpleArrayUnion = function ( a, ...rest ) {
-	var set = new Set( a );
+	const set = new Set( a );
 
-	for ( var i = 0; i < rest.length; i++ ) {
-		var arr = rest[ i ];
-		for ( var j = 0; j < arr.length; j++ ) {
+	for ( let i = 0; i < rest.length; i++ ) {
+		const arr = rest[ i ];
+		for ( let j = 0; j < arr.length; j++ ) {
 			set.add( arr[ j ] );
 		}
 	}
@@ -576,11 +576,11 @@ OO.simpleArrayUnion = function ( a, ...rest ) {
  * @return {Array} Combination (intersection or difference) of arrays
  */
 function simpleArrayCombine( a, b, includeB ) {
-	var set = new Set( b );
-	var result = [];
+	const set = new Set( b );
+	const result = [];
 
-	for ( var j = 0; j < a.length; j++ ) {
-		var isInB = set.has( a[ j ] );
+	for ( let j = 0; j < a.length; j++ ) {
+		const isInB = set.has( a[ j ] );
 		if ( isInB === includeB ) {
 			result.push( a[ j ] );
 		}

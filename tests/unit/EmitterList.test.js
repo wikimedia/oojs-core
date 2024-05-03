@@ -36,7 +36,7 @@
 	QUnit.module( 'EmitterList' );
 
 	QUnit.test( 'addItems', function ( assert ) {
-		var initialItems = [
+		const initialItems = [
 				new TestItem( 'a' ),
 				new TestItem( 'b' ),
 				new TestItem( 'c' )
@@ -124,7 +124,7 @@
 			];
 
 		cases.forEach( function ( test ) {
-			var list = new TestList();
+			const list = new TestList();
 			list.addItems( test.items );
 
 			if ( test.add ) {
@@ -135,23 +135,23 @@
 		} );
 
 		assert.throws( function () {
-			var list = new TestList();
+			const list = new TestList();
 			list.addItems( initialItems.concat( [ null ] ) );
 		}, 'throws when trying to add null item.' );
 
 		assert.throws( function () {
-			var list = new TestList();
+			const list = new TestList();
 			list.addItems( initialItems.concat( [ undefined ] ) );
 		}, 'throws when trying to add undefined item.' );
 
 		assert.throws( function () {
-			var list = new TestList();
+			const list = new TestList();
 			list.addItems( initialItems.concat( [ 3 ] ) );
 		}, 'throws when trying to add a number.' );
 	} );
 
 	QUnit.test( 'moveItem', function ( assert ) {
-		var list = new TestList(),
+		const list = new TestList(),
 			item = new TestItem( 'a' );
 		assert.throws( function () {
 			list.moveItem( item, 0 );
@@ -159,7 +159,7 @@
 	} );
 
 	QUnit.test( 'clearItems', function ( assert ) {
-		var list = new TestList();
+		const list = new TestList();
 
 		list.addItems( [
 			new TestItem( 'a' ),
@@ -174,7 +174,7 @@
 	} );
 
 	QUnit.test( 'removeItems', function ( assert ) {
-		var expected = [],
+		const expected = [],
 			list = new TestList(),
 			plain = { not: 'connectable' },
 			items = [
@@ -214,8 +214,7 @@
 	} );
 
 	QUnit.test( 'aggregate', function ( assert ) {
-		var testItem,
-			list = new TestList(),
+		const list = new TestList(),
 			expectChange = [],
 			expectEdit = [],
 			plain = { not: 'connectable' },
@@ -246,7 +245,7 @@
 		items[ 2 ].emit( 'edit' );
 
 		// Add an item after the fact
-		testItem = new TestItem( 'd' );
+		const testItem = new TestItem( 'd' );
 		list.addItems( testItem );
 		testItem.emit( 'change' );
 
@@ -274,7 +273,7 @@
 	} );
 
 	QUnit.test( 'Events', function ( assert ) {
-		var result = [],
+		const result = [],
 			list = new TestList(),
 			items = [
 				new TestItem( 'a' ),
@@ -282,7 +281,7 @@
 				new TestItem( 'c' )
 			],
 			stringifyEvent = function ( type, item, index ) {
-				var string = type;
+				let string = type;
 				if ( item ) {
 					string += ':' + item.getContent();
 				}

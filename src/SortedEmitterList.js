@@ -70,7 +70,7 @@ OO.SortedEmitterList.prototype.onItemSortChange = function ( item ) {
  * @param {Function} sortingCallback Sorting callback
  */
 OO.SortedEmitterList.prototype.setSortingCallback = function ( sortingCallback ) {
-	var items = this.getItems();
+	const items = this.getItems();
 
 	this.sortingCallback = sortingCallback;
 
@@ -96,9 +96,9 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
 		return this;
 	}
 
-	for ( var i = 0; i < items.length; i++ ) {
+	for ( let i = 0; i < items.length; i++ ) {
 		// Find insertion index
-		var insertionIndex = this.findInsertionIndex( items[ i ] );
+		const insertionIndex = this.findInsertionIndex( items[ i ] );
 
 		// Check if the item exists using the sorting callback
 		// and remove it first if it exists
@@ -117,7 +117,7 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
 		}
 
 		// Insert item at the insertion index
-		var index = this.insertItem( items[ i ], insertionIndex );
+		const index = this.insertItem( items[ i ], insertionIndex );
 		this.emit( 'add', items[ i ], index );
 	}
 
@@ -132,7 +132,7 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
  * @return {number} The index the item should be inserted at
  */
 OO.SortedEmitterList.prototype.findInsertionIndex = function ( item ) {
-	var list = this;
+	const list = this;
 
 	return OO.binarySearch(
 		this.items,

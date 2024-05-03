@@ -51,7 +51,7 @@
 	QUnit.module( 'SortedEmitterList' );
 
 	QUnit.test( 'addItems', function ( assert ) {
-		var initialItems = [
+		const initialItems = [
 				new TestItem( 'aa' ),
 				new TestItem( 'bb' ),
 				new TestItem( 'cc' )
@@ -118,7 +118,7 @@
 			];
 
 		cases.forEach( function ( test ) {
-			var list = new SortedTestList();
+			const list = new SortedTestList();
 			// Sort by content
 			list.setSortingCallback( function ( a, b ) {
 				return a.getContent() > b.getContent() ? 1 : (
@@ -140,19 +140,19 @@
 		}, this );
 
 		assert.throws( function () {
-			var list = new SortedTestList();
+			const list = new SortedTestList();
 			list.addItems( initialItems.concat( [ null ] ) );
 		}, 'throws when adding null item to list' );
 
 		assert.throws( function () {
-			var list = new SortedTestList();
+			const list = new SortedTestList();
 			list.addItems( initialItems.concat( [ undefined ] ) );
 		}, 'throws when adding undefined item to list' );
 
 	} );
 
 	QUnit.test( 'Events', function ( assert ) {
-		var result = [],
+		const result = [],
 			list = new SortedTestList(),
 			items = [
 				new TestItem( 'aa' ),
@@ -161,7 +161,7 @@
 				new TestItem( 'dd' )
 			],
 			stringifyEvent = function ( type, item, index ) {
-				var string = type;
+				let string = type;
 				if ( item ) {
 					string += ':' + item.getIdentity();
 				}

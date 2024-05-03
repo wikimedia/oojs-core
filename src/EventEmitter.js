@@ -57,7 +57,7 @@
 	 * @param {Object} binding
 	 */
 	function addBinding( eventEmitter, event, binding ) {
-		var bindings;
+		let bindings;
 		// Auto-initialize bindings list
 		if ( hasOwn.call( eventEmitter.bindings, event ) ) {
 			bindings = eventEmitter.bindings[ event ];
@@ -146,8 +146,8 @@
 		}
 
 		// Remove matching handlers
-		var bindings = this.bindings[ event ];
-		var i = bindings.length;
+		const bindings = this.bindings[ event ];
+		let i = bindings.length;
 		while ( i-- ) {
 			if ( bindings[ i ].method === method && bindings[ i ].context === context ) {
 				bindings.splice( i, 1 );
@@ -184,10 +184,10 @@
 
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
-		var bindings = this.bindings[ event ].slice();
-		for ( var i = 0; i < bindings.length; i++ ) {
-			var binding = bindings[ i ];
-			var method;
+		const bindings = this.bindings[ event ].slice();
+		for ( let i = 0; i < bindings.length; i++ ) {
+			const binding = bindings[ i ];
+			let method;
 			if ( typeof binding.method === 'string' ) {
 				// Lookup method by name (late binding)
 				method = binding.context[ binding.method ];
@@ -241,13 +241,13 @@
 			return false;
 		}
 
-		var firstError;
+		let firstError;
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
-		var bindings = this.bindings[ event ].slice();
-		for ( var i = 0; i < bindings.length; i++ ) {
-			var binding = bindings[ i ];
-			var method;
+		const bindings = this.bindings[ event ].slice();
+		for ( let i = 0; i < bindings.length; i++ ) {
+			const binding = bindings[ i ];
+			let method;
 			if ( typeof binding.method === 'string' ) {
 				// Lookup method by name (late binding)
 				method = binding.context[ binding.method ];
@@ -294,9 +294,9 @@
 	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.connect = function ( context, methods ) {
-		for ( var event in methods ) {
-			var method = methods[ event ];
-			var args;
+		for ( const event in methods ) {
+			let method = methods[ event ];
+			let args;
 			// Allow providing additional args
 			if ( Array.isArray( method ) ) {
 				args = method.slice( 1 );
@@ -325,11 +325,11 @@
 	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.disconnect = function ( context, methods ) {
-		var event;
+		let event;
 		if ( methods ) {
 			// Remove specific connections to the context
 			for ( event in methods ) {
-				var method = methods[ event ];
+				let method = methods[ event ];
 				if ( Array.isArray( method ) ) {
 					method = method[ 0 ];
 				}
@@ -338,8 +338,8 @@
 		} else {
 			// Remove all connections to the context
 			for ( event in this.bindings ) {
-				var bindings = this.bindings[ event ];
-				var i = bindings.length;
+				const bindings = this.bindings[ event ];
+				let i = bindings.length;
 				while ( i-- ) {
 					// bindings[i] may have been removed by the previous step's
 					// this.off so check it still exists

@@ -79,7 +79,7 @@ OO.Factory.prototype.unregister = function ( key ) {
  * @throws {Error} Unknown key
  */
 OO.Factory.prototype.create = function ( key, ...args ) {
-	var constructor = this.lookup( key );
+	const constructor = this.lookup( key );
 	if ( !constructor ) {
 		throw new Error( 'No class registered by that key: ' + key );
 	}
