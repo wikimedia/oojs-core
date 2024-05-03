@@ -1,11 +1,11 @@
 ( function () {
 
 	/**
-	 * Contain and manage a list of @{link OO.EventEmitter} items.
+	 * Contain and manage a list of {@link OO.EventEmitter} items.
 	 *
 	 * Aggregates and manages their events collectively.
 	 *
-	 * This mixin must be used in a class that also mixes in @{link OO.EventEmitter}.
+	 * This mixin must be used in a class that also mixes in {@link OO.EventEmitter}.
 	 *
 	 * @abstract
 	 * @class
