@@ -9,7 +9,6 @@ var
 	OO = {},
 	// Optimisation: Local reference to methods from a global prototype
 	hasOwn = OO.hasOwnProperty,
-	slice = Array.prototype.slice,
 	// eslint-disable-next-line no-redeclare
 	toString = OO.toString;
 
@@ -188,14 +187,14 @@ OO.isSubclass = function ( testFn, baseFn ) {
  * @param {...any} [keys]
  * @return {Object|undefined} obj[arguments[1]][arguments[2]].... or undefined
  */
-OO.getProp = function ( obj ) {
+OO.getProp = function ( obj, ...keys ) {
 	var retval = obj;
-	for ( var i = 1; i < arguments.length; i++ ) {
+	for ( var i = 0; i < keys.length; i++ ) {
 		if ( retval === undefined || retval === null ) {
 			// Trying to access a property of undefined or null causes an error
 			return undefined;
 		}
-		retval = retval[ arguments[ i ] ];
+		retval = retval[ keys[ i ] ];
 	}
 	return retval;
 };
@@ -216,21 +215,22 @@ OO.getProp = function ( obj ) {
  * @param {...any} [keys]
  * @param {any} [value]
  */
-OO.setProp = function ( obj ) {
-	if ( Object( obj ) !== obj || arguments.length < 2 ) {
+OO.setProp = function ( obj, ...keys ) {
+	var value = keys.pop();
+	if ( Object( obj ) !== obj || !keys.length ) {
 		return;
 	}
 	var prop = obj;
-	for ( var i = 1; i < arguments.length - 2; i++ ) {
-		if ( prop[ arguments[ i ] ] === undefined ) {
-			prop[ arguments[ i ] ] = {};
+	for ( var i = 0; i < keys.length - 1; i++ ) {
+		if ( prop[ keys[ i ] ] === undefined ) {
+			prop[ keys[ i ] ] = {};
 		}
-		if ( Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ] ) {
+		if ( Object( prop[ keys[ i ] ] ) !== prop[ keys[ i ] ] ) {
 			return;
 		}
-		prop = prop[ arguments[ i ] ];
+		prop = prop[ keys[ i ] ];
 	}
-	prop[ arguments[ arguments.length - 2 ] ] = arguments[ arguments.length - 1 ];
+	prop[ keys[ keys.length - 1 ] ] = value;
 };
 
 /**
@@ -242,24 +242,24 @@ OO.setProp = function ( obj ) {
  * @param {Object} obj
  * @param {...any} [keys]
  */
-OO.deleteProp = function ( obj ) {
-	if ( Object( obj ) !== obj || arguments.length < 2 ) {
+OO.deleteProp = function ( obj, ...keys ) {
+	if ( Object( obj ) !== obj || !keys.length ) {
 		return;
 	}
 	var prop = obj;
 	var props = [ prop ];
-	var i = 1;
-	for ( ; i < arguments.length - 1; i++ ) {
+	var i = 0;
+	for ( ; i < keys.length - 1; i++ ) {
 		if (
-			prop[ arguments[ i ] ] === undefined ||
-			Object( prop[ arguments[ i ] ] ) !== prop[ arguments[ i ] ]
+			prop[ keys[ i ] ] === undefined ||
+			Object( prop[ keys[ i ] ] ) !== prop[ keys[ i ] ]
 		) {
 			return;
 		}
-		prop = prop[ arguments[ i ] ];
+		prop = prop[ keys[ i ] ];
 		props.push( prop );
 	}
-	delete prop[ arguments[ i ] ];
+	delete prop[ keys[ i ] ];
 	// Walk back through props removing any plain empty objects
 	while (
 		props.length > 1 &&
@@ -267,7 +267,7 @@ OO.deleteProp = function ( obj ) {
 
 		OO.isPlainObject( prop ) && !Object.keys( prop ).length
 	) {
-		delete props[ props.length - 1 ][ arguments[ props.length ] ];
+		delete props[ props.length - 1 ][ keys[ props.length - 1 ] ];
 	}
 };
 

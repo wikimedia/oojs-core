@@ -1,4 +1,4 @@
-/* global hasOwn, slice */
+/* global hasOwn */
 
 ( function () {
 
@@ -177,7 +177,7 @@
 	 * @param {...any} [args] Arguments passed to the event handler
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
-	OO.EventEmitter.prototype.emit = function ( event ) {
+	OO.EventEmitter.prototype.emit = function ( event, ...args ) {
 		if ( !hasOwn.call( this.bindings, event ) ) {
 			return false;
 		}
@@ -185,7 +185,6 @@
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
 		var bindings = this.bindings[ event ].slice();
-		var args = slice.call( arguments, 1 );
 		for ( var i = 0; i < bindings.length; i++ ) {
 			var binding = bindings[ i ];
 			var method;
@@ -234,7 +233,7 @@
 	 * @param {...any} [args] Arguments passed to the event handler
 	 * @return {boolean} Whether the event was handled by at least one listener
 	 */
-	OO.EventEmitter.prototype.emitThrow = function ( event ) {
+	OO.EventEmitter.prototype.emitThrow = function ( event, ...args ) {
 		// We tolerate code duplication with #emit, because the
 		// alternative is an extra level of indirection which will
 		// appear in very many stack traces.
@@ -246,7 +245,6 @@
 		// Slicing ensures that we don't get tripped up by event
 		// handlers that add/remove bindings
 		var bindings = this.bindings[ event ].slice();
-		var args = slice.call( arguments, 1 );
 		for ( var i = 0; i < bindings.length; i++ ) {
 			var binding = bindings[ i ];
 			var method;
