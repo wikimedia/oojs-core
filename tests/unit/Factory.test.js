@@ -31,32 +31,32 @@
 	Quux.key = 'my-quux';
 	Quux.static.name = 'not-quite-right';
 
-	QUnit.test( 'invalid registration', function ( assert ) {
+	QUnit.test( 'invalid registration', ( assert ) => {
 		const factory = new OO.Factory();
 
 		assert.throws(
-			function () {
+			() => {
 				factory.register( 'not-a-function' );
 			},
 			Error,
 			'register non-function value'
 		);
 		assert.throws(
-			function () {
-				factory.register( function UnnamedExample() {} );
+			() => {
+				factory.register( () => {} );
 			},
 			'register class without a key'
 		);
 		assert.throws(
-			function () {
+			() => {
 				factory.unregister( 42 );
 			},
 			Error,
 			'unregister non-function value'
 		);
 		assert.throws(
-			function () {
-				factory.unregister( function UnnamedExample() {} );
+			() => {
+				factory.unregister( () => {} );
 			},
 			'unregister class without a key'
 		);
@@ -66,7 +66,7 @@
 		'Class.key': [ Foo, 'my-foo' ],
 		'Class.static.name': [ Bar, 'my-bar' ],
 		'key and name': [ Quux, 'my-quux' ]
-	}, function ( assert, data ) {
+	}, ( assert, data ) => {
 		const Class = data[ 0 ];
 		const key = data[ 1 ];
 
@@ -86,7 +86,7 @@
 		assert.strictEqual( factory.lookup( 'different-key' ), undefined );
 	} );
 
-	QUnit.test( 'registeration and lookup [unknown]', function ( assert ) {
+	QUnit.test( 'registeration and lookup [unknown]', ( assert ) => {
 		assert.expect( 0 );
 
 		// Unknown key should not throw
@@ -94,11 +94,11 @@
 		factory.unregister( 'not-registered' );
 	} );
 
-	QUnit.test( 'invalid creation', function ( assert ) {
+	QUnit.test( 'invalid creation', ( assert ) => {
 		const factory = new OO.Factory();
 
 		assert.throws(
-			function () {
+			() => {
 				factory.create( 'my-foo', 23, 'foo', { bar: 'baz' } );
 			},
 			Error,
@@ -106,7 +106,7 @@
 		);
 	} );
 
-	QUnit.test( 'valid creation', function ( assert ) {
+	QUnit.test( 'valid creation', ( assert ) => {
 		const factory = new OO.Factory();
 
 		factory.register( Foo );

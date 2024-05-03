@@ -2,7 +2,7 @@
 
 	QUnit.module( 'core' );
 
-	QUnit.test( 'initClass', function ( assert ) {
+	QUnit.test( 'initClass', ( assert ) => {
 		function Foo() {
 		}
 		oo.initClass( Foo );
@@ -10,7 +10,7 @@
 		assert.deepEqual( Foo.static, {}, 'A "static" property (empty object) is created' );
 	} );
 
-	QUnit.test( 'inheritClass', function ( assert ) {
+	QUnit.test( 'inheritClass', ( assert ) => {
 		function InitA() {}
 		function InitB() {}
 		oo.inheritClass( InitB, InitA );
@@ -72,15 +72,15 @@
 		assert.strictEqual( child.protoA, 'Base', 'inherit parent prototype (non-function value)' );
 		assert.strictEqual( child.protoC(), 'Child', 'own properties go first' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			oo.inheritClass( Child, Base );
 		}, 'Throw if target already inherits from source (from an earlier call)' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			oo.inheritClass( Child, Object );
 		}, 'Throw if target already inherits from source (naturally, Object)' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			oo.inheritClass( Child, undefined );
 		}, /Origin is not a function/, 'Throw if source is undefined (e.g. due to missing dependency)' );
 
@@ -106,7 +106,7 @@
 		assert.strictEqual( child.protoB(), 'Child', 'inheritance is live (overwriting an inherited method)' );
 	} );
 
-	QUnit.test( 'mixinClass', function ( assert ) {
+	QUnit.test( 'mixinClass', ( assert ) => {
 		function Init() {}
 		function Init2() {}
 		OO.mixinClass( Init2, Init );
@@ -169,12 +169,12 @@
 
 		assert.strictEqual( obj.protoFunction2(), 'Child', 'method works as expected' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			oo.mixinClass( Mixer, undefined );
 		}, /Origin is not a function/, 'Throw if source is undefined (e.g. due to missing dependency)' );
 	} );
 
-	QUnit.test( 'isSubclass', function ( assert ) {
+	QUnit.test( 'isSubclass', ( assert ) => {
 		function Base() {}
 		function Child() {}
 		function GrandChild() {}
@@ -198,7 +198,7 @@
 		const runners = {};
 
 		runners.testGetProp = function ( type, obj ) {
-			QUnit.test( 'getProp( ' + type + ' )', function ( assert ) {
+			QUnit.test( 'getProp( ' + type + ' )', ( assert ) => {
 				assert.strictEqual(
 					oo.getProp( obj, 'foo' ),
 					3,
@@ -248,7 +248,7 @@
 		};
 
 		runners.testSetProp = function ( type, obj ) {
-			QUnit.test( 'setProp( ' + type + ' )', function ( assert ) {
+			QUnit.test( 'setProp( ' + type + ' )', ( assert ) => {
 				const emptyObj = {};
 
 				oo.setProp( emptyObj );
@@ -278,7 +278,7 @@
 		};
 
 		runners.testDeleteProp = function ( type, obj ) {
-			QUnit.test( 'deleteProp( ' + type + ' )', function ( assert ) {
+			QUnit.test( 'deleteProp( ' + type + ' )', ( assert ) => {
 				const clone = OO.copy( obj ),
 					hasOwn = Object.prototype.hasOwnProperty;
 
@@ -350,7 +350,7 @@
 		}
 	}() );
 
-	QUnit.test( 'cloneObject', function ( assert ) {
+	QUnit.test( 'cloneObject', ( assert ) => {
 		const hasOwn = Object.prototype.hasOwnProperty;
 
 		function Foo( x ) {
@@ -413,7 +413,7 @@
 
 	} );
 
-	QUnit.test( 'getObjectValues', function ( assert ) {
+	QUnit.test( 'getObjectValues', ( assert ) => {
 		assert.deepEqual(
 			oo.getObjectValues( { a: 1, b: false, foo: 'bar' } ),
 			[ 1, false, 'bar' ],
@@ -451,7 +451,7 @@
 		);
 
 		assert.throws(
-			function () {
+			() => {
 				oo.getObjectValues( 'hello' );
 			},
 			/^TypeError/,
@@ -459,7 +459,7 @@
 		);
 
 		assert.throws(
-			function () {
+			() => {
 				oo.getObjectValues( null );
 			},
 			/^TypeError/,
@@ -467,7 +467,7 @@
 		);
 	} );
 
-	QUnit.test( 'binarySearch', function ( assert ) {
+	QUnit.test( 'binarySearch', ( assert ) => {
 		const data = [ -42, -10, 0, 2, 5, 7, 12, 21, 42, 70, 144, 1001 ];
 
 		function dir( target, item ) {
@@ -477,7 +477,7 @@
 		function assertSearch( target, expectedPath, expectedRet ) {
 			const path = [];
 
-			const ret = oo.binarySearch( data, function ( item ) {
+			const ret = oo.binarySearch( data, ( item ) => {
 				path.push( item );
 				return dir( target, item );
 			} );
@@ -495,32 +495,26 @@
 		assertSearch( 2000, [ 12, 70, 1001 ], null );
 
 		assert.strictEqual(
-			oo.binarySearch( data, function ( item ) {
-				return dir( -2000, item );
-			}, true ),
+			oo.binarySearch( data, ( item ) => dir( -2000, item ), true ),
 			0,
 			'forInsertion at start'
 		);
 
 		assert.strictEqual(
-			oo.binarySearch( [ 1, 2, 4, 5 ], function ( item ) {
-				return dir( 3, item );
-			}, true ),
+			oo.binarySearch( [ 1, 2, 4, 5 ], ( item ) => dir( 3, item ), true ),
 			2,
 			'forInsertion in the middle'
 		);
 
 		assert.strictEqual(
-			oo.binarySearch( data, function ( item ) {
-				return dir( 2000, item );
-			}, true ),
+			oo.binarySearch( data, ( item ) => dir( 2000, item ), true ),
 			12,
 			'forInsertion at end'
 		);
 
 	} );
 
-	QUnit.test( 'compare', function ( assert ) {
+	QUnit.test( 'compare', ( assert ) => {
 		assert.strictEqual(
 			oo.compare( [], [] ),
 			true,
@@ -734,7 +728,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Node, Node )', function ( assert ) {
+	QUnit.test( 'compare( Node, Node )', ( assert ) => {
 		const a = {
 			id: '1',
 			nodeType: 0,
@@ -790,7 +784,7 @@
 		);
 	} );
 
-	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', function ( assert ) {
+	QUnit.test( 'compare( Object, Object, Boolean asymmetrical )', ( assert ) => {
 		let x = {
 			foo: [ true, 42 ],
 			baz: undefined
@@ -861,7 +855,7 @@
 		}
 	} );
 
-	QUnit.test( 'copy( source )', function ( assert ) {
+	QUnit.test( 'copy( source )', ( assert ) => {
 		const simpleObj = { foo: 'bar', baz: 3, quux: null, truth: true, falsehood: false },
 			simpleArray = [ 'foo', 3, true, false ],
 			withObj = [ { bar: 'baz', quux: 3 }, 5, null ],
@@ -984,7 +978,7 @@
 		);
 	} );
 
-	QUnit.test( 'copy( source, Function leafCallback )', function ( assert ) {
+	QUnit.test( 'copy( source, Function leafCallback )', ( assert ) => {
 		const nodeLike = {
 			cloneNode: function () {
 				return 'cloned node';
@@ -1001,9 +995,7 @@
 		assert.deepEqual(
 			oo.copy(
 				{ foo: 'bar', baz: [ 1 ], bat: null, bar: undefined },
-				function ( val ) {
-					return 'mod-' + val;
-				}
+				( val ) => 'mod-' + val
 			),
 			{ foo: 'mod-bar', baz: [ 'mod-1' ], bat: 'mod-null', bar: 'mod-undefined' },
 			'Callback on primitive values'
@@ -1012,7 +1004,7 @@
 		assert.deepEqual(
 			oo.copy(
 				new Cloneable( 'callback' ),
-				function ( val ) {
+				( val ) => {
 					val.name += '-mod';
 					return val;
 				}
@@ -1024,7 +1016,7 @@
 		assert.deepEqual(
 			oo.copy(
 				[ new Cloneable( 'callback' ) ],
-				function ( val ) {
+				( val ) => {
 					val.name += '-mod';
 					return val;
 				}
@@ -1036,7 +1028,7 @@
 		assert.deepEqual(
 			oo.copy(
 				nodeLike,
-				function ( val ) {
+				( val ) => {
 					val += ' leaf';
 					return val;
 				}
@@ -1046,7 +1038,7 @@
 		);
 	} );
 
-	QUnit.test( 'copy( source, Function leafCallback, Function nodeCallback )', function ( assert ) {
+	QUnit.test( 'copy( source, Function leafCallback, Function nodeCallback )', ( assert ) => {
 		function Cloneable( name ) {
 			this.name = name;
 			this.clone = function () {
@@ -1057,10 +1049,8 @@
 		assert.deepEqual(
 			oo.copy(
 				{ foo: 'bar', baz: [ 1 ], bat: null, bar: undefined },
-				function ( val ) {
-					return 'mod-' + val;
-				},
-				function ( val ) {
+				( val ) => 'mod-' + val,
+				( val ) => {
 					if ( Array.isArray( val ) ) {
 						return [ 2 ];
 					}
@@ -1079,11 +1069,11 @@
 					new Cloneable( 'callback' ),
 					new Cloneable( 'extension' )
 				],
-				function ( val ) {
+				( val ) => {
 					val.name += '-mod';
 					return val;
 				},
-				function ( val ) {
+				( val ) => {
 					if ( val && val.name === 'extension' ) {
 						return { type: 'extension' };
 					}
@@ -1094,7 +1084,7 @@
 		);
 	} );
 
-	QUnit.test( 'getHash: Basic usage', function ( assert ) {
+	QUnit.test( 'getHash: Basic usage', ( assert ) => {
 		const cases = {},
 			hash = '{"a":1,"b":1,"c":1}',
 			customHash = '{"first":1,"last":1}';
@@ -1176,7 +1166,7 @@
 		);
 	} );
 
-	QUnit.test( 'getHash: Complex usage', function ( assert ) {
+	QUnit.test( 'getHash: Complex usage', ( assert ) => {
 		const obj = {
 			a: 1,
 			b: 1,
@@ -1229,7 +1219,7 @@
 	} );
 
 	if ( global.document ) {
-		QUnit.test( 'getHash( iframe Object )', function ( assert ) {
+		QUnit.test( 'getHash( iframe Object )', ( assert ) => {
 			const IframeObject = QUnit.tmpIframe().contentWindow.Object;
 			const obj = new IframeObject();
 			obj.c = 3;
@@ -1249,7 +1239,7 @@
 		} );
 	}
 
-	QUnit.test( 'unique', function ( assert ) {
+	QUnit.test( 'unique', ( assert ) => {
 
 		assert.deepEqual(
 			oo.unique( [] ),
@@ -1296,7 +1286,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayUnion', function ( assert ) {
+	QUnit.test( 'simpleArrayUnion', ( assert ) => {
 
 		assert.deepEqual(
 			oo.simpleArrayUnion( [] ),
@@ -1333,7 +1323,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayIntersection', function ( assert ) {
+	QUnit.test( 'simpleArrayIntersection', ( assert ) => {
 
 		assert.deepEqual(
 			oo.simpleArrayIntersection( [], [] ),
@@ -1352,7 +1342,7 @@
 
 	} );
 
-	QUnit.test( 'simpleArrayDifference', function ( assert ) {
+	QUnit.test( 'simpleArrayDifference', ( assert ) => {
 
 		assert.deepEqual(
 			oo.simpleArrayDifference( [], [] ),

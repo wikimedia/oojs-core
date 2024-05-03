@@ -7,11 +7,9 @@
 		// Mixin constructor
 		oo.SortedEmitterList.call(
 			this,
-			function ( a, b ) {
-				return a.getContent() < b.getContent() ? -1 : (
-					a.getContent() > b.getContent() ? 1 : 0
-				);
-			}
+			( a, b ) => a.getContent() < b.getContent() ? -1 : (
+				a.getContent() > b.getContent() ? 1 : 0
+			)
 		);
 	}
 	oo.mixinClass( SortedTestList, oo.EventEmitter );
@@ -43,9 +41,7 @@
 	// Helper method to get an array of item contents
 	// for testing
 	function getIdentityArray( arr ) {
-		return arr.map( function ( item ) {
-			return item.getIdentity();
-		} );
+		return arr.map( ( item ) => item.getIdentity() );
 	}
 
 	QUnit.module( 'SortedEmitterList' );
@@ -117,14 +113,12 @@
 				}
 			];
 
-		cases.forEach( function ( test ) {
+		cases.forEach( ( test ) => {
 			const list = new SortedTestList();
 			// Sort by content
-			list.setSortingCallback( function ( a, b ) {
-				return a.getContent() > b.getContent() ? 1 : (
-					a.getContent() < b.getContent() ? -1 : 0
-				);
-			} );
+			list.setSortingCallback( ( a, b ) => a.getContent() > b.getContent() ? 1 : (
+				a.getContent() < b.getContent() ? -1 : 0
+			) );
 
 			list.addItems( test.items );
 
@@ -139,19 +133,19 @@
 			assert.deepEqual( getIdentityArray( list.getItems() ), test.expected, test.msg );
 		}, this );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			const list = new SortedTestList();
 			list.addItems( initialItems.concat( [ null ] ) );
 		}, 'throws when adding null item to list' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			const list = new SortedTestList();
 			list.addItems( initialItems.concat( [ undefined ] ) );
 		}, 'throws when adding undefined item to list' );
 
 	} );
 
-	QUnit.test( 'Events', function ( assert ) {
+	QUnit.test( 'Events', ( assert ) => {
 		const result = [],
 			list = new SortedTestList(),
 			items = [
@@ -172,16 +166,16 @@
 			};
 
 		// Register
-		list.on( 'add', function ( item, index ) {
+		list.on( 'add', ( item, index ) => {
 			result.push( stringifyEvent( 'add', item, index ) );
 		} );
-		list.on( 'move', function ( item, index ) {
+		list.on( 'move', ( item, index ) => {
 			result.push( stringifyEvent( 'move', item, index ) );
 		} );
-		list.on( 'remove', function ( item, index ) {
+		list.on( 'remove', ( item, index ) => {
 			result.push( stringifyEvent( 'remove', item, index ) );
 		} );
-		list.on( 'clear', function () {
+		list.on( 'clear', () => {
 			result.push( stringifyEvent( 'clear' ) );
 		} );
 
@@ -204,11 +198,9 @@
 			new TestItem( 'cc' )
 		] );
 		// Change the sorting callback to a flipped sort
-		list.setSortingCallback( function ( a, b ) {
-			return a.getContent() > b.getContent() ? -1 : (
-				a.getContent() < b.getContent() ? 1 : 0
-			);
-		} );
+		list.setSortingCallback( ( a, b ) => a.getContent() > b.getContent() ? -1 : (
+			a.getContent() < b.getContent() ? 1 : 0
+		) );
 		list.items[ 1 ].content = 'ee';
 		list.items[ 1 ].emit( 'sortChange' );
 

@@ -64,11 +64,11 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
-	grunt.registerTask( 'set-meta', function () {
+	grunt.registerTask( 'set-meta', () => {
 		grunt.config.set( 'build.version', require( './package.json' ).version );
 	} );
 
-	grunt.registerTask( 'set-dev', function () {
+	grunt.registerTask( 'set-dev', () => {
 		grunt.config.set( 'build.version', grunt.config( 'build.version' ) + '-dev' );
 	} );
 

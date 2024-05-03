@@ -25,7 +25,7 @@
 
 	// Helper method to get an array of item contents for testing
 	function getContentArray( arr ) {
-		return arr.map( function ( item ) {
+		return arr.map( ( item ) => {
 			if ( typeof item.getContent === 'function' ) {
 				return item.getContent();
 			}
@@ -35,7 +35,7 @@
 
 	QUnit.module( 'EmitterList' );
 
-	QUnit.test( 'addItems', function ( assert ) {
+	QUnit.test( 'addItems', ( assert ) => {
 		const initialItems = [
 				new TestItem( 'a' ),
 				new TestItem( 'b' ),
@@ -123,7 +123,7 @@
 				}
 			];
 
-		cases.forEach( function ( test ) {
+		cases.forEach( ( test ) => {
 			const list = new TestList();
 			list.addItems( test.items );
 
@@ -134,31 +134,31 @@
 			assert.deepEqual( getContentArray( list.getItems() ), test.expected, test.msg );
 		} );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			const list = new TestList();
 			list.addItems( initialItems.concat( [ null ] ) );
 		}, 'throws when trying to add null item.' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			const list = new TestList();
 			list.addItems( initialItems.concat( [ undefined ] ) );
 		}, 'throws when trying to add undefined item.' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			const list = new TestList();
 			list.addItems( initialItems.concat( [ 3 ] ) );
 		}, 'throws when trying to add a number.' );
 	} );
 
-	QUnit.test( 'moveItem', function ( assert ) {
+	QUnit.test( 'moveItem', ( assert ) => {
 		const list = new TestList(),
 			item = new TestItem( 'a' );
-		assert.throws( function () {
+		assert.throws( () => {
 			list.moveItem( item, 0 );
 		}, 'Throw when trying to move an item not in the list' );
 	} );
 
-	QUnit.test( 'clearItems', function ( assert ) {
+	QUnit.test( 'clearItems', ( assert ) => {
 		const list = new TestList();
 
 		list.addItems( [
@@ -173,7 +173,7 @@
 		assert.true( list.isEmpty(), 'List is empty' );
 	} );
 
-	QUnit.test( 'removeItems', function ( assert ) {
+	QUnit.test( 'removeItems', ( assert ) => {
 		const expected = [],
 			list = new TestList(),
 			plain = { not: 'connectable' },
@@ -195,7 +195,7 @@
 
 		// Remove an item with aggregate events
 		list.aggregate( { change: 'itemChange' } );
-		list.on( 'itemChange', function ( item ) {
+		list.on( 'itemChange', ( item ) => {
 			expected.push( item.getContent() );
 		} );
 
@@ -213,7 +213,7 @@
 		assert.strictEqual( list.getItemCount(), 1, 'Plain removed' );
 	} );
 
-	QUnit.test( 'aggregate', function ( assert ) {
+	QUnit.test( 'aggregate', ( assert ) => {
 		const list = new TestList(),
 			expectChange = [],
 			expectEdit = [],
@@ -230,10 +230,10 @@
 			change: 'itemChange',
 			edit: 'itemEdit'
 		} );
-		list.on( 'itemChange', function ( item ) {
+		list.on( 'itemChange', ( item ) => {
 			expectChange.push( item.getContent() );
 		} );
-		list.on( 'itemEdit', function ( item ) {
+		list.on( 'itemEdit', ( item ) => {
 			expectEdit.push( item.getContent() );
 		} );
 
@@ -262,7 +262,7 @@
 		assert.deepEqual( expectEdit, [ 'c' ], 'Edit event aggregation intercepted in the correct order' );
 
 		// Verify that aggregating duplicate events throws an exception
-		assert.throws( function () {
+		assert.throws( () => {
 			list.aggregate( { change: 'itemChangeDuplicate' } );
 		}, 'Duplicate event aggregation throws an error' );
 
@@ -272,7 +272,7 @@
 		list.aggregate( { spain: null } );
 	} );
 
-	QUnit.test( 'Events', function ( assert ) {
+	QUnit.test( 'Events', ( assert ) => {
 		const result = [],
 			list = new TestList(),
 			items = [
@@ -292,16 +292,16 @@
 			};
 
 		// Register
-		list.on( 'add', function ( item, index ) {
+		list.on( 'add', ( item, index ) => {
 			result.push( stringifyEvent( 'add', item, index ) );
 		} );
-		list.on( 'move', function ( item, index ) {
+		list.on( 'move', ( item, index ) => {
 			result.push( stringifyEvent( 'move', item, index ) );
 		} );
-		list.on( 'remove', function ( item, index ) {
+		list.on( 'remove', ( item, index ) => {
 			result.push( stringifyEvent( 'remove', item, index ) );
 		} );
-		list.on( 'clear', function () {
+		list.on( 'clear', () => {
 			result.push( stringifyEvent( 'clear' ) );
 		} );
 
@@ -311,7 +311,7 @@
 		list.addItems( [ items[ 0 ] ], 10 );
 		list.removeItems( items[ 1 ] );
 		// Add array with a null item, should not result in an event.
-		assert.throws( function () {
+		assert.throws( () => {
 			list.addItems( [ null ] );
 		}, 'throw when adding items array with null content' );
 

@@ -207,7 +207,7 @@
 				// If one listener has an unhandled error, don't have it
 				// take down the emitter. But rethrow asynchronously so
 				// debuggers can break with a full async stack trace.
-				setTimeout( ( function ( error ) {
+				setTimeout( ( ( error ) => {
 					throw error;
 				} ).bind( null, e ) );
 			}
@@ -270,7 +270,7 @@
 					// If one listener has an unhandled error, don't have it
 					// take down the emitter. But rethrow asynchronously so
 					// debuggers can break with a full async stack trace.
-					setTimeout( ( function ( error ) {
+					setTimeout( ( ( error ) => {
 						throw error;
 					} ).bind( null, e ) );
 				}

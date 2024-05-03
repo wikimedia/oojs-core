@@ -2,7 +2,7 @@
 
 	QUnit.module( 'util' );
 
-	QUnit.test( 'isPlainObject', function ( assert ) {
+	QUnit.test( 'isPlainObject', ( assert ) => {
 		function Thing() {}
 
 		// Plain objects
@@ -45,7 +45,7 @@
 	} );
 
 	if ( global.document ) {
-		QUnit.test( 'isPlainObject - browser specific', function ( assert ) {
+		QUnit.test( 'isPlainObject - browser specific', ( assert ) => {
 			assert.strictEqual(
 				oo.isPlainObject( global.document.createElement( 'div' ) ),
 				false,

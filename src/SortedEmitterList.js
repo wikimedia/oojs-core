@@ -138,9 +138,7 @@ OO.SortedEmitterList.prototype.findInsertionIndex = function ( item ) {
 		this.items,
 		// Fake a this.sortingCallback.bind( null, item ) call here
 		// otherwise this doesn't pass tests in phantomJS
-		function ( otherItem ) {
-			return list.sortingCallback( item, otherItem );
-		},
+		( otherItem ) => list.sortingCallback( item, otherItem ),
 		true
 	);
 

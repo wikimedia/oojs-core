@@ -2,7 +2,7 @@
 
 	QUnit.module( 'Registry' );
 
-	QUnit.test( 'register/unregister', function ( assert ) {
+	QUnit.test( 'register/unregister', ( assert ) => {
 		const registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );
@@ -24,20 +24,20 @@
 		registry.unregister( 'not-registered' );
 
 		assert.throws(
-			function () {
+			() => {
 				registry.register( null );
 			},
 			'Invalid name'
 		);
 		assert.throws(
-			function () {
+			() => {
 				registry.unregister( null );
 			},
 			'Invalid name'
 		);
 	} );
 
-	QUnit.test( 'lookup', function ( assert ) {
+	QUnit.test( 'lookup', ( assert ) => {
 		const registry = new oo.Registry();
 
 		registry.register( 'registry-item-1', 1 );

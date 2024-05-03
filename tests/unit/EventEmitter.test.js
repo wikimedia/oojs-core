@@ -8,19 +8,19 @@
 
 	QUnit.module( 'EventEmitter' );
 
-	QUnit.test( 'on', function ( assert ) {
+	QUnit.test( 'on', ( assert ) => {
 		const origSetTimeout = global.setTimeout,
 			ee = new oo.EventEmitter();
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.on( 'nocallback' );
 		}, 'Throw when callback is missing' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.on( 'invalidcallback', {} );
 		}, 'Throw when callback is invalid' );
 
-		ee.on( 'callback', function () {
+		ee.on( 'callback', () => {
 			assert.true( true, 'Callback ran' );
 		} );
 		ee.emit( 'callback' );
@@ -51,19 +51,19 @@
 		try {
 			x = 0;
 			thrown = [];
-			ee.on( 'multiple-error', function () {
+			ee.on( 'multiple-error', () => {
 				x += 1;
 			} );
-			ee.on( 'multiple-error', function () {
+			ee.on( 'multiple-error', () => {
 				throw new Error( 'Unhandled error 1' );
 			} );
-			ee.on( 'multiple-error', function () {
+			ee.on( 'multiple-error', () => {
 				x += 10;
 			} );
-			ee.on( 'multiple-error', function () {
+			ee.on( 'multiple-error', () => {
 				throw new Error( 'Unhandled error 2' );
 			} );
-			ee.on( 'multiple-error', function () {
+			ee.on( 'multiple-error', () => {
 				x += 100;
 			} );
 			ee.emit( 'multiple-error' );
@@ -71,7 +71,7 @@
 			assert.strictEqual( x, 111, 'emit runs every callback even if errors are thrown' );
 			x = 0;
 			thrown = [];
-			assert.throws( function () {
+			assert.throws( () => {
 				ee.emitThrow( 'multiple-error' );
 			}, /Unhandled error 1/, 'emitThrow propagates the first error' );
 			assert.true(
@@ -85,7 +85,7 @@
 		}
 
 		x = {};
-		ee.on( 'args', function ( a ) {
+		ee.on( 'args', ( a ) => {
 			assert.strictEqual( a, x, 'Arguments registered in binding passed to callback' );
 		}, [ x ] );
 		ee.emit( 'args' );
@@ -114,21 +114,21 @@
 		ee.emitThrow( 'context-custom' );
 		assert.deepEqual( seq, [ x ], 'Custom context' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.on( 'invalid-context', 'methodName', [], null );
 		}, 'invalid context' );
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.on( 'invalid-context', 'methodName', [], undefined );
 		}, 'invalid context' );
 
 		assert.deepEqual( ee.emit( 'hasOwnProperty' ), false, 'Event with name "hasOwnProperty" doesn\'t exist by default' );
 
-		ee.on( 'hasOwnProperty', function () {
+		ee.on( 'hasOwnProperty', () => {
 			assert.true( true, 'Bind event with name "hasOwnProperty"' );
 		} );
 		ee.emit( 'hasOwnProperty' );
 
-		ee.on( 'post', function () {
+		ee.on( 'post', () => {
 			// Binding "hasOwnProperty" worked because the first time 'this.bindings.hasOwnProperty'
 			// is what it should be (inherited from Object.prototype). But it used to break any
 			// events bound after since EventEmitter#on used 'this.bindings.hasOwnProperty'.
@@ -137,11 +137,11 @@
 		ee.emit( 'post' );
 	} );
 
-	QUnit.test( 'once', function ( assert ) {
+	QUnit.test( 'once', ( assert ) => {
 		const ee = new oo.EventEmitter();
 
 		const seq = [];
-		ee.once( 'basic', function () {
+		ee.once( 'basic', () => {
 			seq.push( 'call' );
 		} );
 
@@ -152,11 +152,11 @@
 		assert.deepEqual( seq, [ 'call' ], 'Callback ran only once' );
 	} );
 
-	QUnit.test( 'once - nested', function ( assert ) {
+	QUnit.test( 'once - nested', ( assert ) => {
 		const seq = [],
 			ee = new oo.EventEmitter();
 
-		ee.once( 'basic', function ( value ) {
+		ee.once( 'basic', ( value ) => {
 			seq.push( value );
 			if ( value === 'one' ) {
 				// Verify once is truly once, handler must be unbound
@@ -170,7 +170,7 @@
 		assert.deepEqual( seq, [ 'one' ], 'Callback ran only once' );
 	} );
 
-	QUnit.test( 'once - off', function ( assert ) {
+	QUnit.test( 'once - off', ( assert ) => {
 		let seq = [];
 		const ee = new oo.EventEmitter();
 
@@ -193,17 +193,17 @@
 		ee.emitThrow( 'basic' );
 	} );
 
-	QUnit.test( 'emit', function ( assert ) {
+	QUnit.test( 'emit', ( assert ) => {
 		const ee = new oo.EventEmitter();
 
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when no handlers are registered' );
-		ee.on( 'return', function () {} );
+		ee.on( 'return', () => {} );
 		assert.strictEqual( ee.emit( 'return' ), true, 'Return value when a handler is registered' );
 		ee.off( 'return' );
 		assert.strictEqual( ee.emit( 'return' ), false, 'Return value when handlers were removed' );
 
 		const data1 = {};
-		ee.on( 'dataParam', function ( data ) {
+		ee.on( 'dataParam', ( data ) => {
 			assert.strictEqual( data, data1, 'Data is passed on to event handler' );
 		} );
 		ee.emit( 'dataParam', data1 );
@@ -212,7 +212,7 @@
 		const data2B = {};
 		const data2C = {};
 
-		ee.on( 'dataParams', function ( a, b, c ) {
+		ee.on( 'dataParams', ( a, b, c ) => {
 			assert.strictEqual( a, data2A, 'Multiple data parameters (1) are passed on to event handler' );
 			assert.strictEqual( b, data2B, 'Multiple data parameters (2) are passed on to event handler' );
 			assert.strictEqual( c, data2C, 'Multiple data parameters (3) are passed on to event handler' );
@@ -221,11 +221,11 @@
 		ee.emit( 'dataParams', data2A, data2B, data2C );
 	} );
 
-	QUnit.test( 'off', function ( assert ) {
+	QUnit.test( 'off', ( assert ) => {
 		const ee = new oo.EventEmitter();
 
 		let hits = 0;
-		ee.on( 'basic', function () {
+		ee.on( 'basic', () => {
 			hits++;
 		} );
 
@@ -261,7 +261,7 @@
 		assert.true( true, 'Unbinding an unknown callback for event named "hasOwnProperty"' );
 	} );
 
-	QUnit.test( 'connect', function ( assert ) {
+	QUnit.test( 'connect', ( assert ) => {
 		const ee = new oo.EventEmitter();
 
 		const data1 = {};
@@ -288,20 +288,20 @@
 		ee.emit( 'bar' );
 		ee.emit( 'quux' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.connect( host, {
 				baz: 'onBaz'
 			} );
 		}, 'Connecting to unknown method' );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.connect( host, {
 				baz: 'bazoon'
 			} );
 		}, 'Connecting to invalid method' );
 	} );
 
-	QUnit.test( 'disconnect( host )', function ( assert ) {
+	QUnit.test( 'disconnect( host )', ( assert ) => {
 		const hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
@@ -328,7 +328,7 @@
 		assert.deepEqual( hits, { foo: 1, bar: 1 } );
 	} );
 
-	QUnit.test( 'disconnect( host, methods )', function ( assert ) {
+	QUnit.test( 'disconnect( host, methods )', ( assert ) => {
 		const hits = { foo: 0, bar: 0 },
 			ee = new oo.EventEmitter();
 
@@ -355,7 +355,7 @@
 		assert.deepEqual( hits, { foo: 1, bar: 2 } );
 	} );
 
-	QUnit.test( 'disconnect( host, array methods )', function ( assert ) {
+	QUnit.test( 'disconnect( host, array methods )', ( assert ) => {
 		const hits = { foo: 0, barbara: 0, barbaraAlt: 0 },
 			ee = new oo.EventEmitter();
 
@@ -404,7 +404,7 @@
 		assert.deepEqual( hits, { foo: 2, barbara: 2, barbaraAlt: 1 } );
 	} );
 
-	QUnit.test( 'disconnect( host, unbound methods )', function ( assert ) {
+	QUnit.test( 'disconnect( host, unbound methods )', ( assert ) => {
 		let ee = new oo.EventEmitter();
 
 		const host = {
@@ -420,12 +420,12 @@
 		ee.disconnect( host, { foo: 'onFoo' } );
 		ee.disconnect( host );
 
-		assert.throws( function () {
+		assert.throws( () => {
 			ee.disconnect( host, { notfound: 'onExample' } );
 		}, 'method must exist on host object even if event has no listeners' );
 	} );
 
-	QUnit.test( 'chainable', function ( assert ) {
+	QUnit.test( 'chainable', ( assert ) => {
 		const fn = function () {},
 			ee = new oo.EventEmitter();
 
