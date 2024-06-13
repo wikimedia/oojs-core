@@ -132,13 +132,11 @@ OO.SortedEmitterList.prototype.addItems = function ( items ) {
  * @return {number} The index the item should be inserted at
  */
 OO.SortedEmitterList.prototype.findInsertionIndex = function ( item ) {
-	const list = this;
-
 	return OO.binarySearch(
 		this.items,
 		// Fake a this.sortingCallback.bind( null, item ) call here
 		// otherwise this doesn't pass tests in phantomJS
-		( otherItem ) => list.sortingCallback( item, otherItem ),
+		( otherItem ) => this.sortingCallback( item, otherItem ),
 		true
 	);
 
