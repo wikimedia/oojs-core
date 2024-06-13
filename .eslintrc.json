@@ -4,11 +4,6 @@
 	"globals": {
 		"OO": false
 	},
-	"rules": {
-		"prefer-arrow-callback": "error",
-		"implicit-arrow-linebreak": "error",
-		"arrow-body-style": "error"
-	},
 	"overrides": [
 		{
 			"files": [
