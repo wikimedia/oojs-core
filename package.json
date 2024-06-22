@@ -26,7 +26,7 @@
 		"lint": "eslint --cache .",
 		"build-dev": "grunt build-dev",
 		"build-release": "grunt build-release",
-		"doc": "jsdoc -c .jsdoc.json",
+		"doc": "jsdoc -c jsdoc.json",
 		"authors": "git shortlog -se | sed 's/[[:space:]]*[0-9]*[[:space:]]//' | grep -vE 'jenkins|libraryupgrader' > AUTHORS.txt",
 		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint",
 		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc"
