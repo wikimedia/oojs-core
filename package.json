@@ -29,7 +29,7 @@
 		"doc": "jsdoc -c jsdoc.json",
 		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc",
 		"lint": "eslint --cache .",
-		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint"
+		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.28.2",
