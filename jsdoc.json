@@ -12,11 +12,7 @@
 		}
 	},
 	"plugins": [
-		"plugins/markdown",
-		"node_modules/jsdoc-wmf-theme/plugins/allow-dots-in-modules",
-		"node_modules/jsdoc-wmf-theme/plugins/betterlinks",
-		"node_modules/jsdoc-wmf-theme/plugins/summarize",
-		"node_modules/jsdoc-class-hierarchy"
+		"node_modules/jsdoc-wmf-theme/plugins/default"
 	],
 	"source": {
 		"include": [ "src" ]
@@ -30,10 +26,10 @@
 			"maintitle": "OOjs",
 			"repository": "https://gerrit.wikimedia.org/g/oojs/core/",
 			"hideSections": [ "Events" ],
+			"prefixMap": {
+				"OO.": true
+			},
 			"linkMap": {
-				"Array": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-				"Object": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-				"Error": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
 				"function()": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function"
 			}
 		}
