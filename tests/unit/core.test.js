@@ -410,6 +410,12 @@
 			expected,
 			'clone looks as expected'
 		);
+		assert.deepEqual(
+			// eslint-disable-next-line no-proto
+			oo.cloneObject( Object.create( null ) ).__proto__,
+			undefined,
+			'clone works correctly on an object with a null prototype'
+		);
 
 	} );
 
@@ -975,6 +981,12 @@
 			oo.copy( nodeLike ),
 			'cloned node',
 			'Node-like object (using #cloneNode)'
+		);
+		assert.deepEqual(
+			// eslint-disable-next-line no-proto
+			oo.copy( Object.create( null ) ).__proto__,
+			undefined,
+			'Copying an object with a null prototype'
 		);
 	} );
 
