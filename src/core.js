@@ -296,7 +296,7 @@ OO.deleteProp = function ( obj, ...keys ) {
  * @return {Object} Clone of origin
  */
 OO.cloneObject = function ( origin ) {
-	const r = Object.create( origin.constructor.prototype );
+	const r = Object.create( Object.getPrototypeOf( origin ) );
 
 	for ( const key in origin ) {
 		if ( hasOwn.call( origin, key ) ) {
@@ -459,7 +459,7 @@ OO.copy = function ( source, leafCallback, nodeCallback ) {
 			source.cloneNode( true );
 	} else if ( OO.isPlainObject( source ) ) {
 		// Plain objects (fall through)
-		destination = {};
+		destination = Object.create( Object.getPrototypeOf( source ) );
 	} else {
 		// Non-plain objects (incl. functions) and primitive values
 		return leafCallback ? leafCallback( source ) : source;
