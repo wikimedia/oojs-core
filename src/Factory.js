@@ -27,7 +27,7 @@ OO.inheritClass( OO.Factory, OO.Registry );
  *     factory.create( 'hello' );
  *
  * @param {Function} constructor Class to use when creating an object
- * @param {string} [key] The key for #create().
+ * @param {string} [key] The key for {@link OO.Factory#create|create()}.
  *  This parameter is usually omitted in favour of letting the class declare
  *  its own key, through `MyClass.key`.
  *  For backwards-compatiblity with OOjs 6.0 (2021) and older, it can also be declared

@@ -237,7 +237,7 @@
 	 * connect it to aggregate events.
 	 *
 	 * Don't call this directly unless you know what you're doing.
-	 * Use #addItems instead.
+	 * Use {@link OO.EmitterList#addItems|addItems()} instead.
 	 *
 	 * This method can be extended in child classes to produce
 	 * different behavior when an item is inserted. For example,

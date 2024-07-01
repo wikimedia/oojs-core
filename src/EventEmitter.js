@@ -317,11 +317,11 @@
 	 * @param {Object.<string,string>|Object.<string,Function>|Object.<string,Array>} [methods]
 	 *  List of event bindings keyed by event name. Values can be either method names, functions or
 	 *  arrays containing a method name.
-	 *  NOTE: To allow matching call sites with connect(), array values are allowed to contain the
-	 *  parameters as well, but only the method name is used to find bindings. It is discouraged to
-	 *  have multiple bindings for the same event to the same listener, but if used (and only the
-	 *  parameters vary), disconnecting one variation of (event name, event listener, parameters)
-	 *  will disconnect other variations as well.
+	 *  NOTE: To allow matching call sites with {@link OO.EventEmitter#connect|connect()}, array
+	 *  values are allowed to contain the parameters as well, but only the method name is used to
+	 *  find bindings. It is discouraged to have multiple bindings for the same event to the same
+	 *  listener, but if used (and only the parameters vary), disconnecting one variation of
+	 *  (event name, event listener, parameters) will disconnect other variations as well.
 	 * @return {OO.EventEmitter}
 	 */
 	OO.EventEmitter.prototype.disconnect = function ( context, methods ) {

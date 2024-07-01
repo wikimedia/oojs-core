@@ -1,5 +1,5 @@
 /**
- * Manage a sorted list of OO.EmitterList objects.
+ * Manage a sorted list of {@link OO.EmitterList} objects.
  *
  * The sort order is based on a callback that compares two items. The return value of
  * callback( a, b ) must be less than zero if a < b, greater than zero if a > b, and zero

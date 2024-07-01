@@ -2,7 +2,7 @@
 /* global hasOwn, toString */
 
 /**
- * Assert whether a value is a plain object or not.
+ * Check whether a value is a plain object or not.
  *
  * @memberof OO
  * @param {any} obj

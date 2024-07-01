@@ -28,7 +28,7 @@ OO.initClass = function ( fn ) {
 };
 
 /**
- * Inherit from prototype to another using Object#create.
+ * Inherit from prototype to another using Object.create.
  *
  * Beware: This redefines the prototype, call before setting your prototypes.
  *
@@ -37,29 +37,30 @@ OO.initClass = function ( fn ) {
  * This is how prototypal inheritance works, it can only be one straight chain
  * (just like classical inheritance in PHP for example). If you need to work with
  * multiple constructors consider storing an instance of the other constructor in a
- * property instead, or perhaps use a mixin (see OO.mixinClass).
+ * property instead, or perhaps use a mixin (see {@link OO.mixinClass}).
  *
- *     function Thing() {}
- *     Thing.prototype.exists = function () {};
+ * @example
+ * function Thing() {}
+ * Thing.prototype.exists = function () {};
  *
- *     function Person() {
- *         Person.super.apply( this, arguments );
- *     }
- *     OO.inheritClass( Person, Thing );
- *     Person.static.defaultEyeCount = 2;
- *     Person.prototype.walk = function () {};
+ * function Person() {
+ *     Person.super.apply( this, arguments );
+ * }
+ * OO.inheritClass( Person, Thing );
+ * Person.static.defaultEyeCount = 2;
+ * Person.prototype.walk = function () {};
  *
- *     function Jumper() {
- *         Jumper.super.apply( this, arguments );
- *     }
- *     OO.inheritClass( Jumper, Person );
- *     Jumper.prototype.jump = function () {};
+ * function Jumper() {
+ *     Jumper.super.apply( this, arguments );
+ * }
+ * OO.inheritClass( Jumper, Person );
+ * Jumper.prototype.jump = function () {};
  *
- *     Jumper.static.defaultEyeCount === 2;
- *     var x = new Jumper();
- *     x.jump();
- *     x.walk();
- *     x instanceof Thing && x instanceof Person && x instanceof Jumper;
+ * Jumper.static.defaultEyeCount === 2;
+ * var x = new Jumper();
+ * x.jump();
+ * x.walk();
+ * x instanceof Thing && x instanceof Person && x instanceof Jumper;
  *
  * @memberof OO
  * @method inheritClass
@@ -102,27 +103,28 @@ OO.inheritClass = function ( targetFn, originFn ) {
  * The 'constructor' (whether implicit or explicit) is not copied over.
  *
  * This does not create inheritance to the origin. If you need inheritance,
- * use OO.inheritClass instead.
+ * use {@link OO.inheritClass} instead.
  *
  * Beware: This can redefine a prototype property, call before setting your prototypes.
  *
- * Beware: Don't call before OO.inheritClass.
+ * Beware: Don't call before {@link OO.inheritClass}.
  *
- *     function Foo() {}
- *     function Context() {}
+ * @example
+ * function Foo() {}
+ * function Context() {}
  *
- *     // Avoid repeating this code
- *     function ContextLazyLoad() {}
- *     ContextLazyLoad.prototype.getContext = function () {
- *         if ( !this.context ) {
- *             this.context = new Context();
- *         }
- *         return this.context;
- *     };
+ * // Avoid repeating this code
+ * function ContextLazyLoad() {}
+ * ContextLazyLoad.prototype.getContext = function () {
+ *     if ( !this.context ) {
+ *         this.context = new Context();
+ *     }
+ *     return this.context;
+ * };
  *
- *     function FooBar() {}
- *     OO.inheritClass( FooBar, Foo );
- *     OO.mixinClass( FooBar, ContextLazyLoad );
+ * function FooBar() {}
+ * OO.inheritClass( FooBar, Foo );
+ * OO.mixinClass( FooBar, ContextLazyLoad );
  *
  * @memberof OO
  * @method mixinClass
@@ -161,7 +163,7 @@ OO.mixinClass = function ( targetFn, originFn ) {
  * Every class is considered a subclass of Object and of itself.
  *
  * @memberof OO
- * @method isSubClass
+ * @method isSubclass
  * @param {Function} testFn The class to be tested
  * @param {Function} baseFn The base class
  * @return {boolean} Whether testFn is a subclass of baseFn (or equal to it)
@@ -277,7 +279,7 @@ OO.deleteProp = function ( obj, ...keys ) {
  * and contains the same own properties.
  *
  * This makes a shallow non-recursive copy of own properties.
- * To create a recursive copy of plain objects, use #copy.
+ * To create a recursive copy of plain objects, use {@link .copy}.
  *
  *     var foo = new Person( mom, dad );
  *     foo.setAge( 21 );
@@ -497,7 +499,7 @@ OO.getHash = function ( val ) {
 };
 
 /**
- * Sort objects by key (helper function for OO.getHash).
+ * Sort objects by key (helper function for {@link OO.getHash}).
  *
  * This is a callback passed into JSON.stringify.
  *
