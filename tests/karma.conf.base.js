@@ -37,9 +37,9 @@ module.exports = {
 		slSafari12: {
 			// Oldest Safari that Sauce Labs provides
 			base: 'SauceLabs',
-			platform: 'macOS 10.13',
+			platform: 'macOS 11',
 			browserName: 'safari',
-			version: '12.1'
+			version: '14'
 		}
 	},
 	frameworks: [ 'qunit' ],
