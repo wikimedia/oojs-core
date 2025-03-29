@@ -32,7 +32,7 @@
 		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc"
 	},
 	"devDependencies": {
-		"eslint-config-wikimedia": "0.28.2",
+		"eslint-config-wikimedia": "0.29.1",
 		"grunt": "1.6.1",
 		"grunt-contrib-clean": "2.0.1",
 		"grunt-contrib-concat": "2.1.0",
