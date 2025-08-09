@@ -10,7 +10,7 @@
 				"src/**/*.js",
 				"tests/setup-browser.js"
 			],
-			"extends": "wikimedia/client-es6",
+			"extends": "wikimedia/client/es6",
 			"rules": {
 				"no-implicit-globals": "off"
 			}
