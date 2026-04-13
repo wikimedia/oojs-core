@@ -26,7 +26,7 @@
 		},
 		{
 			"files": [
-				"Gruntfile.js",
+				"build.mjs",
 				"web-test-runner.*.mjs",
 				"tests/wtr.conf.base.mjs"
 			],

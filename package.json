@@ -24,8 +24,8 @@
 	],
 	"scripts": {
 		"authors": "git shortlog -se | sed 's/[[:space:]]*[0-9]*[[:space:]]//' | grep -vE 'jenkins|libraryupgrader' > AUTHORS.txt",
-		"build-dev": "grunt build-dev",
-		"build-release": "grunt build-release",
+		"build-dev": "node build.mjs dev",
+		"build-release": "node build.mjs release",
 		"doc": "jsdoc -c jsdoc.json",
 		"jenkins": "npm run build-dev && wtr --config web-test-runner.jenkins.config.mjs && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc",
 		"lint": "eslint --cache .",
@@ -36,12 +36,9 @@
 		"@web/test-runner-playwright": "0.11.1",
 		"@web/test-runner-webdriver": "0.9.0",
 		"eslint-config-wikimedia": "0.32.3",
-		"grunt": "1.6.1",
-		"grunt-contrib-clean": "2.0.1",
-		"grunt-contrib-concat": "2.1.0",
-		"grunt-contrib-uglify": "5.2.2",
 		"jsdoc": "4.0.5",
 		"jsdoc-wmf-theme": "1.1.0",
-		"qunit": "2.24.1"
+		"qunit": "2.24.1",
+		"terser": "5.46.1"
 	}
 }
