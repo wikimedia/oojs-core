@@ -37,7 +37,7 @@
 		"@web/test-runner-webdriver": "0.9.0",
 		"eslint-config-wikimedia": "0.32.3",
 		"jsdoc": "4.0.5",
-		"jsdoc-wmf-theme": "1.1.0",
+		"jsdoc-wmf-theme": "1.2.0",
 		"qunit": "2.24.1",
 		"terser": "5.46.1"
 	}
