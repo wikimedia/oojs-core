@@ -27,9 +27,20 @@
 		{
 			"files": [
 				"Gruntfile.js",
-				"karma*.js"
+				"web-test-runner.*.mjs",
+				"tests/wtr.conf.base.mjs"
 			],
 			"extends": "wikimedia/server"
+		},
+		{
+			"files": [
+				"tests/wtr-qunit-adapter.js"
+			],
+			"extends": "wikimedia/client",
+			"parserOptions": {
+				"ecmaVersion": 2020,
+				"sourceType": "module"
+			}
 		}
 	]
 }

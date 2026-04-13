@@ -27,11 +27,14 @@
 		"build-dev": "grunt build-dev",
 		"build-release": "grunt build-release",
 		"doc": "jsdoc -c jsdoc.json",
-		"jenkins": "npm run test && karma start karma.conf.sauce.js && npm run doc",
+		"jenkins": "npm run build-dev && wtr --config web-test-runner.jenkins.config.mjs && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc",
 		"lint": "eslint --cache .",
-		"test": "npm run build-dev && karma start && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc"
+		"test": "npm run build-dev && wtr && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc"
 	},
 	"devDependencies": {
+		"@web/test-runner": "0.20.2",
+		"@web/test-runner-playwright": "0.11.1",
+		"@web/test-runner-webdriver": "0.9.0",
 		"eslint-config-wikimedia": "0.32.3",
 		"grunt": "1.6.1",
 		"grunt-contrib-clean": "2.0.1",
@@ -39,13 +42,6 @@
 		"grunt-contrib-uglify": "5.2.2",
 		"jsdoc": "4.0.5",
 		"jsdoc-wmf-theme": "1.1.0",
-		"karma": "6.3.18",
-		"karma-chrome-launcher": "3.1.0",
-		"karma-coverage": "2.0.3",
-		"karma-firefox-launcher": "2.1.2",
-		"karma-qunit": "4.1.2",
-		"karma-remap-istanbul": "0.6.0",
-		"karma-sauce-launcher": "4.3.6",
 		"qunit": "2.24.1"
 	}
 }

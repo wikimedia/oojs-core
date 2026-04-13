@@ -1,10 +1,5 @@
 /*!
  * Grunt file
- *
- * To use the automated Sauce Labs setup (as we do in Jenkins), set
- * the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables (either one-time
- * via export, or from your bashrc). Then, run 'grunt ci'.
- * Sign up for free at https://saucelabs.com/signup/plan/free.
  */
 
 'use strict';
