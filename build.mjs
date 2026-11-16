@@ -42,6 +42,7 @@ mkdirSync( 'dist', { recursive: true } );
 
 // Read and concatenate source files (joined with \n, matching
 // the former grunt-contrib-concat default separator).
+// eslint-disable-next-line security/detect-non-literal-fs-filename
 const contents = sourceFiles.map( ( f ) => readFileSync( f, 'utf8' ) );
 const code = banner + contents.join( '\n' );
 

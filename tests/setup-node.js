@@ -1,2 +1,2 @@
-/* eslint-env node, es6 */
+/* global global, require */
 global.OO = require( '../dist/oojs.js' );

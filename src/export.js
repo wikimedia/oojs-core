@@ -1,4 +1,4 @@
-/* eslint-env node */
+/* global module, global */
 
 /* istanbul ignore next */
 if ( typeof module !== 'undefined' && module.exports ) {
