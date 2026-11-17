@@ -29,6 +29,7 @@
 		"doc": "jsdoc -c jsdoc.json",
 		"jenkins": "npm run build-dev && wtr --config web-test-runner.jenkins.config.mjs && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc",
 		"lint": "eslint --cache .",
+		"prepublishOnly": "npm run build-release",
 		"test": "npm run build-dev && wtr && qunit --require ./tests/setup-node tests/unit/ && npm run lint && npm run doc"
 	},
 	"devDependencies": {
