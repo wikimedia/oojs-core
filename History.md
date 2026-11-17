@@ -1,5 +1,13 @@
 # OOjs Release History
 
+## v7.1.0 / 2026-11-17
+* ES6: Enforce no-var rule (Ed Sanders)
+* ES6: Use arrow callbacks (Ed Sanders)
+* Fix JSDoc links, examples, and isSubclass's name (Aaron Liu)
+* Remove unnecessary local context variable (Ed Sanders)
+* Support null-prototype objects in OO.cloneObject/OO.copy (David Chan) [T368530](https://phabricator.wikimedia.org/T368530)
+* Use ES6 variadic arguments (Ed Sanders)
+
 ## v7.0.1 / 2023-06-08
 * release: Update `/dist/` in the npm package.
   The oojs@7.0.0 package on npm includes a distribution for an earlier commit
